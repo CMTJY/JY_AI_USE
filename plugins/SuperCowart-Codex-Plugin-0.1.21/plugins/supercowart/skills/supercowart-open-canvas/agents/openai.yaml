@@ -1,0 +1,4 @@
+interface:
+  display_name: "SuperCowart Open Canvas"
+  short_description: "Open the SuperCowart infinite-canvas widget"
+  default_prompt: "Use $supercowart:supercowart-open-canvas to open the SuperCowart infinite-canvas widget."

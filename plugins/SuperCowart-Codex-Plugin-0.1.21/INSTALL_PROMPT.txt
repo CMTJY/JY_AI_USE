@@ -1,0 +1,15 @@
+请安装我提供的 SuperCowart Codex 插件包。
+
+包根目录就是包含 INSTALL_WITH_CODEX.md、.agents/ 和 plugins/ 的这个文件夹。
+请先完整阅读 INSTALL_WITH_CODEX.md，然后：
+
+1. 检查 plugins/supercowart/.codex-plugin/plugin.json 与 package.json。
+2. 确认 Node.js 20.19.0 或更高版本以及 npm 可用。
+3. 使用 plugin-creator 的 validate_plugin.py 校验 plugins/supercowart；如果当前环境没有该 skill，则执行等价的 manifest 和目录结构检查。
+4. 在 plugins/supercowart 中运行 npm ci 和 npm run quality，必须确保语法检查、生产构建和 MCP 端到端探针全部通过。
+5. 将这个包根目录注册为非默认本地 marketplace；marketplace 名为 supercowart-portable。若尚未注册，运行 codex plugin marketplace add "<包根目录绝对路径>"。
+6. 运行 codex plugin add supercowart@supercowart-portable 安装或刷新插件。
+7. 确认至少能发现 render_cowart_canvas_widget、edit_cowart_canvas、get_cowart_canvas_state、insert_cowart_html_draft 和 insert_cowart_image。
+8. 告诉我需要新建一个 Codex 任务来加载新的 skill 与 MCP schema。
+
+不要启动 localhost 服务，不要把用户画布写入插件目录，不要跳过验证。

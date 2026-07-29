@@ -1,0 +1,42 @@
+{
+  "name": "supercowart",
+  "version": "0.1.21",
+  "description": "A native Codex widget canvas powered by tldraw and built for visual thinking, image generation, and annotation-driven edits.",
+  "author": {
+    "name": "SuperCowart Contributors"
+  },
+  "keywords": [
+    "canvas",
+    "tldraw",
+    "whiteboard",
+    "image-generation",
+    "visual-collaboration"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "SuperCowart",
+    "shortDescription": "Create, annotate, and generate on a native infinite-canvas widget in Codex.",
+    "longDescription": "SuperCowart brings a tldraw-powered native widget canvas into Codex for visual planning and creative iteration. Open a project-backed canvas, let Codex create native shapes, flowcharts, frames, and AI Slides containers, generate images or HTML into selected slots, and turn annotated screenshots into revised outputs while keeping canvas data in the user's project workspace.",
+    "developerName": "SuperCowart Contributors",
+    "category": "Productivity",
+    "brandColor": "#25BFEF",
+    "logo": "./public/supercowart-logo.svg",
+    "composerIcon": "./public/supercowart-logo.svg",
+    "capabilities": [
+      "Interactive canvas",
+      "Native Codex widget",
+      "AI-native shape and flowchart editing",
+      "AI image generation",
+      "Annotation-driven editing",
+      "Project-local persistence"
+    ],
+    "defaultPrompt": [
+      "Open the SuperCowart canvas for this project.",
+      "Create a native flowchart on the SuperCowart canvas.",
+      "Create an AI Slides frame and build a five-page deck inside it.",
+      "Use my SuperCowart annotation screenshot to generate a clean revised image beside the original.",
+      "Generate a new image into the selected SuperCowart AI image holder."
+    ]
+  }
+}

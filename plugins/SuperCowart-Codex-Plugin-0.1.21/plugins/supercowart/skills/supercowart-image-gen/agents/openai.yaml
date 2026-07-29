@@ -1,0 +1,7 @@
+interface:
+  display_name: "SuperCowart Image Gen"
+  short_description: "Replace a selected SuperCowart AI holder with a generated image"
+  default_prompt: "Use $supercowart:supercowart-image-gen to replace the selected SuperCowart AI image holder with a generated image."
+
+policy:
+  allow_implicit_invocation: true

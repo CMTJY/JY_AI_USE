@@ -1,0 +1,20 @@
+{
+  "name": "supercowart-portable",
+  "interface": {
+    "displayName": "SuperCowart Portable"
+  },
+  "plugins": [
+    {
+      "name": "supercowart",
+      "source": {
+        "source": "local",
+        "path": "./plugins/supercowart"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

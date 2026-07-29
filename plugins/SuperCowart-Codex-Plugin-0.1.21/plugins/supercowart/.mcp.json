@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "supercowart_mcp": {
+      "title": "SuperCowart Canvas Widget MCP",
+      "description": "Render and persist the native SuperCowart Codex widget without opening a localhost page.",
+      "command": "node",
+      "args": [
+        "./scripts/start-mcp.mjs"
+      ],
+      "cwd": "."
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "supercowart-canvas",
+  "version": "0.1.21",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "check": "node --check ./mcp/server.mjs && node --check ./mcp/lib/plugin-root.mjs && node --check ./mcp/lib/widget-resource.mjs && node --check ./mcp/lib/cowart-static-widget.mjs && node --check ./mcp/lib/canvas-storage.mjs && node --check ./scripts/probe-mcp.mjs && node --check ./scripts/start-mcp.mjs && node --check ./scripts/vite-build-once.mjs",
+    "dev": "vite",
+    "build": "node ./scripts/vite-build-once.mjs",
+    "preview": "vite preview",
+    "probe:mcp": "node ./scripts/probe-mcp.mjs",
+    "quality": "npm run check && npm run build && npm run probe:mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.7.4",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@tiptap/pm": "3.27.0",
+    "@tldraw/assets": "^5.1.1",
+    "@vitejs/plugin-react": "^6.0.4",
+    "fractional-indexing": "^3.2.0",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^1.24.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tldraw": "^5.1.1",
+    "vite": "^8.1.5",
+    "zod": "^4.4.3"
+  }
+}

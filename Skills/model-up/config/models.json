@@ -1,0 +1,100 @@
+{
+  "default_chain": [
+    "qwen-vl-max",
+    "gpt-4o-mini"
+  ],
+  "providers": {
+    "dashscope": {
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "env_key": "DASHSCOPE_API_KEY"
+    },
+    "openai": {
+      "base_url": "https://api.openai.com/v1",
+      "env_key": "OPENAI_API_KEY"
+    },
+    "zhipu": {
+      "base_url": "https://open.bigmodel.cn/api/paas/v4",
+      "env_key": "ZHIPU_API_KEY"
+    },
+    "google": {
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "env_key": "GOOGLE_API_KEY"
+    },
+    "agnes": {
+      "base_url": "https://apihub.agnes-ai.com/v1",
+      "env_key": "AGNES_API_KEY"
+    },
+    "ollama": {
+      "base_url": "http://localhost:11434/v1",
+      "env_key": ""
+    }
+  },
+  "models": {
+    "qwen-vl-max": {
+      "provider": "dashscope",
+      "model": "qwen-vl-max",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "qwen3-vl-flash": {
+      "provider": "dashscope",
+      "model": "qwen3-vl-flash",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "gpt-4o-mini": {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "glm-4v-flash": {
+      "provider": "zhipu",
+      "model": "glm-4v-flash",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "gemini-2.0-flash": {
+      "provider": "google",
+      "model": "gemini-2.0-flash",
+      "modalities": [
+        "image",
+        "audio",
+        "video"
+      ],
+      "enabled": false
+    },
+    "agnes-2.5-flash": {
+      "provider": "agnes",
+      "model": "agnes-2.5-flash",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "agnes-2.0-flash": {
+      "provider": "agnes",
+      "model": "agnes-2.0-flash",
+      "modalities": [
+        "image"
+      ],
+      "enabled": true
+    },
+    "llava": {
+      "provider": "ollama",
+      "model": "llava",
+      "modalities": [
+        "image"
+      ],
+      "enabled": false
+    }
+  }
+}

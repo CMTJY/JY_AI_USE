@@ -1,0 +1,4 @@
+interface:
+  display_name: "Model Up"
+  short_description: "Give text-only models vision via multimodal proxies"
+  default_prompt: "Use $model-up to analyze the image when the current model cannot see it."

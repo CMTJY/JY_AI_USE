@@ -13,5 +13,8 @@ desktop.ini
 # Logs
 *.log
 
+# Secrets
+**/secrets.env
+
 # Node (just in case)
 node_modules/

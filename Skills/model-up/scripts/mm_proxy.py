@@ -25,6 +25,7 @@ import json
 import mimetypes
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -53,6 +54,7 @@ MODES = {
 
 DEFAULT_MODELS = {
     "default_chain": ["qwen-vl-max", "gpt-4o-mini"],
+    "default_generator": "agnes-image-2.0-flash",
     "providers": {
         "dashscope": {
             "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
@@ -118,6 +120,13 @@ DEFAULT_MODELS = {
             "model": "agnes-2.0-flash",
             "modalities": ["image"],
             "enabled": True,
+        },
+        "agnes-image-2.0-flash": {
+            "provider": "agnes",
+            "model": "agnes-image-2.0-flash",
+            "generation": True,
+            "enabled": True,
+            "sizes": ["1024x1024", "1024x768", "768x1024"],
         },
         "llava": {
             "provider": "ollama",
@@ -423,13 +432,101 @@ def cmd_analyze(args):
     return 1
 
 
+def cmd_generate(args):
+    cfg_dir = config_dir_from(args)
+    cfg = load_config(cfg_dir)
+    secrets = load_secrets(cfg_dir)
+    generators = [
+        mid for mid, entry in cfg["models"].items()
+        if entry.get("generation") and entry.get("enabled", True)
+    ]
+    if not generators:
+        raise ModelUpError(
+            "No enabled generation model. Add one with "
+            "'models add --id <id> --provider <p> --model <m> --generation'."
+        )
+    mid = args.model or cfg.get("default_generator") or generators[0]
+    entry = cfg["models"].get(mid)
+    if not entry or not entry.get("generation"):
+        raise ModelUpError(
+            f"'{mid}' is not a generation model. Available generators: {', '.join(generators)}"
+        )
+    provider = cfg["providers"][entry["provider"]]
+    api_key = api_key_for(entry, provider, secrets)
+    if api_key is None and provider.get("env_key"):
+        raise ModelUpError(
+            f"API key missing for provider '{entry['provider']}'. "
+            f"Add {provider['env_key']}=<key> to {cfg_dir / 'secrets.env'}."
+        )
+
+    payload = {
+        "model": entry["model"],
+        "prompt": args.prompt,
+        "size": args.size,
+        "extra_body": {"response_format": "url" if args.url_output else "b64_json"},
+    }
+    if args.input:
+        images = []
+        for ref in [r.strip() for r in args.input.split(",") if r.strip()]:
+            if ref.startswith(("http://", "https://", "data:")):
+                images.append(ref)
+                continue
+            path = Path(ref)
+            if not path.is_file():
+                raise ModelUpError(f"Input image not found: {ref}")
+            mime = mimetypes.guess_type(str(path))[0] or EXTRA_MIME.get(
+                path.suffix.lower(), "application/octet-stream"
+            )
+            images.append(f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode('ascii')}")
+        payload["extra_body"]["image"] = images
+
+    if args.dry_run:
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+
+    url = provider["base_url"].rstrip("/") + "/images/generations"
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+    req = urllib.request.Request(
+        url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=args.timeout) as resp:
+            resp_obj = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        raise ApiError(exc.code, exc.read().decode("utf-8", "replace")[:500]) from exc
+    except urllib.error.URLError as exc:
+        raise ApiError(0, str(exc.reason)) from exc
+
+    data = (resp_obj.get("data") or [{}])[0]
+    if args.json_out:
+        print(json.dumps(resp_obj, ensure_ascii=False, indent=2))
+    out_path = Path(args.out) if args.out else Path.cwd() / f"generated-{int(time.time())}.png"
+    b64 = data.get("b64_json")
+    if b64:
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(base64.b64decode(b64))
+        print(f"Saved generated image to: {out_path}")
+        return 0
+    img_url = data.get("url")
+    if img_url:
+        with urllib.request.urlopen(img_url, timeout=args.timeout) as resp:
+            raw = resp.read()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(raw)
+        print(f"Saved generated image (from URL) to: {out_path}")
+        return 0
+    raise ModelUpError(f"Generation response missing image data: {str(resp_obj)[:300]}")
+
+
 def print_models_table(cfg):
     default_set = set(cfg.get("default_chain", []))
     header = f"{'ID':<22}{'PROVIDER':<12}{'MODEL':<22}{'MODALITIES':<18}{'ENABLED':<8}DEFAULT"
     print(header)
     print("-" * len(header))
     for mid, entry in cfg["models"].items():
-        mods = ",".join(entry.get("modalities", ["image"]))
+        mods = "generation" if entry.get("generation") else ",".join(entry.get("modalities", ["image"]))
         enabled = "yes" if entry.get("enabled", True) else "no"
         mark = "*" if mid in default_set else ""
         print(f"{mid:<22}{entry['provider']:<12}{entry['model']:<22}{mods:<18}{enabled:<8}{mark}")
@@ -479,6 +576,8 @@ def cmd_models(args):
             "modalities": [m.strip() for m in args.modalities.split(",") if m.strip()],
             "enabled": args.enabled,
         }
+        if args.generation:
+            entry["generation"] = True
         if args.base_url and provider_id in providers:
             entry["base_url"] = args.base_url  # per-model override
         if args.env_key and provider_id in providers:
@@ -526,6 +625,8 @@ def cmd_check(args):
     print(f"secrets.env: {cfg_dir / 'secrets.env'}")
     print()
     print_models_table(cfg)
+    print()
+    print(f"default_generator: {cfg.get('default_generator', '(none)')}")
     print()
     print("Providers:")
     for pid, pdef in cfg["providers"].items():
@@ -592,6 +693,7 @@ def build_parser():
     pa2.add_argument("--base-url", default=None)
     pa2.add_argument("--env-key", default=None)
     pa2.add_argument("--disabled", action="store_false", dest="enabled")
+    pa2.add_argument("--generation", action="store_true", help="Mark as a generation model (used by 'generate').")
     pa2.set_defaults(enabled=True, func=cmd_models)
     for name in ("remove", "enable", "disable"):
         pcmd = pms.add_parser(name)
@@ -600,6 +702,23 @@ def build_parser():
     psd = pms.add_parser("set-default", help="Set the default fallback chain.")
     psd.add_argument("--ids", required=True, help="Comma-separated model ids.")
     psd.set_defaults(func=cmd_models)
+
+    pg = sub.add_parser("generate", help="Generate an image with a generation model.")
+    pg.add_argument("prompt", help="Text prompt describing the image to generate or edit.")
+    pg.add_argument("--model", default=None, help="Generator model id (default: config default_generator).")
+    pg.add_argument("--size", default="1024x1024", help="Output size, e.g. 1024x768, 1024x1024, 768x1024.")
+    pg.add_argument(
+        "--input",
+        default=None,
+        help="Comma-separated reference images for img2img / multi-image composition "
+        "(path, URL, or data URI).",
+    )
+    pg.add_argument("--out", default=None, help="Save path for the generated image.")
+    pg.add_argument("--url-output", action="store_true", help="Ask the API for a URL instead of base64.")
+    pg.add_argument("--timeout", type=int, default=180, help="Timeout in seconds (docs recommend 60-360).")
+    pg.add_argument("--dry-run", action="store_true", help="Print the request instead of sending it.")
+    pg.add_argument("--json", action="store_true", dest="json_out", help="Print the raw API response.")
+    pg.set_defaults(func=cmd_generate)
 
     pc = sub.add_parser("check", help="Validate config and key presence.")
     pc.set_defaults(func=cmd_check)

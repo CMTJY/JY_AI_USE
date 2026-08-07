@@ -6,9 +6,12 @@ description: >-
   otherwise cannot process multimodal content: a user asks you to read/describe
   a local image, screenshot, URL, chart, diagram, or error dialog; pasted images
   are rejected or replaced with "[Unsupported Image]"; visible text needs OCR;
-  or audio/video needs understanding. Model registry and provider endpoints live
-  in config/models.json, API keys live in config/secrets.env, and the proxy
-  calls OpenAI-compatible chat endpoints with automatic multi-model fallback.
+  or audio/video needs understanding. Also use when the user asks to create or
+  generate an image (text-to-image, image-to-image, image editing): the proxy
+  calls a configured generation model and saves the result locally.
+  Model registry and provider endpoints live in config/models.json, API keys
+  live in config/secrets.env, and the proxy calls OpenAI-compatible chat and
+  image endpoints with automatic multi-model fallback.
 ---
 
 # Model Up
@@ -48,6 +51,31 @@ All bundled image models accept this, including `agnes-2.5-flash` and
 ```powershell
 python scripts\mm_proxy.py analyze "C:\path\to\screenshot.png" --models agnes-2.5-flash
 ```
+
+## Generating images
+
+When the user wants an image created or edited (text-to-image, image-to-image,
+image editing), use `generate` with a generation model from the registry (e.g.
+`agnes-image-2.0-flash`, same `AGNES_API_KEY`):
+
+```powershell
+python scripts\mm_proxy.py generate "a cute robot waving hello, flat illustration, soft colors" --size 1024x1024
+python scripts\mm_proxy.py generate "change the background to a night city, keep the person unchanged" --input "C:\path\photo.png" --out result.png
+```
+
+The script saves the image to a local file (default `generated-<timestamp>.png`),
+prints the path, and returns it. Render the saved file for the user; never
+claim you drew it yourself. Options:
+
+- `--model <id>` - pick a generator (default: `default_generator` in config).
+- `--input <a,b>` - image-to-image / multi-image composition; local files are
+  base64-encoded automatically, no upload.
+- `--size 1024x768|1024x1024|768x1024` - output size (required by the API).
+- `--out <path>` - custom save path; `--url-output` for a URL instead of
+  base64; `--json` for the raw response; `--dry-run` to preview the request.
+
+Manage generators like other models: `models list`, `models add --generation
+...`, `models enable|disable --id ...`. See providers.md for API details.
 
 ## Choosing and managing models
 

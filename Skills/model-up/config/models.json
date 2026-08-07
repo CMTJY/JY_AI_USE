@@ -3,6 +3,7 @@
     "qwen-vl-max",
     "gpt-4o-mini"
   ],
+  "default_generator": "agnes-image-2.0-flash",
   "providers": {
     "dashscope": {
       "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
@@ -87,6 +88,17 @@
         "image"
       ],
       "enabled": true
+    },
+    "agnes-image-2.0-flash": {
+      "provider": "agnes",
+      "model": "agnes-image-2.0-flash",
+      "generation": true,
+      "enabled": true,
+      "sizes": [
+        "1024x1024",
+        "1024x768",
+        "768x1024"
+      ]
     },
     "llava": {
       "provider": "ollama",

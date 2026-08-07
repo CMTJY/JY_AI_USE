@@ -46,6 +46,7 @@ AWENAI-TOOL/
 │   ├── infra-module-decoupler/       #   嵌入式模块解耦器
 │   ├── lark-doc-local-publish/       #   本地 MD → 飞书文档
 │   ├── lark-doc-precision/           #   飞书文档精准修改
+│   ├── model-up/                     #   多模态代理（文字模型看图）
 │   ├── skill-creator/                #   自定义技能创建工厂
 │   └── superpowers/                  #   开发工作流超能力系列
 │
@@ -152,6 +153,7 @@ AWENAI-TOOL/
 |------|------|---------|
 | [agent-team-builder](Skills/agent-team-builder/) | 通用智能体团队搭建 | 需求识别 → 框架规划 → 实际搭建 三阶段流程 |
 | [intent-recognition](Skills/intent-recognition/) | 需求意图识别 | 逐个问题引导，区分表面需求 vs 真正意图 |
+| [model-up](Skills/model-up/) | 多模态代理（图片/音频/视频→文本分析） | OpenAI 兼容接口，多模型自动降级 |
 | [skill-creator](Skills/skill-creator/) | 自定义技能工厂 | 新建 Skill / 将对话封装为 Skill |
 
 ### 嵌入式专项

@@ -45,9 +45,9 @@ Generation models are registry entries with `"generation": true` (see
   instead.
 - Generation can take seconds to tens of seconds; default timeout is 180s
   (docs recommend 60-360s).
-- If a community-reported `agnes-image-2.1-flash` model is available on your
-  account, add it with:
-  `models add --id agnes-image-2.1-flash --provider agnes --model agnes-image-2.1-flash --generation`.
+- `agnes-image-2.1-flash` is included in the registry as a second generator
+  (same provider/endpoint); switch with `generate --model agnes-image-2.1-flash`
+  or change `default_generator` in `config/models.json`.
 
 ## Adding a new provider
 

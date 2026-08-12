@@ -1,113 +1,92 @@
-# StartupPlanner Pro v2 通用多智能体团队
+# StartupPlanner Pro v3
 
-StartupPlanner Pro 是一套纯 Markdown/YAML、可被不同 Agent 工具共同读取的团队协议。Codex、Cursor、TRAE、CodeBuddy 或其他工具使用同一套主控协议、40 个已注册角色、能力注册表和工作流；项目本身不运行模型、不要求额外模型 API，也不提供平台专用 Agent 封装。
+StartupPlanner Pro v3 是一个平台无关的可移植智能体团队框架。它用同一套 Markdown/YAML 角色契约服务 Codex、Cursor 和 TRAE，支持团队自动调度，也支持把任意专业 Agent 单独打包到其他项目使用。
 
-## 怎么使用
+项目不是模型运行时，不要求额外模型 API。Python 工具只用于维护、离线路由实验、配置验证和 Agent 打包；日常使用只需 AI 工具能够读取项目文件。
 
-把本目录放在当前 AI 工具可读取的项目范围，在新对话中输入：
+## 这次解决了什么
 
-```text
-请先读取 ./AGENTS.md，然后使用 StartupPlanner Pro 执行：
-为一个面向跨境电商卖家的 AI 视频产品完成需求、技术方案和 MVP 开发计划。
-```
+- 39 个 active Agent 不再只靠宽泛关键词选择；
+- 复合请求先拆任务，再给每个任务选择一个权威生产者；
+- 小红书、抖音、视频剪辑、私域、国内/跨境电商、直播和 LinkedIn 等细分角色都有明确入口；
+- “从0到1”默认是生命周期 `launch`，不再单独触发创业战略角色；
+- 工作流使用能力槽位，根据渠道和产物选择最聚焦角色；
+- 每个专业 Agent 使用统一 v3 契约，既支持团队模式也支持独立模式；
+- 提供 Codex、Cursor、TRAE 薄适配器和可重复路由评测。
 
-如果宿主自动加载 `AGENTS.md`，可直接描述任务。宿主有原生子 Agent 时执行真实委派；没有时会明确降级为单 Agent 串行角色模拟，不会伪装成真实并行协作。
-
-### 开放式请求会先确认方向
-
-如果只输入：
-
-```text
-请使用 StartupPlanner Pro 写一份完整的跨境电商商业计划书。
-```
-
-团队不会自行选择美国、家居或某个具体品类。主控会先运行方向发现门，一次询问一个会改变方案的关键问题；用户没有既定方向时，主控提供 2–3 个方向及权衡，等待确认后才启动市场、竞品、产品、财务和 BP 工作流。
-
-方向已经完整时不会重复提问，例如：
+## 运行原理
 
 ```text
-为中国供应链出海、面向美国租房者的轻量收纳品牌，
-使用 Amazon US + Shopify，编写投资人版商业计划书。
+短平台入口
+→ core/BOOTSTRAP.md
+→ 请求槽位提取与复合任务拆分
+→ 精简路由目录召回候选
+→ 硬过滤与可解释评分
+→ 只加载命中 Agent 和 1–3 个技能
+→ 执行、审核、返工、汇总
 ```
 
-若希望团队直接代选，需明确授权范围并说明是否无需二次确认；“帮我推荐”“你看着办”默认只允许提出选项，不允许直接替用户定案。
+这种渐进加载避免把 35 个专业角色和 100 个技能全部塞进上下文。完整原理见 [团队架构](docs/architecture.md)。
 
-## 目录结构
+## 两种工作模式
+
+### 团队模式
+
+主控生成 Task Packet，专业 Agent 只执行分配任务，关键产物由独立 reviewer 审核。宿主支持原生子 Agent 时执行真实委派；否则公开降级为“单 Agent 串行角色模拟”。
+
+### 独立模式
+
+把某个专业 Agent 打包或复制到其他项目。没有 Task Packet 时，它自行确认关键输入、执行专业任务和验证，但不声称其他团队成员已经参与。
+
+```powershell
+python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-operator --output C:\temp\portable-agents
+```
+
+详见 [独立 Agent 指南](docs/portable-agent-guide.md)。
+
+## 三平台快速开始
+
+### Codex
+
+把 [Codex 入口片段](adapters/codex/AGENTS.snippet.md) 合并到目标项目根目录 `AGENTS.md`，或在本子项目目录中启动任务。
+
+### Cursor
+
+复制 `adapters/cursor/startupplanner.mdc` 到目标项目 `.cursor/rules/`，可选复制 `startupplanner-command.md` 到 `.cursor/commands/`。
+
+### TRAE
+
+使用 `adapters/trae/AGENTS.snippet.md`，或把 `startupplanner-bootstrap` 放到目标项目 `.agents/skills/`。
+
+完整步骤见 [三平台安装](docs/platform-setup.md)。
+
+## 目录
 
 ```text
-StartupPlanner Pro/
-├── README.md                         面向使用者的项目总览
-├── AGENTS.md                         通用主控与协作协议
-├── docs/
-│   ├── README.md                     文档统一导航
-│   ├── departments.md                部门与角色索引
-│   ├── methodology/                  方法论
-│   └── templates/                    交付物模板
-└── agents/
-    ├── config/
-    │   ├── capabilities.yaml         角色、状态、能力和文件注册表
-    │   └── routing-rules.yaml        意图与能力路由
-    ├── templates/                    参考任务 DAG
-    ├── core/
-    │   └── orchestrator/
-    │       ├── orchestrator.md
-    │       └── skills/               主控独立技能副本
-    ├── tech/
-    │   ├── architect/ backend-dev/ frontend-dev/ mobile-dev/
-    │   └── code-reviewer/ qa/ devops/
-    ├── research/ strategy/ product/ marketing/
-    ├── finance/ organization/ risk/
-    └── _director/
+core/        平台无关启动、路由、编排和质量协议
+registry/    taxonomy、路由、工作流索引和生成的 Agent 目录
+agents/      角色正文与角色私有技能
+workflows/   v3 能力槽位 DAG
+adapters/    Codex、Cursor、TRAE 和独立包入口
+evals/       路由用例与回归基线
+tools/       验证、评测、Token 预算和打包工具
+tests/       自动化回归测试
+docs/        架构、路由、平台、打包与实验说明
 ```
 
-没有 `.codex`、`.cursor`、`.trae` 或 `.codebuddy` 平台目录。
+## 当前路由实验
 
-## 两种“独立”不要混淆
+离线规则实验包含 117 条用例：117/117 通过，原子准确率 100.00%，专业 Agent 漏调率 0.00%，不必要调用率 3.12%，方向门误触发率 0.00%，BP 门禁漏检为 0。
 
-1. **角色定义通用**：每个 Agent 角色只在 `agents/` 中维护一次，所有宿主读取同一文件。
-2. **角色技能自包含**：主控和技术角色将适用 Superpowers 技能物理复制到自己的 `skills/` 内，运行时不依赖仓库根目录的技能源。
+这些是本仓库确定性路由器的离线规则结果，不等于三平台实机模型表现。平台实机需要用同一语料抽测，结果单独记录在 [实验报告](docs/evaluation-report.md)。
 
-因此，角色技能副本不是“为不同平台各复制一套”，而是 StartupPlanner Pro 内部的能力封装。每个技能目录都有索引、来源清单和许可证；源集合更新不会自动覆盖这些副本。
+## 维护验证
 
-## 技术团队重构
-
-技术部由七个职责互斥的角色组成：
-
-- `tech-architect`：架构、稳定契约、技术任务图与文件边界；
-- `tech-backend-dev`：服务端、API、数据与后端测试；
-- `tech-frontend-dev`：Web 体验、可访问性、状态与前端测试；
-- `tech-mobile-dev`：移动平台行为、权限、生命周期与真机验证；
-- `tech-code-reviewer`：规格符合性和代码质量双门审；
-- `tech-qa`：测试策略、集成、E2E、性能和验收；
-- `tech-devops`：构建、CI/CD、可观测性、回滚与发布就绪。
-
-标准软件链路：
-
-```text
-需求 → 架构/契约 → 测试策略
-→ 无冲突文件范围内并行实现
-→ 规格审查 → 代码质量审查
-→ 集成与验收测试 → 发布就绪 → 最终质检
+```powershell
+python -m unittest discover -s "Agents/StartupPlanner Pro/tests" -v
+python "Agents/StartupPlanner Pro/tools/validate.py"
+python "Agents/StartupPlanner Pro/tools/route_eval.py"
+python "Agents/StartupPlanner Pro/tools/token_budget.py"
 ```
 
-详见 [部门与角色索引](docs/departments.md)、[文档导航](docs/README.md) 和 [软件交付工作流](agents/templates/software-dev.yaml)。
-
-## 协作不变量
-
-- 先生成 Project Brief 和带依赖的 Task Packet，再委派。
-- 代码任务必须声明 `file_scope`、验收标准、所需技能和验证要求。
-- 只有无依赖且无共享可写状态的任务可并行。
-- 执行者不得审核自己；QA 与代码审查员职责分离。
-- 缺陷定向退回责任角色，不重跑无关任务。
-- 只整合已通过审核且证据可追溯的产物。
-- 未经用户授权，不部署、合并、推送、创建 PR 或丢弃工作。
-
-## 维护入口
-
-- 文档导航与放置规则：`docs/README.md`。
-- 部门和角色总览：`docs/departments.md`，部门目录不再分散维护 README。
-- 新增角色：创建角色 Markdown，再注册到 `agents/config/capabilities.yaml`。
-- 新增路由：更新 `agents/config/routing-rules.yaml`。
-- 新增固定协作顺序：更新 `agents/templates/`。
-- 更新角色技能：从审核过的源基线复制，更新角色 `SKILL_INDEX.md` 和 `SOURCE_MANIFEST.yaml`，再运行完整验证。
-- 不新增平台专用角色副本或外部模型运行时。
+新增或调整 Agent 后必须同步更新契约正反例、路由信号和评测语料；不要靠“感觉”修改提示词。

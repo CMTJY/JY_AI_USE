@@ -1,6 +1,14 @@
-# 部门与角色索引
+# StartupPlanner Pro v3 部门与角色索引
 
-本页是 StartupPlanner Pro 的部门导航。角色是否可用、能力和真实文件位置以 [`capabilities.yaml`](../agents/config/capabilities.yaml) 为唯一注册事实源。
+本页是 StartupPlanner Pro v3 的部门导航。角色是否可用、能力、真实文件位置和可路由状态以 [`generated-agents.yaml`](../registry/generated-agents.yaml) 为生成事实源，以各角色 Markdown 的 v3 frontmatter 为最终源；[`routes.yaml`](../registry/routes.yaml) 决定请求到角色的可达路径。旧 [`capabilities.yaml`](../agents/config/capabilities.yaml) 仅用于兼容和迁移。
+
+## v3 可达性约束
+
+- 所有 `active` 专业 Agent 必须至少被一个显式路由或能力槽位引用；验证器会阻止“已经安装但永远不会调用”的死角色。
+- 路由先按领域、任务类型、产物、渠道和生命周期硬过滤，再按正向信号、负向信号与上下文评分。
+- 渠道专员优先于泛化角色；缺少可信度或证据时必须报告候选角色和选择理由。
+- 工作流只引用能力槽位，不把角色 ID 固化在编排图里，因此可按项目覆盖默认角色。
+- 单独复制角色时，角色依靠自身 v3 契约运行，不声称主控、审核员或其他成员已参与。
 
 ## 控制面（core）
 

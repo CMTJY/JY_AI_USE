@@ -8,15 +8,15 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/platform-通用-6C5CE7" alt="Platform: Universal">
-  <img src="https://img.shields.io/badge/agents-20+-orange" alt="Agents: 20+">
-  <img src="https://img.shields.io/badge/skills-80+-green" alt="Skills: 80+">
+  <img src="https://img.shields.io/badge/StartupPlanner_Agents-39_active-orange" alt="StartupPlanner Agents: 39 active">
+  <img src="https://img.shields.io/badge/StartupPlanner_Skills-100-green" alt="StartupPlanner Skills: 100">
 </p>
 
 ---
 
 ## 项目简介
 
-**AWENAI-TOOL** 是一套通用的 **AI 智能体（Agent）配置库**和 **AI 技能（Skill）工具箱**。它不是一个传统意义上的"软件工程"项目——没有可编译的代码，没有运行时依赖。它的核心产物是：
+**AWENAI-TOOL** 是一套通用的 **AI 智能体（Agent）配置库**和 **AI 技能（Skill）工具箱**。智能体日常执行依赖宿主 AI 工具读取 Markdown/YAML，不需要额外模型服务；仓库中的 Python 工具用于离线路由评测、配置验证、Token 预算和独立 Agent 打包。它的核心产物是：
 
 - **智能体规则文件**（`.md` / `.yaml`）：定义 AI 角色的身份、工作流、交付物标准和质检标准
 - **技能模块**（`SKILL.md`）：封装可复用的 AI 能力，按方法论执行而非凭直觉回答
@@ -100,6 +100,30 @@ v3 是一个面向 **Codex、Cursor、TRAE** 的平台无关智能体团队框�
 离线回归语料当前为 117 条，总通过率与原子精确路由准确率均为 100%，不必要调用率 0%；实验走真实运行时分片，但仍是确定性规则实验，不代表三个 AI 工具的实机模型表现。完整架构、安装方式、实验边界和复现命令见 [StartupPlanner Pro v3 README](Agents/StartupPlanner%20Pro/README.md)。
 
 > 📂 位置：[Agents/StartupPlanner Pro/](Agents/StartupPlanner%20Pro/)
+
+#### StartupPlanner Pro v3 快速接入
+
+| AI 工具 | 接入文件 | 建议位置 |
+|---|---|---|
+| Codex | [`adapters/codex/AGENTS.snippet.md`](Agents/StartupPlanner%20Pro/adapters/codex/AGENTS.snippet.md) | 合并到目标项目 `AGENTS.md` |
+| Cursor | [`adapters/cursor/startupplanner.mdc`](Agents/StartupPlanner%20Pro/adapters/cursor/startupplanner.mdc) | 复制到 `.cursor/rules/` |
+| TRAE | [`adapters/trae/AGENTS.snippet.md`](Agents/StartupPlanner%20Pro/adapters/trae/AGENTS.snippet.md) | 合并到项目 `AGENTS.md`，或使用配套 Skill |
+
+团队模式从 [`core/BOOTSTRAP.md`](Agents/StartupPlanner%20Pro/core/BOOTSTRAP.md) 启动，按“路由索引 → 最多两个领域分片 → 命中 Agent → 1–3 个必要技能”渐进加载。宿主支持原生子 Agent 时执行真实委派；不支持时明确降级为“单 Agent 串行角色模拟”。
+
+单独导出某个专业 Agent：
+
+```powershell
+python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-operator --output C:\temp\portable-agents
+```
+
+导出包会改写为独立模式，移除团队角色依赖，检查相对链接，并在 `manifest.yaml` 中记录角色文本与全包 Token 估算。完整说明见：
+
+- [架构与渐进加载](Agents/StartupPlanner%20Pro/docs/architecture.md)
+- [三平台安装](Agents/StartupPlanner%20Pro/docs/platform-setup.md)
+- [路由规则与诊断](Agents/StartupPlanner%20Pro/docs/routing-guide.md)
+- [独立 Agent 打包](Agents/StartupPlanner%20Pro/docs/portable-agent-guide.md)
+- [实验与限制](Agents/StartupPlanner%20Pro/docs/evaluation-report.md)
 
 ---
 
@@ -216,8 +240,9 @@ v3 是一个面向 **Codex、Cursor、TRAE** 的平台无关智能体团队框�
 
 ### 前提条件
 
-- 安装支持智能体（Agent）和规则（Rules）体系的大型语言模型工具（如 Trae IDE、Cursor 等）
+- 安装支持项目规则或智能体体系的 AI 工具，如 Codex、Cursor、TRAE
 - 将本项目克隆到本地
+- 仅在运行 StartupPlanner Pro 维护/评测工具时需要 Python 3 与 PyYAML
 
 ### 如何调用智能体
 
@@ -261,6 +286,19 @@ color: "#FF6B35"
 ```
 
 每个智能体配备了 `SKILL_INDEX.md` 技能索引表，运行时自动检索匹配最佳技能并执行。
+
+### StartupPlanner Pro v3 验证命令
+
+从仓库根目录运行：
+
+```powershell
+python -m unittest discover -s "Agents/StartupPlanner Pro/tests" -v
+python "Agents/StartupPlanner Pro/tools/validate.py"
+python "Agents/StartupPlanner Pro/tools/route_eval.py"
+python "Agents/StartupPlanner Pro/tools/token_budget.py"
+```
+
+当前发布基线：52 项测试通过；117/117 条离线分片路由用例通过；静态验证和 Token 预算均为 0 错误、0 警告。以上是确定性离线验证，不等同于 Codex、Cursor、TRAE 三个平台的实机模型表现。
 
 ---
 

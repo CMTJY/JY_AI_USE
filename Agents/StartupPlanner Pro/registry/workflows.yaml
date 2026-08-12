@@ -1,0 +1,10 @@
+schema_version: "3.0"
+updated: "2026-08-12"
+workflows:
+  - {id: business-plan, file: workflows/business-plan.yaml, triggers: [business-plan-writing, startup-validation]}
+  - {id: product-development, file: workflows/product-development.yaml, triggers: [product-management, mvp-design, product-governance]}
+  - {id: software-delivery, file: workflows/software-delivery.yaml, triggers: [architecture, backend-development, frontend-development, mobile-development]}
+  - {id: marketing-campaign, file: workflows/marketing-campaign.yaml, triggers: [campaign-planning, growth-marketing]}
+  - {id: channel-operation, file: workflows/channel-operation.yaml, triggers: [channel-strategy, account-operation, ecommerce-operation, cross-border-ecommerce, private-domain-operation, livestream-commerce]}
+  - {id: research-project, file: workflows/research-project.yaml, triggers: [general-research, market-research, competitor-analysis, user-validation]}
+

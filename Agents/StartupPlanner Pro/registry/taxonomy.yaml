@@ -1,0 +1,92 @@
+schema_version: "3.0"
+updated: "2026-08-12"
+
+domains: [core, tech, research, strategy, product, marketing, finance, organization, risk, business-plan]
+task_types:
+  - direction-discovery
+  - orchestration
+  - architecture
+  - backend-development
+  - frontend-development
+  - mobile-development
+  - code-review
+  - quality-assurance
+  - deployment
+  - general-research
+  - market-research
+  - user-validation
+  - competitor-analysis
+  - startup-validation
+  - business-strategy
+  - product-management
+  - mvp-design
+  - product-governance
+  - launch-readiness
+  - hardware-product-planning
+  - growth-marketing
+  - content-strategy
+  - content-creation
+  - campaign-planning
+  - social-media-strategy
+  - channel-strategy
+  - account-operation
+  - video-editing
+  - private-domain-operation
+  - ecommerce-operation
+  - cross-border-ecommerce
+  - livestream-commerce
+  - financial-modeling
+  - fundraising
+  - organization-design
+  - talent-planning
+  - risk-review
+  - business-plan-writing
+channels:
+  - web
+  - mobile
+  - douyin
+  - xiaohongshu
+  - wechat
+  - private-domain
+  - linkedin
+  - twitter
+  - taobao
+  - tmall
+  - jd
+  - pinduoduo
+  - amazon
+  - shopify
+  - shopee
+  - lazada
+  - livestream
+lifecycle_stages: [discovery, validation, launch, growth, optimization, scale, release]
+lifecycle_aliases:
+  discovery: [探索, 发现, discovery]
+  validation: [验证, validation, proof]
+  launch: [从0到1, 从零到一, 启动, 冷启动, launch]
+  growth: [增长, growth]
+  optimization: [优化, 复盘, optimization]
+  scale: [规模化, 扩张, scale]
+  release: [发布, 上线, release]
+artifact_types:
+  - direction-brief
+  - route-decision
+  - workflow-dag
+  - research-report
+  - strategy-report
+  - product-brief
+  - prd
+  - mvp-scope
+  - technical-design
+  - code
+  - code-review
+  - test-report
+  - deployment-package
+  - channel-plan
+  - content-plan
+  - campaign-plan
+  - financial-model
+  - organization-plan
+  - risk-review
+  - business-plan
+

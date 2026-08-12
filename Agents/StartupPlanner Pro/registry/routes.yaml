@@ -1,0 +1,221 @@
+schema_version: "3.0"
+updated: "2026-08-12"
+
+defaults:
+  min_confidence: 0.70
+  ambiguity_margin: 0.10
+  max_candidates: 5
+  max_selected_per_atomic_task: 1
+
+scoring:
+  weights:
+    task_types: 0.30
+    capabilities: 0.25
+    domains: 0.15
+    produces: 0.15
+    channels: 0.10
+    lifecycle_stages: 0.05
+  rules:
+    - do_not_use_when matches: reject
+    - equal coverage: prefer most-specific
+    - below min_confidence: clarify
+    - top margin below ambiguity_margin: clarify
+
+routes:
+  - id: startup-direction-discovery
+    domains: [core]
+    task_types: [direction-discovery]
+    positive_signals: [创业, 创业方向, 商业计划书, BP, 赛道选择, 商业模式]
+    requires_any_context: [公司, 创业, 商业, 投资人, 融资, 市场]
+    negative_signals: [账号从0到1, 产品从0到1开发, 冷启动运营]
+    preferred_agents: [core-orchestrator]
+    preconditions: [material_business_direction_missing]
+    blocks_until: direction-brief.dag_entry_authorized
+
+  - id: software-architecture
+    domains: [tech]
+    task_types: [architecture]
+    positive_signals: [架构, 技术选型, 系统设计, 数据库设计, API契约, scalability, architecture]
+    preferred_agents: [tech-architect]
+  - id: backend-development
+    domains: [tech]
+    task_types: [backend-development]
+    positive_signals: [后端, 服务端, API实现, 数据库实现, python, node, go, java, backend]
+    preferred_agents: [tech-backend-dev]
+  - id: frontend-development
+    domains: [tech]
+    task_types: [frontend-development]
+    positive_signals: [前端, 页面, Web界面, UI组件, react, vue, typescript, frontend]
+    preferred_agents: [tech-frontend-dev]
+  - id: mobile-development
+    domains: [tech]
+    task_types: [mobile-development]
+    positive_signals: [移动端, iOS, Android, Flutter, React Native, 小程序, mobile]
+    preferred_agents: [tech-mobile-dev]
+  - id: code-review
+    domains: [tech]
+    task_types: [code-review]
+    positive_signals: [代码审查, code review, 安全审查, 规格符合性, 可维护性]
+    preferred_agents: [tech-code-reviewer]
+  - id: quality-assurance
+    domains: [tech]
+    task_types: [quality-assurance]
+    positive_signals: [测试, QA, 自动化测试, 性能测试, 集成测试, E2E, 验收测试]
+    preferred_agents: [tech-qa]
+  - id: deployment
+    domains: [tech]
+    task_types: [deployment]
+    positive_signals: [部署, 上线, CI/CD, Docker, k8s, 监控, 回滚, release]
+    preferred_agents: [tech-devops]
+
+  - id: general-research
+    domains: [research]
+    task_types: [general-research]
+    positive_signals: [调研, 资料研究, 事实核查, 综合分析, research]
+    preferred_agents: [research-analyst]
+  - id: market-research
+    domains: [research]
+    task_types: [market-research]
+    positive_signals: [市场规模, TAM, SAM, SOM, 市场细分, 用户画像, market sizing]
+    preferred_agents: [research-market]
+  - id: user-validation
+    domains: [strategy]
+    task_types: [user-validation]
+    positive_signals: [用户访谈, 需求验证, 用户研究, 访谈提纲, demand validation]
+    preferred_agents: [strategy-market-researcher]
+  - id: competitor-analysis
+    domains: [research]
+    task_types: [competitor-analysis]
+    positive_signals: [竞品, 对标, 竞争对手, 差异化, SWOT, benchmarking]
+    preferred_agents: [research-competitor]
+  - id: startup-validation
+    domains: [strategy]
+    task_types: [startup-validation]
+    positive_signals: [创业验证, 假设验证, GO/NO-GO, 立项验证, opc]
+    preferred_agents: [strategy-opc]
+  - id: business-strategy
+    domains: [strategy]
+    task_types: [business-strategy]
+    positive_signals: [商业战略, 商业模式, PEST, 五力, 行业战略, strategy]
+    preferred_agents: [strategy-analyst]
+
+  - id: product-management
+    domains: [product]
+    task_types: [product-management]
+    positive_signals: [PRD, 产品需求, 用户故事, 路线图, 产品规划, product requirements]
+    preferred_agents: [product-pm]
+  - id: mvp-design
+    domains: [product]
+    task_types: [mvp-design]
+    positive_signals: [MVP, 最小可行产品, 原型, 范围裁剪, 验证指标]
+    preferred_agents: [product-mvp-designer]
+  - id: product-governance
+    domains: [product]
+    task_types: [product-governance, launch-readiness, hardware-product-planning]
+    positive_signals: [产品治理, 产品发布就绪, 发布评审, 规模化规划, 硬件量产, launch readiness]
+    preferred_agents: [product-director]
+
+  - id: growth-marketing
+    domains: [marketing]
+    task_types: [growth-marketing]
+    positive_signals: [增长, 获客, 漏斗, 留存, AARRR, 增长实验]
+    preferred_agents: [marketing-growth-hacker]
+  - id: content-marketing
+    domains: [marketing]
+    task_types: [content-strategy, content-creation]
+    positive_signals: [内容策略, 通用文案, 文章, 品牌文案, 内容创作]
+    negative_signals: [小红书笔记, 抖音脚本]
+    preferred_agents: [marketing-content-creator]
+  - id: campaign
+    domains: [marketing]
+    task_types: [campaign-planning]
+    positive_signals: [营销活动, campaign, 发布活动, 促销活动, 活动策划]
+    preferred_agents: [marketing-campaign-planner]
+  - id: social-media-strategy
+    domains: [marketing]
+    task_types: [social-media-strategy]
+    channels: [linkedin, twitter]
+    positive_signals: [LinkedIn, Twitter, X平台, B2B社交, 创始人IP, 高管IP]
+    preferred_agents: [marketing-social-strategist]
+  - id: douyin-operation
+    domains: [marketing]
+    task_types: [channel-strategy, account-operation]
+    channels: [douyin]
+    positive_signals: [抖音, DOU+, 千川, 抖音矩阵, 抖音直播]
+    preferred_agents: [marketing-douyin-strategist]
+  - id: video-editing
+    domains: [marketing]
+    task_types: [video-editing]
+    positive_signals: [剪辑, 剪映, CapCut, Premiere, DaVinci, Final Cut, 后期制作]
+    preferred_agents: [marketing-video-editing-coach]
+  - id: xiaohongshu-operation
+    domains: [marketing]
+    task_types: [channel-strategy, account-operation]
+    channels: [xiaohongshu]
+    positive_signals: [小红书运营, 小红书账号, 小红书投放, 达人合作, 蒲公英]
+    negative_signals: [写一篇小红书, 小红书笔记文案]
+    preferred_agents: [marketing-xiaohongshu-operator]
+  - id: xiaohongshu-content
+    domains: [marketing]
+    task_types: [content-creation]
+    channels: [xiaohongshu]
+    positive_signals: [小红书笔记, 种草笔记, 小红书标题, 小红书封面, 小红书选题]
+    preferred_agents: [marketing-xiaohongshu-specialist]
+  - id: private-domain-operation
+    domains: [marketing]
+    task_types: [private-domain-operation]
+    channels: [wechat, private-domain]
+    positive_signals: [私域, 企业微信, 微信社群, SCRM, 复购运营]
+    preferred_agents: [marketing-private-domain]
+  - id: domestic-ecommerce
+    domains: [marketing]
+    task_types: [ecommerce-operation]
+    channels: [taobao, tmall, jd, pinduoduo]
+    positive_signals: [淘宝, 天猫, 京东, 拼多多, 国内电商, 店铺运营]
+    preferred_agents: [marketing-ecommerce]
+  - id: cross-border-ecommerce
+    domains: [marketing]
+    task_types: [cross-border-ecommerce]
+    channels: [amazon, shopify, shopee, lazada]
+    positive_signals: [跨境电商, Amazon, Shopify, Shopee, Lazada, 海外店铺]
+    preferred_agents: [marketing-cross-border-ecommerce]
+  - id: livestream-commerce
+    domains: [marketing]
+    task_types: [livestream-commerce]
+    channels: [livestream]
+    positive_signals: [直播带货, 主播训练, 直播话术, 控场, 直播转化]
+    negative_signals: [抖音账号运营, 直播剪辑]
+    preferred_agents: [marketing-livestream-coach]
+
+  - id: financial-model
+    domains: [finance]
+    task_types: [financial-modeling]
+    positive_signals: [财务模型, 预算, 现金流, 盈亏平衡, LTV, CAC, 单位经济]
+    preferred_agents: [finance-financial-analyst]
+  - id: fundraising
+    domains: [finance]
+    task_types: [fundraising]
+    positive_signals: [融资, 估值, 投资人, 路演, 资金用途, pitch deck]
+    preferred_agents: [finance-fundraising]
+  - id: organization
+    domains: [organization]
+    task_types: [organization-design]
+    positive_signals: [组织架构, 股权设计, 公司治理, 岗位结构]
+    preferred_agents: [org-architect]
+  - id: hiring
+    domains: [organization]
+    task_types: [talent-planning]
+    positive_signals: [招聘, 人才规划, JD, 薪酬, 团队文化]
+    preferred_agents: [org-talent-planner]
+  - id: risk
+    domains: [risk]
+    task_types: [risk-review]
+    positive_signals: [风险, 合规, 法律, 监管, 风险矩阵]
+    preferred_agents: [risk-manager]
+  - id: business-plan
+    domains: [business-plan]
+    task_types: [business-plan-writing]
+    positive_signals: [商业计划书, BP, 投资人版本]
+    preferred_agents: [director-bp]
+    preconditions: [direction-brief.dag_entry_authorized, project-brief]
+

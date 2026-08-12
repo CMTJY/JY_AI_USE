@@ -1,0 +1,22 @@
+schema_version: "3.0"
+workflow:
+  id: product-development
+  system_inputs: [project-brief]
+  final_artifacts: [product-readiness]
+  tasks:
+    - id: requirements
+      assignment: {required: {domains: [product], task_types: [product-management]}, selection: most-specific, fallback: product-pm}
+      depends_on: []
+      produces: {id: prd, type: prd}
+      reviewer: core-quality-reviewer
+    - id: mvp
+      assignment: {required: {domains: [product], task_types: [mvp-design]}, selection: most-specific, fallback: product-mvp-designer}
+      depends_on: [requirements]
+      produces: {id: mvp-scope, type: mvp-scope}
+      reviewer: core-quality-reviewer
+    - id: governance
+      assignment: {required: {domains: [product], task_types: [product-governance]}, selection: most-specific, fallback: product-director}
+      depends_on: [mvp]
+      produces: {id: product-readiness, type: product-governance-plan}
+      reviewer: core-quality-reviewer
+

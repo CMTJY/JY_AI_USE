@@ -1,0 +1,27 @@
+schema_version: "3.0"
+workflow:
+  id: research-project
+  system_inputs: [project-brief]
+  final_artifacts: [research-deliverable]
+  tasks:
+    - id: general-evidence
+      assignment: {required: {domains: [research], task_types: [general-research]}, selection: most-specific, fallback: research-analyst}
+      depends_on: []
+      produces: {id: general-evidence, type: research-report}
+      reviewer: core-quality-reviewer
+    - id: market-evidence
+      assignment: {required: {domains: [research], task_types: [market-research]}, selection: most-specific, fallback: research-market}
+      depends_on: []
+      produces: {id: market-evidence, type: research-report}
+      reviewer: core-quality-reviewer
+    - id: competitor-evidence
+      assignment: {required: {domains: [research], task_types: [competitor-analysis]}, selection: most-specific, fallback: research-competitor}
+      depends_on: []
+      produces: {id: competitor-evidence, type: research-report}
+      reviewer: core-quality-reviewer
+    - id: synthesis
+      agent: core-aggregator
+      depends_on: [general-evidence, market-evidence, competitor-evidence]
+      produces: {id: research-deliverable, type: research-report}
+      reviewer: core-quality-reviewer
+

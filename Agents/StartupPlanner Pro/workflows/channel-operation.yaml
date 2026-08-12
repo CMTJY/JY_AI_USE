@@ -1,0 +1,30 @@
+schema_version: "3.0"
+workflow:
+  id: channel-operation
+  system_inputs: [project-brief]
+  final_artifacts: [channel-deliverable]
+  tasks:
+    - id: channel-strategy
+      assignment:
+        required: {domains: [marketing], task_types: [channel-strategy, account-operation]}
+        conditional: {channels: [xiaohongshu, douyin, private-domain, amazon, shopify, taobao, tmall, jd, livestream, linkedin, twitter]}
+        selection: most-specific
+        fallback: marketing-growth-hacker
+      depends_on: []
+      produces: {id: channel-plan, type: channel-plan}
+      reviewer: core-quality-reviewer
+    - id: content-production
+      assignment:
+        required: {domains: [marketing], task_types: [content-creation]}
+        conditional: {channels: [xiaohongshu, douyin, linkedin, twitter]}
+        selection: most-specific
+        fallback: marketing-content-creator
+      depends_on: [channel-strategy]
+      produces: {id: channel-content, type: content-plan}
+      reviewer: core-quality-reviewer
+    - id: optimization
+      assignment: {required: {domains: [marketing], task_types: [growth-marketing]}, selection: most-specific, fallback: marketing-growth-hacker}
+      depends_on: [content-production]
+      produces: {id: channel-deliverable, type: integrated-deliverable}
+      reviewer: core-quality-reviewer
+

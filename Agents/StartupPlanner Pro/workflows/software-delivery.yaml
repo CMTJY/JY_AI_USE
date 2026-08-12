@@ -1,0 +1,37 @@
+schema_version: "3.0"
+workflow:
+  id: software-delivery
+  system_inputs: [project-brief]
+  final_artifacts: [release-package]
+  tasks:
+    - id: architecture
+      assignment: {required: {domains: [tech], task_types: [architecture]}, selection: most-specific, fallback: tech-architect}
+      depends_on: []
+      produces: {id: technical-design, type: technical-design}
+      reviewer: core-quality-reviewer
+    - id: backend
+      assignment: {required: {domains: [tech], task_types: [backend-development]}, selection: most-specific, fallback: tech-backend-dev}
+      depends_on: [architecture]
+      produces: {id: backend-code, type: code}
+      reviewer: tech-code-reviewer
+    - id: frontend
+      assignment: {required: {domains: [tech], task_types: [frontend-development]}, selection: most-specific, fallback: tech-frontend-dev}
+      depends_on: [architecture]
+      produces: {id: frontend-code, type: code}
+      reviewer: tech-code-reviewer
+    - id: code-review
+      agent: tech-code-reviewer
+      depends_on: [backend, frontend]
+      produces: {id: code-review, type: code-review}
+      reviewer: core-quality-reviewer
+    - id: qa
+      assignment: {required: {domains: [tech], task_types: [quality-assurance]}, selection: most-specific, fallback: tech-qa}
+      depends_on: [code-review]
+      produces: {id: test-report, type: test-report}
+      reviewer: core-quality-reviewer
+    - id: release
+      assignment: {required: {domains: [tech], task_types: [deployment]}, selection: most-specific, fallback: tech-devops}
+      depends_on: [qa]
+      produces: {id: release-package, type: deployment-package}
+      reviewer: core-quality-reviewer
+

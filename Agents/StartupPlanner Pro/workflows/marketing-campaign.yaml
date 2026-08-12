@@ -1,0 +1,41 @@
+schema_version: "3.0"
+workflow:
+  id: marketing-campaign
+  system_inputs: [project-brief]
+  final_artifacts: [campaign-deliverable]
+  tasks:
+    - id: insight
+      assignment: {required: {domains: [research], task_types: [market-research]}, selection: most-specific, fallback: research-market}
+      depends_on: []
+      produces: {id: market-insight, type: research-report}
+      reviewer: core-quality-reviewer
+    - id: growth
+      assignment: {required: {domains: [marketing], task_types: [growth-marketing]}, selection: most-specific, fallback: marketing-growth-hacker}
+      depends_on: [insight]
+      produces: {id: growth-plan, type: growth-plan}
+      reviewer: core-quality-reviewer
+    - id: channel
+      assignment:
+        required: {domains: [marketing], task_types: [channel-strategy]}
+        conditional: {channels: [xiaohongshu, douyin, private-domain, amazon, shopify, taobao, livestream, linkedin]}
+        selection: most-specific
+        fallback: marketing-growth-hacker
+      depends_on: [growth]
+      produces: {id: channel-plan, type: channel-plan}
+      reviewer: core-quality-reviewer
+    - id: content
+      assignment: {required: {domains: [marketing], task_types: [content-strategy]}, selection: most-specific, fallback: marketing-content-creator}
+      depends_on: [channel]
+      produces: {id: content-plan, type: content-plan}
+      reviewer: core-quality-reviewer
+    - id: campaign
+      assignment: {required: {domains: [marketing], task_types: [campaign-planning]}, selection: most-specific, fallback: marketing-campaign-planner}
+      depends_on: [content]
+      produces: {id: campaign-plan, type: campaign-plan}
+      reviewer: core-quality-reviewer
+    - id: integration
+      agent: core-aggregator
+      depends_on: [campaign]
+      produces: {id: campaign-deliverable, type: integrated-deliverable}
+      reviewer: core-quality-reviewer
+

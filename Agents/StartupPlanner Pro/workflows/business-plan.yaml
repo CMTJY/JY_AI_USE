@@ -1,0 +1,43 @@
+schema_version: "3.0"
+workflow:
+  id: business-plan
+  system_inputs: [direction-brief, project-brief]
+  final_artifacts: [final-business-plan]
+  preconditions: [direction-brief.dag_entry_authorized]
+  tasks:
+    - id: direction-gate
+      agent: core-orchestrator
+      depends_on: []
+      produces: {id: confirmed-direction, type: direction-brief}
+      reviewer: core-quality-reviewer
+    - id: evidence
+      assignment: {required: {domains: [research], task_types: [market-research]}, selection: most-specific, fallback: research-market}
+      depends_on: [direction-gate]
+      produces: {id: market-evidence, type: research-report}
+      reviewer: core-quality-reviewer
+    - id: strategy
+      assignment: {required: {domains: [strategy], task_types: [business-strategy]}, selection: most-specific, fallback: strategy-analyst}
+      depends_on: [evidence]
+      produces: {id: strategy, type: strategy-report}
+      reviewer: core-quality-reviewer
+    - id: product
+      assignment: {required: {domains: [product], task_types: [product-management]}, selection: most-specific, fallback: product-pm}
+      depends_on: [strategy]
+      produces: {id: product-brief, type: product-brief}
+      reviewer: core-quality-reviewer
+    - id: financials
+      assignment: {required: {domains: [finance], task_types: [financial-modeling]}, selection: most-specific, fallback: finance-financial-analyst}
+      depends_on: [product]
+      produces: {id: financial-model, type: financial-model}
+      reviewer: core-quality-reviewer
+    - id: risk
+      assignment: {required: {domains: [risk], task_types: [risk-review]}, selection: most-specific, fallback: risk-manager}
+      depends_on: [financials]
+      produces: {id: risk-review, type: risk-review}
+      reviewer: core-quality-reviewer
+    - id: bp
+      assignment: {required: {domains: [business-plan], task_types: [business-plan-writing]}, selection: most-specific, fallback: director-bp}
+      depends_on: [risk]
+      produces: {id: final-business-plan, type: business-plan}
+      reviewer: core-quality-reviewer
+

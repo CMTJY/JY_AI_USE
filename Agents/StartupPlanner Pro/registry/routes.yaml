@@ -25,9 +25,9 @@ routes:
   - id: startup-direction-discovery
     domains: [core]
     task_types: [direction-discovery]
-    positive_signals: [创业, 创业方向, 商业计划书, BP, 赛道选择, 商业模式]
-    requires_any_context: [公司, 创业, 商业, 投资人, 融资, 市场]
-    negative_signals: [账号从0到1, 产品从0到1开发, 冷启动运营]
+    positive_signals: [创业方向, 商业计划书, BP, 赛道选择, 投资人版本]
+    requires_any_context: [创业, 商业计划书, BP, 赛道, 投资人版本]
+    negative_signals: [账号从0到1, 产品从0到1开发, 冷启动运营, 创业验证, 假设验证]
     preferred_agents: [core-orchestrator]
     preconditions: [material_business_direction_missing]
     blocks_until: direction-brief.dag_entry_authorized
@@ -112,7 +112,7 @@ routes:
   - id: product-governance
     domains: [product]
     task_types: [product-governance, launch-readiness, hardware-product-planning]
-    positive_signals: [产品治理, 产品发布就绪, 发布评审, 规模化规划, 硬件量产, launch readiness]
+    positive_signals: [产品治理, 产品发布就绪, 发布就绪, 发布评审, 规模化规划, 规模化治理, 硬件产品, 硬件量产, 量产, launch readiness]
     preferred_agents: [product-director]
 
   - id: growth-marketing
@@ -123,7 +123,7 @@ routes:
   - id: content-marketing
     domains: [marketing]
     task_types: [content-strategy, content-creation]
-    positive_signals: [内容策略, 通用文案, 文章, 品牌文案, 内容创作]
+    positive_signals: [内容策略, 通用文案, 文章, 品牌文案, 内容创作, 内容日历]
     negative_signals: [小红书笔记, 抖音脚本]
     preferred_agents: [marketing-content-creator]
   - id: campaign
@@ -146,20 +146,20 @@ routes:
   - id: video-editing
     domains: [marketing]
     task_types: [video-editing]
-    positive_signals: [剪辑, 剪映, CapCut, Premiere, DaVinci, Final Cut, 后期制作]
+    positive_signals: [剪辑, 剪映, CapCut, Premiere, DaVinci, Final Cut, 后期制作, 导出调色, 音频优化]
     preferred_agents: [marketing-video-editing-coach]
   - id: xiaohongshu-operation
     domains: [marketing]
     task_types: [channel-strategy, account-operation]
     channels: [xiaohongshu]
-    positive_signals: [小红书运营, 小红书账号, 小红书投放, 达人合作, 蒲公英]
+    positive_signals: [小红书运营, 小红书账号, 小红书投放, 小红书达人投放, 达人合作, 蒲公英]
     negative_signals: [写一篇小红书, 小红书笔记文案]
     preferred_agents: [marketing-xiaohongshu-operator]
   - id: xiaohongshu-content
     domains: [marketing]
     task_types: [content-creation]
     channels: [xiaohongshu]
-    positive_signals: [小红书笔记, 种草笔记, 小红书标题, 小红书封面, 小红书选题]
+    positive_signals: [小红书笔记, 种草笔记, 小红书标题, 小红书封面, 小红书选题, 小红书具体选题]
     preferred_agents: [marketing-xiaohongshu-specialist]
   - id: private-domain-operation
     domains: [marketing]
@@ -183,7 +183,7 @@ routes:
     domains: [marketing]
     task_types: [livestream-commerce]
     channels: [livestream]
-    positive_signals: [直播带货, 主播训练, 直播话术, 控场, 直播转化]
+    positive_signals: [直播带货, 主播训练, 直播话术, 控场, 直播转化, 直播间成交转化]
     negative_signals: [抖音账号运营, 直播剪辑]
     preferred_agents: [marketing-livestream-coach]
 
@@ -218,4 +218,3 @@ routes:
     positive_signals: [商业计划书, BP, 投资人版本]
     preferred_agents: [director-bp]
     preconditions: [direction-brief.dag_entry_authorized, project-brief]
-

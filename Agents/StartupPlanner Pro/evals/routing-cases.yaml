@@ -1,0 +1,80 @@
+schema_version: "3.0"
+expand_active_specialist_examples: true
+cases:
+  - id: xhs-zero-to-one-not-startup
+    input: 帮我做一个小红书账号从0到1运营方案
+    expected_agents: [marketing-xiaohongshu-operator]
+    forbidden_agents: [core-orchestrator, strategy-opc]
+    direction_gate_required: false
+  - id: xhs-note-content
+    input: 为护肤品写三篇小红书种草笔记
+    expected_agents: [marketing-xiaohongshu-specialist]
+    forbidden_agents: [marketing-xiaohongshu-operator]
+    direction_gate_required: false
+  - id: douyin-account
+    input: 规划抖音账号矩阵和DOU+投放
+    expected_agents: [marketing-douyin-strategist]
+    forbidden_agents: [marketing-video-editing-coach]
+    direction_gate_required: false
+  - id: video-editing
+    input: 教我用剪映完成短视频剪辑和调色
+    expected_agents: [marketing-video-editing-coach]
+    forbidden_agents: [marketing-douyin-strategist]
+    direction_gate_required: false
+  - id: private-domain
+    input: 规划企业微信私域和SCRM复购运营
+    expected_agents: [marketing-private-domain]
+    forbidden_agents: []
+    direction_gate_required: false
+  - id: cross-border
+    input: 分析Amazon美国站和Shopify跨境电商打法
+    expected_agents: [marketing-cross-border-ecommerce]
+    forbidden_agents: [marketing-ecommerce]
+    direction_gate_required: false
+  - id: livestream-coaching
+    input: 训练直播带货主播的话术和控场
+    expected_agents: [marketing-livestream-coach]
+    forbidden_agents: [marketing-douyin-strategist]
+    direction_gate_required: false
+  - id: linkedin-founder-brand
+    input: 制定LinkedIn企业号和创始人IP策略
+    expected_agents: [marketing-social-strategist]
+    forbidden_agents: []
+    direction_gate_required: false
+  - id: release-readiness
+    input: 评审产品是否达到发布就绪并规划规模化治理
+    expected_agents: [product-director]
+    forbidden_agents: [product-pm]
+    direction_gate_required: false
+  - id: architecture-backend
+    input: 设计系统架构和数据库，并完成后端API实现
+    expected_agents: [tech-architect, tech-backend-dev]
+    forbidden_agents: []
+    direction_gate_required: false
+  - id: prd-mvp
+    input: 编写PRD并定义MVP范围
+    expected_agents: [product-pm, product-mvp-designer]
+    forbidden_agents: []
+    direction_gate_required: false
+  - id: review-qa
+    input: 执行代码审查和E2E性能测试
+    expected_agents: [tech-code-reviewer, tech-qa]
+    forbidden_agents: []
+    direction_gate_required: false
+  - id: bp-direction-gate
+    input: 写一份完整商业计划书
+    expected_agents: [core-orchestrator, director-bp]
+    forbidden_agents: []
+    direction_gate_required: true
+  - id: vague-clarification
+    input: 帮我弄一下这个
+    expected_agents: []
+    forbidden_agents: []
+    clarification_required: true
+    direction_gate_required: false
+  - id: english-frontend-qa
+    input: Build a React frontend and run E2E tests
+    expected_agents: [tech-frontend-dev, tech-qa]
+    forbidden_agents: []
+    direction_gate_required: false
+

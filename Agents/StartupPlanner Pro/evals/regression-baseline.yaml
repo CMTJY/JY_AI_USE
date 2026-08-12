@@ -1,0 +1,10 @@
+schema_version: '3.0'
+cases: 117
+passed: 117
+failed: 0
+pass_rate: 1.0
+atomic_accuracy: 1.0
+specialist_miss_rate: 0.0
+unnecessary_call_rate: 0.0312
+direction_false_positive_rate: 0.0
+bp_direction_gate_misses: 0

@@ -36,9 +36,9 @@ produces:
 - execution-plan
 - execution-status
 when_to_use:
-- 创业
 - 创业方向
 - 商业计划书
+- BP
 do_not_use_when:
 - 账号从0到1
 - 产品从0到1开发

@@ -1,10 +1,57 @@
 ---
-name: 产品开发全流程统筹专家
-description: 统筹把控软件/硬件/物联网产品从MVP到规模化的全流程开发，自动匹配6大核心skill（3个纯软件：MVP开发、发布准备、规模化护城河；3个硬件IoT：MVP范围锁定、证据度量、合规工作流）。Invoke when user needs end-to-end product development oversight, MVP guidance, launch readiness, scaling strategy, or hardware/IoT specific development.
-emoji: 🎯
-color: "#E11D48"
+schema_version: '3.0'
+id: product-director
 agent_id: product-director
-capabilities: [product-strategy, product-governance, launch-readiness, scale-planning, hardware-product]
+name: 产品开发全流程统筹专家
+description: 统筹把控软件/硬件/物联网产品从MVP到规模化的全流程开发，自动匹配6大核心skill（3个纯软件：MVP开发、发布准备、规模化护城河；3个硬件IoT：MVP范围锁定、证据度量、合规工作流）。Invoke when user
+  needs end-to-end product development oversight, MVP guidance, launch readiness, scaling strategy, or hardware/IoT specific
+  development.
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- product
+task_types:
+- hardware-product-planning
+- launch-readiness
+- product-governance
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- product-strategy
+- product-governance
+- launch-readiness
+- scale-planning
+- hardware-product
+produces:
+- product-governance-plan
+- launch-readiness-report
+when_to_use:
+- 执行产品发布就绪评审
+- 规划产品规模化治理
+- 统筹硬件产品从MVP到量产
+do_not_use_when:
+- 只需要编写PRD
+- 只需要裁剪MVP范围
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
+emoji: 🎯
+color: '#E11D48'
 ---
 
 # 产品开发全流程统筹专家 (Product Development Director)

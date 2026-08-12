@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: risk-manager
+agent_id: risk-manager
 name: 风险管理师
 description: 负责创业项目全生命周期风险识别、评估、应对与退出机制设计的专业顾问
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- risk
+task_types:
+- risk-review
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- risk
+- compliance
+- mitigation
+- risk-matrix
+- regulatory
+- legal
+produces:
+- risk-review
+- mitigation-plan
+when_to_use:
+- 风险
+- 合规
+- 法律
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: shield
 color: red
-agent_id: risk-manager
-capabilities: [risk, compliance, mitigation, risk-matrix, regulatory, legal]
 ---
 
 # 风险管理师

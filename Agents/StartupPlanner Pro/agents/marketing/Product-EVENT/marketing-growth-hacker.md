@@ -1,10 +1,55 @@
 ---
+schema_version: '3.0'
+id: marketing-growth-hacker
+agent_id: marketing-growth-hacker
 name: 增长黑客
 description: 数据驱动的用户增长专家，擅长设计和执行低成本高回报的获客实验，用最小预算撬动最大增长。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- growth-marketing
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- growth
+- acquisition
+- funnel
+- virality
+- aarrr
+- experimentation
+- retention
+produces:
+- growth-plan
+- funnel-model
+when_to_use:
+- 增长
+- 获客
+- 漏斗
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🚀
 color: green
-agent_id: marketing-growth-hacker
-capabilities: [growth, acquisition, funnel, virality, aarrr, experimentation, retention]
 ---
 
 # 增长黑客

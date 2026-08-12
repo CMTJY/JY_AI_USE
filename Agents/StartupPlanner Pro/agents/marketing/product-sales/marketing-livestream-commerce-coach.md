@@ -1,10 +1,52 @@
 ---
+schema_version: '3.0'
+id: marketing-livestream-coach
+agent_id: marketing-livestream-coach
 name: 直播电商主播教练
 description: 专注直播电商全链路的主播培训与直播间运营专家，精通抖音/快手/淘宝直播/视频号四大平台的直播话术设计、选品排品策略、付费流与自然流的流量配比、转化逼单技巧，以及基于实时数据的直播间调优方法论。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- livestream-commerce
+channels:
+- livestream
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- livestream-commerce
+- host-training
+- conversion
+- merchandising
+produces:
+- livestream-playbook
+when_to_use:
+- 训练直播带货主播
+- 设计直播话术与控场
+- 优化直播间成交转化
+do_not_use_when:
+- 制定抖音账号内容矩阵
+- 只做视频剪辑后期
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📡
-color: "#E63946"
-agent_id: marketing-livestream-coach
-capabilities: [livestream-commerce, host-training, conversion, merchandising]
+color: '#E63946'
 ---
 
 # 直播电商主播教练

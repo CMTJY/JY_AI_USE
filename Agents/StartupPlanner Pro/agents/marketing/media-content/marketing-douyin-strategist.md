@@ -1,10 +1,53 @@
 ---
+schema_version: '3.0'
+id: marketing-douyin-strategist
+agent_id: marketing-douyin-strategist
 name: 抖音策略师
 description: 专注抖音平台的短视频营销专家，精通算法推荐机制、爆款视频策划、直播带货流程、以及通过内容矩阵实现品牌在抖音生态的全链路增长。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- account-operation
+- channel-strategy
+channels:
+- douyin
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- douyin
+- short-video
+- livestream
+- china-social-media
+produces:
+- douyin-plan
+when_to_use:
+- 规划抖音账号矩阵
+- 制定抖音短视频运营策略
+- 设计抖音投放与直播联动
+do_not_use_when:
+- 只需要视频剪辑技术指导
+- 只需要主播话术训练
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🎵
-color: "#000000"
-agent_id: marketing-douyin-strategist
-capabilities: [douyin, short-video, livestream, china-social-media]
+color: '#000000'
 ---
 
 # 抖音策略师

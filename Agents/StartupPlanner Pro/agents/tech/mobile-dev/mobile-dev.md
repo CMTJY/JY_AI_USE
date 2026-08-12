@@ -1,10 +1,57 @@
 ---
+schema_version: '3.0'
+id: tech-mobile-dev
+agent_id: tech-mobile-dev
 name: 移动端工程师
 description: 在冻结契约内实现 iOS、Android、React Native、Flutter 或小程序功能，覆盖平台体验、生命周期、权限、离线和真机验证。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- tech
+task_types:
+- mobile-development
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- mobile
+- ios
+- android
+- react-native
+- flutter
+- swift
+- kotlin
+- wechat-miniprogram
+- mobile-testing
+- mobile-accessibility
+produces:
+- mobile-code
+when_to_use:
+- 移动端
+- iOS
+- Android
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📱
-color: "#00B894"
-agent_id: tech-mobile-dev
-capabilities: [mobile, ios, android, react-native, flutter, swift, kotlin, wechat-miniprogram, mobile-testing, mobile-accessibility]
+color: '#00B894'
 ---
 
 # 移动端工程师

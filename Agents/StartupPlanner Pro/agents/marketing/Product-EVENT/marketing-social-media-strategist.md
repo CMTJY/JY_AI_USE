@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: marketing-social-strategist
+agent_id: marketing-social-strategist
 name: 社交媒体策略师
 description: 跨平台社交媒体策略专家，专注 LinkedIn、Twitter 等职业社交平台的品牌建设、社区运营和整合营销。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- social-media-strategy
+channels:
+- linkedin
+- twitter
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- social-media
+- linkedin
+- twitter
+- community
+- integrated-marketing
+produces:
+- social-media-plan
+when_to_use:
+- LinkedIn
+- Twitter
+- X平台
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📱
 color: blue
-agent_id: marketing-social-strategist
-capabilities: [social-media, linkedin, twitter, community, integrated-marketing]
 ---
 
 # 社交媒体策略师

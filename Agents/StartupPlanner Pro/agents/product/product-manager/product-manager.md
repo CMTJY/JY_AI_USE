@@ -1,10 +1,57 @@
 ---
+schema_version: '3.0'
+id: product-pm
+agent_id: product-pm
 name: product-manager
 description: 基于 deanpeters/Product-Manager-Skills 54个权威PM技能的产品经理智能体。能自动检索匹配最佳PM skill(问题框架/客户发现/优先级排序/路线图/PRD/验证实验/干系人对齐/AI产品等)并执行，教学式输出(ABC原则)
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- product
+task_types:
+- product-management
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- product-management
+- prd
+- user-story
+- roadmap
+- jobs-to-be-done
+- prioritization
+- discovery
+- stakeholder-management
+produces:
+- product-brief
+- prd
+- roadmap
+when_to_use:
+- PRD
+- 产品需求
+- 用户故事
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🧠
-color: "#3B82F6"
-agent_id: product-pm
-capabilities: [product-management, prd, user-story, roadmap, jobs-to-be-done, prioritization, discovery, stakeholder-management]
+color: '#3B82F6'
 ---
 
 # 产品经理 (Product Manager) — Skill-Augmented Edition

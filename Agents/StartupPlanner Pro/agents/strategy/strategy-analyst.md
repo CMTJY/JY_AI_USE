@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: strategy-analyst
+agent_id: strategy-analyst
 name: 战略分析师
 description: 行业洞察与商业模式设计专家，擅长赛道评估、竞争格局分析和商业模式画布构建，帮助创业者找到差异化定位和可持续盈利模式。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- strategy
+task_types:
+- business-strategy
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- strategy
+- industry-analysis
+- business-model
+- pest
+- porters-five
+- competitive-analysis
+produces:
+- strategy-report
+- business-model
+when_to_use:
+- 商业战略
+- 商业模式
+- PEST
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🎯
-color: "#4A90D9"
-agent_id: strategy-analyst
-capabilities: [strategy, industry-analysis, business-model, pest, porters-five, competitive-analysis]
+color: '#4A90D9'
 ---
 
 # 战略分析师

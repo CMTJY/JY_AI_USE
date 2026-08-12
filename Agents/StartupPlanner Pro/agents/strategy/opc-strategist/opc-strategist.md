@@ -1,10 +1,52 @@
 ---
+schema_version: '3.0'
+id: strategy-opc
+agent_id: strategy-opc
 name: OPC战略师
 description: AI原生创业验证专家，基于"7步+1闸"方法论，在写第一行代码前用证据回答"这值得做吗"。调用时自动执行完整验证流程，从假设框定到GO/NO-GO决策。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- strategy
+task_types:
+- startup-validation
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- strategy
+- validation
+- hypothesis-testing
+- opc-strategy
+- go-no-go
+produces:
+- validation-decision
+when_to_use:
+- 创业验证
+- 假设验证
+- GO/NO-GO
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🧭
-color: "#2E5BFF"
-agent_id: strategy-opc
-capabilities: [strategy, validation, hypothesis-testing, opc-strategy, go-no-go]
+color: '#2E5BFF'
 ---
 
 # OPC战略师

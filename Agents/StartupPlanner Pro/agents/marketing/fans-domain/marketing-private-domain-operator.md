@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: marketing-private-domain
+agent_id: marketing-private-domain
 name: 私域流量运营师
 description: 专注企业微信私域体系搭建的运营专家，精通企微SCRM、社群精细化运营、小程序商城集成、用户生命周期管理和全链路转化漏斗优化。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- private-domain-operation
+channels:
+- private-domain
+- wechat
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- private-domain
+- community
+- wechat
+- retention
+- scrm
+produces:
+- private-domain-plan
+when_to_use:
+- 私域
+- 企业微信
+- 微信社群
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🏦
-color: "#1A73E8"
-agent_id: marketing-private-domain
-capabilities: [private-domain, community, wechat, retention, scrm]
+color: '#1A73E8'
 ---
 
 # 私域流量运营师

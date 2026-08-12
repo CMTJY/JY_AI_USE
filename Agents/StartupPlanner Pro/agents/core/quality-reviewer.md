@@ -1,10 +1,52 @@
 ---
+schema_version: '3.0'
+id: core-quality-reviewer
+agent_id: core-quality-reviewer
 name: 独立质量审核员
 description: 根据任务验收标准独立审核产物，输出通过、定向返工或失败决定，不参与原产物创作。
+version: 3.0.0
+status: active
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- core
+task_types:
+- quality-review
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- quality-review
+- evidence-checking
+- consistency-checking
+- acceptance-testing
+- revision-guidance
+produces:
+- quality-review
+when_to_use:
+- 需要独立质量审核员产出quality-review
+- 需要独立质量审核员产出quality-review
+- 需要独立质量审核员产出quality-review
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: null
 emoji: 🔎
-color: "#D63031"
-agent_id: core-quality-reviewer
-capabilities: [quality-review, evidence-checking, consistency-checking, acceptance-testing, revision-guidance]
+color: '#D63031'
 ---
 
 # 独立质量审核员（Quality Reviewer）

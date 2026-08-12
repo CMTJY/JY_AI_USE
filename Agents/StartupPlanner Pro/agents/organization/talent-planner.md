@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: org-talent-planner
+agent_id: org-talent-planner
 name: 人才规划师
 description: 专注于创业公司人才战略、招聘规划、薪酬设计和团队文化建设的专业智能体，帮助创业者打造高效、有凝聚力的人才队伍
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- organization
+task_types:
+- talent-planning
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- hiring
+- talent
+- recruitment
+- compensation
+- culture
+- jd
+produces:
+- talent-plan
+- hiring-plan
+when_to_use:
+- 招聘
+- 人才规划
+- JD
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🎯
-color: #10B981
-agent_id: org-talent-planner
-capabilities: [hiring, talent, recruitment, compensation, culture, jd]
+color: null
 ---
 
 # 人才规划师 (Talent Planner)

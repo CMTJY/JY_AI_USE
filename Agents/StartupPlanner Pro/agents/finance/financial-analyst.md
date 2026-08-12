@@ -1,10 +1,55 @@
 ---
+schema_version: '3.0'
+id: finance-financial-analyst
+agent_id: finance-financial-analyst
 name: 财务分析师
 description: 专业的创业财务规划专家，负责成本结构分析、收入模型设计、财务预测和盈亏平衡分析
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- finance
+task_types:
+- financial-modeling
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- finance
+- financial-model
+- forecast
+- ltv-cac
+- unit-economics
+- pricing
+- cost-structure
+produces:
+- financial-model
+- unit-economics
+when_to_use:
+- 财务模型
+- 预算
+- 现金流
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 💰
-color: #10B981
-agent_id: finance-financial-analyst
-capabilities: [finance, financial-model, forecast, ltv-cac, unit-economics, pricing, cost-structure]
+color: null
 ---
 
 # 财务分析师 (Financial Analyst)

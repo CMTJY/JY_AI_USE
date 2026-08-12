@@ -1,0 +1,1807 @@
+schema_version: '3.0'
+generated_from: agents/** role frontmatter
+agents:
+- id: core-aggregator
+  name: 结果整合器
+  version: 3.0.0
+  status: active
+  visibility: internal
+  portable: false
+  domains:
+  - core
+  task_types:
+  - synthesis
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - synthesis
+  - formatting
+  - deduplication
+  - traceability
+  produces:
+  - integrated-deliverable
+  when_to_use:
+  - 需要结果整合器产出integrated-deliverable
+  - 需要结果整合器产出integrated-deliverable
+  - 需要结果整合器产出integrated-deliverable
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: core/aggregator.md
+- id: core-orchestrator
+  name: 通用主控
+  version: 3.0.0
+  status: active
+  visibility: internal
+  portable: false
+  domains:
+  - core
+  task_types:
+  - direction-discovery
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - orchestration
+  - coordination
+  - state-machine
+  - retry-control
+  - handoff
+  - skill-routing
+  - discovery-facilitation
+  - ambiguity-detection
+  produces:
+  - direction-brief
+  - execution-plan
+  - execution-status
+  when_to_use:
+  - 创业
+  - 创业方向
+  - 商业计划书
+  do_not_use_when:
+  - 账号从0到1
+  - 产品从0到1开发
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: core/orchestrator/orchestrator.md
+- id: core-quality-reviewer
+  name: 独立质量审核员
+  version: 3.0.0
+  status: active
+  visibility: internal
+  portable: false
+  domains:
+  - core
+  task_types:
+  - quality-review
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - quality-review
+  - evidence-checking
+  - consistency-checking
+  - acceptance-testing
+  - revision-guidance
+  produces:
+  - quality-review
+  when_to_use:
+  - 需要独立质量审核员产出quality-review
+  - 需要独立质量审核员产出quality-review
+  - 需要独立质量审核员产出quality-review
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: null
+  file: core/quality-reviewer.md
+- id: core-router
+  name: 能力路由器
+  version: 3.0.0
+  status: active
+  visibility: internal
+  portable: false
+  domains:
+  - core
+  task_types:
+  - routing
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - routing
+  - capability-matching
+  - constraint-filtering
+  - fallback-selection
+  produces:
+  - route-decision
+  when_to_use:
+  - 需要能力路由器产出route-decision
+  - 需要能力路由器产出route-decision
+  - 需要能力路由器产出route-decision
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: core/router.md
+- id: core-task-planner
+  name: 任务规划器
+  version: 3.0.0
+  status: active
+  visibility: internal
+  portable: false
+  domains:
+  - core
+  task_types:
+  - decomposition
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - decomposition
+  - dependency-analysis
+  - artifact-planning
+  - acceptance-design
+  - mvp-scoping
+  produces:
+  - workflow-dag
+  when_to_use:
+  - 需要任务规划器产出workflow-dag
+  - 需要任务规划器产出workflow-dag
+  - 需要任务规划器产出workflow-dag
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: core/task-planner.md
+- id: director-bp
+  name: BP总编
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - business-plan
+  task_types:
+  - business-plan-writing
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - bp-writing
+  - document-integration
+  - narrative-consistency
+  - investor-communication
+  produces:
+  - business-plan
+  when_to_use:
+  - 商业计划书
+  - BP
+  - 投资人版本
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: _director/director-bp.md
+- id: director-startup
+  name: 创业总指挥
+  version: 3.0.0
+  status: deprecated
+  visibility: internal
+  portable: false
+  domains:
+  - _director
+  task_types:
+  - legacy-orchestration
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - legacy-orchestration
+  produces: []
+  when_to_use:
+  - 需要创业总指挥（兼容入口）产出专业交付物
+  - 需要创业总指挥（兼容入口）产出专业交付物
+  - 需要创业总指挥（兼容入口）产出专业交付物
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: null
+  file: _director/director-startup.md
+- id: finance-financial-analyst
+  name: 财务分析师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - finance
+  task_types:
+  - financial-modeling
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - finance
+  - financial-model
+  - forecast
+  - ltv-cac
+  - unit-economics
+  - pricing
+  - cost-structure
+  produces:
+  - financial-model
+  - unit-economics
+  when_to_use:
+  - 财务模型
+  - 预算
+  - 现金流
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: finance/financial-analyst.md
+- id: finance-fundraising
+  name: 融资顾问
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - finance
+  task_types:
+  - fundraising
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - fundraising
+  - valuation
+  - investor-relations
+  - pitch-deck
+  - use-of-funds
+  produces:
+  - fundraising-plan
+  - valuation-analysis
+  when_to_use:
+  - 融资
+  - 估值
+  - 投资人
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: finance/fundraising-advisor.md
+- id: marketing-campaign-planner
+  name: 产品曝光活动策划
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - campaign-planning
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - campaign
+  - launch-campaign
+  - event-planning
+  - promotion
+  produces:
+  - campaign-plan
+  when_to_use:
+  - 营销活动
+  - campaign
+  - 发布活动
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/Product-EVENT/marketing-product-campaign-planner.md
+- id: marketing-content-creator
+  name: 内容创作者
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - content-creation
+  - content-strategy
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - content
+  - copywriting
+  - brand
+  - writing
+  - content-strategy
+  produces:
+  - content-plan
+  - copy
+  when_to_use:
+  - 制定跨渠道内容策略
+  - 创作通用品牌文案
+  - 编排内容日历
+  do_not_use_when:
+  - 只需要小红书原生笔记
+  - 只需要抖音平台运营
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/media-content/marketing-content-creator.md
+- id: marketing-cross-border-ecommerce
+  name: 跨境电商运营专家
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - cross-border-ecommerce
+  channels:
+  - amazon
+  - lazada
+  - shopee
+  - shopify
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - cross-border-ecommerce
+  - amazon
+  - shopee
+  - lazada
+  - shopify
+  - localization
+  produces:
+  - cross-border-plan
+  when_to_use:
+  - 跨境电商
+  - Amazon
+  - Shopify
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/product-sales/marketing-cross-border-ecommerce.md
+- id: marketing-douyin-strategist
+  name: 抖音策略师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - account-operation
+  - channel-strategy
+  channels:
+  - douyin
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - douyin
+  - short-video
+  - livestream
+  - china-social-media
+  produces:
+  - douyin-plan
+  when_to_use:
+  - 规划抖音账号矩阵
+  - 制定抖音短视频运营策略
+  - 设计抖音投放与直播联动
+  do_not_use_when:
+  - 只需要视频剪辑技术指导
+  - 只需要主播话术训练
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/media-content/marketing-douyin-strategist.md
+- id: marketing-ecommerce
+  name: 电商运营师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - ecommerce-operation
+  channels:
+  - jd
+  - pinduoduo
+  - taobao
+  - tmall
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - ecommerce
+  - taobao
+  - tmall
+  - jd
+  - pinduoduo
+  - livestream
+  produces:
+  - ecommerce-plan
+  when_to_use:
+  - 淘宝
+  - 天猫
+  - 京东
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/product-sales/marketing-ecommerce-operator.md
+- id: marketing-growth-hacker
+  name: 增长黑客
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - growth-marketing
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - growth
+  - acquisition
+  - funnel
+  - virality
+  - aarrr
+  - experimentation
+  - retention
+  produces:
+  - growth-plan
+  - funnel-model
+  when_to_use:
+  - 增长
+  - 获客
+  - 漏斗
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/Product-EVENT/marketing-growth-hacker.md
+- id: marketing-livestream-coach
+  name: 直播电商主播教练
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - livestream-commerce
+  channels:
+  - livestream
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - livestream-commerce
+  - host-training
+  - conversion
+  - merchandising
+  produces:
+  - livestream-playbook
+  when_to_use:
+  - 训练直播带货主播
+  - 设计直播话术与控场
+  - 优化直播间成交转化
+  do_not_use_when:
+  - 制定抖音账号内容矩阵
+  - 只做视频剪辑后期
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/product-sales/marketing-livestream-commerce-coach.md
+- id: marketing-private-domain
+  name: 私域流量运营师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - private-domain-operation
+  channels:
+  - private-domain
+  - wechat
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - private-domain
+  - community
+  - wechat
+  - retention
+  - scrm
+  produces:
+  - private-domain-plan
+  when_to_use:
+  - 私域
+  - 企业微信
+  - 微信社群
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/fans-domain/marketing-private-domain-operator.md
+- id: marketing-social-strategist
+  name: 社交媒体策略师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - social-media-strategy
+  channels:
+  - linkedin
+  - twitter
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - social-media
+  - linkedin
+  - twitter
+  - community
+  - integrated-marketing
+  produces:
+  - social-media-plan
+  when_to_use:
+  - LinkedIn
+  - Twitter
+  - X平台
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/Product-EVENT/marketing-social-media-strategist.md
+- id: marketing-video-editing-coach
+  name: 短视频剪辑指导师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - video-editing
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - video-editing
+  - capcut
+  - premiere
+  - davinci
+  - final-cut
+  - post-production
+  produces:
+  - editing-plan
+  - production-guide
+  when_to_use:
+  - 指导剪映或CapCut剪辑
+  - 设计视频后期制作流程
+  - 优化导出调色与音频
+  do_not_use_when:
+  - 制定抖音账号增长策略
+  - 训练直播带货主播
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/media-content/marketing-short-video-editing-coach.md
+- id: marketing-xiaohongshu-operator
+  name: 小红书运营专家
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - account-operation
+  - channel-strategy
+  channels:
+  - xiaohongshu
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - xiaohongshu
+  - social-media
+  - content-operations
+  - influencer-marketing
+  produces:
+  - xiaohongshu-plan
+  when_to_use:
+  - 规划小红书账号从0到1运营
+  - 制定小红书达人投放方案
+  - 复盘小红书账号与内容矩阵
+  do_not_use_when:
+  - 只创作一篇具体小红书笔记
+  - 任务主要是抖音账号运营
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/media-content/marketing-xiaohongshu-operator.md
+- id: marketing-xiaohongshu-specialist
+  name: 小红书专家
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - marketing
+  task_types:
+  - content-creation
+  channels:
+  - xiaohongshu
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - xiaohongshu
+  - lifestyle-content
+  - trend-analysis
+  - community-engagement
+  produces:
+  - xiaohongshu-content
+  when_to_use:
+  - 创作小红书种草笔记
+  - 设计小红书标题与封面
+  - 规划小红书具体选题
+  do_not_use_when:
+  - 需要完整账号运营体系
+  - 需要达人投放与预算管理
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: marketing/media-content/marketing-xiaohongshu-specialist.md
+- id: org-architect
+  name: 组织架构师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - organization
+  task_types:
+  - organization-design
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - org-design
+  - equity
+  - governance
+  - structure
+  - role-definition
+  produces:
+  - organization-plan
+  - equity-plan
+  when_to_use:
+  - 组织架构
+  - 股权设计
+  - 公司治理
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: organization/org-architect.md
+- id: org-talent-planner
+  name: 人才规划师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - organization
+  task_types:
+  - talent-planning
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - hiring
+  - talent
+  - recruitment
+  - compensation
+  - culture
+  - jd
+  produces:
+  - talent-plan
+  - hiring-plan
+  when_to_use:
+  - 招聘
+  - 人才规划
+  - JD
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: organization/talent-planner.md
+- id: product-director
+  name: 产品开发全流程统筹专家
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - product
+  task_types:
+  - hardware-product-planning
+  - launch-readiness
+  - product-governance
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - product-strategy
+  - product-governance
+  - launch-readiness
+  - scale-planning
+  - hardware-product
+  produces:
+  - product-governance-plan
+  - launch-readiness-report
+  when_to_use:
+  - 执行产品发布就绪评审
+  - 规划产品规模化治理
+  - 统筹硬件产品从MVP到量产
+  do_not_use_when:
+  - 只需要编写PRD
+  - 只需要裁剪MVP范围
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: product/product-director/product-director.md
+- id: product-mvp-designer
+  name: MVP设计师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - product
+  task_types:
+  - mvp-design
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - mvp
+  - lean
+  - prototype
+  - experiment-design
+  - scope-control
+  produces:
+  - mvp-scope
+  - validation-plan
+  when_to_use:
+  - MVP
+  - 最小可行产品
+  - 原型
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: product/mvp-designer.md
+- id: product-pm
+  name: product-manager
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - product
+  task_types:
+  - product-management
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - product-management
+  - prd
+  - user-story
+  - roadmap
+  - jobs-to-be-done
+  - prioritization
+  - discovery
+  - stakeholder-management
+  produces:
+  - product-brief
+  - prd
+  - roadmap
+  when_to_use:
+  - PRD
+  - 产品需求
+  - 用户故事
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: product/product-manager/product-manager.md
+- id: research-analyst
+  name: 通用调研分析师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - research
+  task_types:
+  - general-research
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - research
+  - analysis
+  - report
+  - data-analysis
+  - fact-checking
+  - synthesis
+  produces:
+  - research-report
+  - evidence-pack
+  when_to_use:
+  - 调研
+  - 资料研究
+  - 事实核查
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: research/analyst.md
+- id: research-competitor
+  name: 竞品分析师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - research
+  task_types:
+  - competitor-analysis
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - competitor-analysis
+  - benchmarking
+  - swot
+  - differentiation
+  - feature-comparison
+  produces:
+  - competitor-report
+  when_to_use:
+  - 竞品
+  - 对标
+  - 竞争对手
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: research/competitor.md
+- id: research-market
+  name: 市场研究员
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - research
+  task_types:
+  - market-research
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - market-research
+  - user-insight
+  - market-sizing
+  - tam-sam-som
+  - segmentation
+  - persona
+  produces:
+  - market-report
+  - user-insight
+  when_to_use:
+  - 市场规模
+  - TAM
+  - SAM
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: research/market.md
+- id: risk-manager
+  name: 风险管理师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - risk
+  task_types:
+  - risk-review
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - risk
+  - compliance
+  - mitigation
+  - risk-matrix
+  - regulatory
+  - legal
+  produces:
+  - risk-review
+  - mitigation-plan
+  when_to_use:
+  - 风险
+  - 合规
+  - 法律
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: risk/risk-manager.md
+- id: strategy-analyst
+  name: 战略分析师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - strategy
+  task_types:
+  - business-strategy
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - strategy
+  - industry-analysis
+  - business-model
+  - pest
+  - porters-five
+  - competitive-analysis
+  produces:
+  - strategy-report
+  - business-model
+  when_to_use:
+  - 商业战略
+  - 商业模式
+  - PEST
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: strategy/strategy-analyst.md
+- id: strategy-market-researcher
+  name: 市场调研员
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - strategy
+  task_types:
+  - user-validation
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - user-research
+  - interview-design
+  - demand-validation
+  - persona
+  - market-sizing
+  produces:
+  - user-research-plan
+  - demand-evidence
+  when_to_use:
+  - 用户访谈
+  - 需求验证
+  - 用户研究
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: strategy/market-researcher.md
+- id: strategy-opc
+  name: OPC战略师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - strategy
+  task_types:
+  - startup-validation
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - strategy
+  - validation
+  - hypothesis-testing
+  - opc-strategy
+  - go-no-go
+  produces:
+  - validation-decision
+  when_to_use:
+  - 创业验证
+  - 假设验证
+  - GO/NO-GO
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: strategy/opc-strategist/opc-strategist.md
+- id: tech-architect
+  name: 技术负责人兼架构师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - architecture
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - architecture
+  - tech-stack
+  - system-design
+  - technical-planning
+  - integration-design
+  - scalability
+  - database-design
+  - api-contract
+  produces:
+  - technical-architecture
+  - technical-plan
+  - api-contract
+  - feasibility-report
+  when_to_use:
+  - 架构
+  - 技术选型
+  - 系统设计
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/architect/architect.md
+- id: tech-backend-dev
+  name: 后端工程师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - backend-development
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - backend
+  - api
+  - database
+  - server
+  - python
+  - node
+  - go
+  - java
+  - rest
+  - graphql
+  - backend-testing
+  - observability
+  produces:
+  - backend-code
+  - api-contract
+  - database-schema
+  when_to_use:
+  - 后端
+  - 服务端
+  - API实现
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/backend-dev/backend-dev.md
+- id: tech-code-reviewer
+  name: 独立代码审查员
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - code-review
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - code-review
+  - spec-compliance-review
+  - security-review
+  - performance-review
+  - maintainability-review
+  - test-quality-review
+  produces:
+  - code-review
+  when_to_use:
+  - 代码审查
+  - code review
+  - 安全审查
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/code-reviewer/code-reviewer.md
+- id: tech-devops
+  name: 平台与可靠性工程师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - deployment
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - devops
+  - ci-cd
+  - deployment
+  - monitoring
+  - docker
+  - k8s
+  - linux
+  - nginx
+  - observability
+  - reliability
+  - rollback
+  produces:
+  - deployment-package
+  - operations-runbook
+  when_to_use:
+  - 部署
+  - 上线
+  - CI/CD
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/devops/devops.md
+- id: tech-frontend-dev
+  name: 前端工程师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - frontend-development
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - frontend
+  - ui
+  - react
+  - vue
+  - css
+  - html
+  - javascript
+  - typescript
+  - responsive
+  - accessibility
+  - frontend-testing
+  - animation
+  produces:
+  - frontend-code
+  - ui-implementation
+  when_to_use:
+  - 前端
+  - 页面
+  - Web界面
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/frontend-dev/frontend-dev.md
+- id: tech-mobile-dev
+  name: 移动端工程师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - mobile-development
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - mobile
+  - ios
+  - android
+  - react-native
+  - flutter
+  - swift
+  - kotlin
+  - wechat-miniprogram
+  - mobile-testing
+  - mobile-accessibility
+  produces:
+  - mobile-code
+  when_to_use:
+  - 移动端
+  - iOS
+  - Android
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/mobile-dev/mobile-dev.md
+- id: tech-qa
+  name: 质量与测试工程师
+  version: 3.0.0
+  status: active
+  visibility: specialist
+  portable: true
+  domains:
+  - tech
+  task_types:
+  - quality-assurance
+  channels: []
+  lifecycle_stages:
+  - discovery
+  - validation
+  - launch
+  - growth
+  - optimization
+  - scale
+  - release
+  capabilities:
+  - testing
+  - qa
+  - test-strategy
+  - automation
+  - performance-testing
+  - e2e-testing
+  - integration-testing
+  - acceptance-testing
+  produces:
+  - test-plan
+  - test-report
+  when_to_use:
+  - 测试
+  - QA
+  - 自动化测试
+  do_not_use_when:
+  - 任务属于其他明确专业领域
+  - 只需要主控协调而不需要本角色专业产物
+  required_inputs:
+  - objective
+  optional_inputs:
+  - constraints
+  - context
+  - available_evidence
+  handoff_targets: []
+  reviewer: core-quality-reviewer
+  file: tech/qa/qa.md

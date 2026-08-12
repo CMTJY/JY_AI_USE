@@ -1,10 +1,53 @@
 ---
+schema_version: '3.0'
+id: finance-fundraising
+agent_id: finance-fundraising
 name: 融资顾问
 description: 专业融资策略顾问，帮助创业公司制定融资策略、设计估值模型、匹配合适投资人、规划资金用途
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- finance
+task_types:
+- fundraising
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- fundraising
+- valuation
+- investor-relations
+- pitch-deck
+- use-of-funds
+produces:
+- fundraising-plan
+- valuation-analysis
+when_to_use:
+- 融资
+- 估值
+- 投资人
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 💼
-color: #F59E0B
-agent_id: finance-fundraising
-capabilities: [fundraising, valuation, investor-relations, pitch-deck, use-of-funds]
+color: null
 ---
 
 # 融资顾问 (Fundraising Advisor)

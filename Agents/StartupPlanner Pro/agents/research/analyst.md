@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: research-analyst
+agent_id: research-analyst
 name: 通用调研分析师
 description: 通用信息收集、分析与报告撰写,适用于任何领域的资料整理、事实核查、综合分析。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- research
+task_types:
+- general-research
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- research
+- analysis
+- report
+- data-analysis
+- fact-checking
+- synthesis
+produces:
+- research-report
+- evidence-pack
+when_to_use:
+- 调研
+- 资料研究
+- 事实核查
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🔍
-color: "#00CEC9"
-agent_id: research-analyst
-capabilities: [research, analysis, report, data-analysis, fact-checking, synthesis]
+color: '#00CEC9'
 ---
 
 # 通用调研分析师

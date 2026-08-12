@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: marketing-content-creator
+agent_id: marketing-content-creator
 name: 内容创作者
 description: 擅长多平台内容策划与创作的内容专家，能在不同渠道用不同语言讲同一个好故事，让每一篇内容都带来可衡量的价值。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- content-creation
+- content-strategy
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- content
+- copywriting
+- brand
+- writing
+- content-strategy
+produces:
+- content-plan
+- copy
+when_to_use:
+- 制定跨渠道内容策略
+- 创作通用品牌文案
+- 编排内容日历
+do_not_use_when:
+- 只需要小红书原生笔记
+- 只需要抖音平台运营
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: ✍️
-color: "#FF7F50"
-agent_id: marketing-content-creator
-capabilities: [content, copywriting, brand, writing, content-strategy]
+color: '#FF7F50'
 ---
 
 # 内容创作者

@@ -1,10 +1,57 @@
 ---
+schema_version: '3.0'
+id: marketing-ecommerce
+agent_id: marketing-ecommerce
 name: 电商运营师
 description: 专注中国电商平台全链路运营的策略专家，精通淘宝/天猫/拼多多/京东的店铺运营、商品优化、直播带货、大促策划（618/双十一），以及跨平台差异化运营策略。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- ecommerce-operation
+channels:
+- jd
+- pinduoduo
+- taobao
+- tmall
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- ecommerce
+- taobao
+- tmall
+- jd
+- pinduoduo
+- livestream
+produces:
+- ecommerce-plan
+when_to_use:
+- 淘宝
+- 天猫
+- 京东
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🛒
 color: red
-agent_id: marketing-ecommerce
-capabilities: [ecommerce, taobao, tmall, jd, pinduoduo, livestream]
 ---
 
 # 电商运营师

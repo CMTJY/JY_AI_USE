@@ -1,0 +1,24 @@
+schema_version: "3.0"
+agents:
+  marketing-xiaohongshu-operator:
+    when_to_use: [规划小红书账号从0到1运营, 制定小红书达人投放方案, 复盘小红书账号与内容矩阵]
+    do_not_use_when: [只创作一篇具体小红书笔记, 任务主要是抖音账号运营]
+  marketing-xiaohongshu-specialist:
+    when_to_use: [创作小红书种草笔记, 设计小红书标题与封面, 规划小红书具体选题]
+    do_not_use_when: [需要完整账号运营体系, 需要达人投放与预算管理]
+  marketing-content-creator:
+    when_to_use: [制定跨渠道内容策略, 创作通用品牌文案, 编排内容日历]
+    do_not_use_when: [只需要小红书原生笔记, 只需要抖音平台运营]
+  marketing-douyin-strategist:
+    when_to_use: [规划抖音账号矩阵, 制定抖音短视频运营策略, 设计抖音投放与直播联动]
+    do_not_use_when: [只需要视频剪辑技术指导, 只需要主播话术训练]
+  marketing-video-editing-coach:
+    when_to_use: [指导剪映或CapCut剪辑, 设计视频后期制作流程, 优化导出调色与音频]
+    do_not_use_when: [制定抖音账号增长策略, 训练直播带货主播]
+  marketing-livestream-coach:
+    when_to_use: [训练直播带货主播, 设计直播话术与控场, 优化直播间成交转化]
+    do_not_use_when: [制定抖音账号内容矩阵, 只做视频剪辑后期]
+  product-director:
+    when_to_use: [执行产品发布就绪评审, 规划产品规模化治理, 统筹硬件产品从MVP到量产]
+    do_not_use_when: [只需要编写PRD, 只需要裁剪MVP范围]
+

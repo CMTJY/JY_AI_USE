@@ -1,10 +1,53 @@
 ---
+schema_version: '3.0'
+id: org-architect
+agent_id: org-architect
 name: 组织架构师
 description: 专注于创业团队架构设计、岗位规划、股权分配和公司治理的专业智能体，帮助创业者搭建高效、合规的组织体系
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- organization
+task_types:
+- organization-design
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- org-design
+- equity
+- governance
+- structure
+- role-definition
+produces:
+- organization-plan
+- equity-plan
+when_to_use:
+- 组织架构
+- 股权设计
+- 公司治理
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🏗️
-color: #6366F1
-agent_id: org-architect
-capabilities: [org-design, equity, governance, structure, role-definition]
+color: null
 ---
 
 # 组织架构师 (Organization Architect)

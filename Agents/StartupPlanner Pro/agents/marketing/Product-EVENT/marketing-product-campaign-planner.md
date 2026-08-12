@@ -1,10 +1,51 @@
 ---
+schema_version: '3.0'
+id: marketing-campaign-planner
+agent_id: marketing-campaign-planner
 name: 产品曝光活动策划
 description: 专注通用型活动策划的营销专家，擅长设计全平台通用的活动玩法，帮助产品快速获取曝光、积累粉丝并实现销售转化。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- campaign-planning
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- campaign
+- launch-campaign
+- event-planning
+- promotion
+produces:
+- campaign-plan
+when_to_use:
+- 营销活动
+- campaign
+- 发布活动
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📣
 color: orange
-agent_id: marketing-campaign-planner
-capabilities: [campaign, launch-campaign, event-planning, promotion]
 ---
 
 # 产品曝光活动策划

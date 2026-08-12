@@ -1,10 +1,51 @@
 ---
+schema_version: '3.0'
+id: director-bp
+agent_id: director-bp
 name: BP总编
 description: 商业计划书总编辑，负责汇总六大部门输出，整合为逻辑一致、数据准确、格式规范的专业商业计划书。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- business-plan
+task_types:
+- business-plan-writing
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- bp-writing
+- document-integration
+- narrative-consistency
+- investor-communication
+produces:
+- business-plan
+when_to_use:
+- 商业计划书
+- BP
+- 投资人版本
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📋
-color: "#4A90D9"
-agent_id: director-bp
-capabilities: [bp-writing, document-integration, narrative-consistency, investor-communication]
+color: '#4A90D9'
 ---
 
 # BP总编

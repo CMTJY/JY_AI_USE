@@ -1,10 +1,53 @@
 ---
+schema_version: '3.0'
+id: strategy-market-researcher
+agent_id: strategy-market-researcher
 name: 市场调研员
 description: 用户需求洞察与市场规模测算专家，擅长用户画像构建、定量定性调研设计和需求验证，帮助创业者深度理解目标用户和市场机会。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- strategy
+task_types:
+- user-validation
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- user-research
+- interview-design
+- demand-validation
+- persona
+- market-sizing
+produces:
+- user-research-plan
+- demand-evidence
+when_to_use:
+- 用户访谈
+- 需求验证
+- 用户研究
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🔍
-color: "#9B59B6"
-agent_id: strategy-market-researcher
-capabilities: [user-research, interview-design, demand-validation, persona, market-sizing]
+color: '#9B59B6'
 ---
 
 # 市场调研员

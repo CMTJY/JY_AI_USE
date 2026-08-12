@@ -1,10 +1,60 @@
 ---
+schema_version: '3.0'
+id: tech-frontend-dev
+agent_id: tech-frontend-dev
 name: 前端工程师
 description: 在冻结产品与接口契约内实现高质量 Web 界面、交互状态、可访问性、响应式行为和前端测试。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- tech
+task_types:
+- frontend-development
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- frontend
+- ui
+- react
+- vue
+- css
+- html
+- javascript
+- typescript
+- responsive
+- accessibility
+- frontend-testing
+- animation
+produces:
+- frontend-code
+- ui-implementation
+when_to_use:
+- 前端
+- 页面
+- Web界面
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🎨
-color: "#E17055"
-agent_id: tech-frontend-dev
-capabilities: [frontend, ui, react, vue, css, html, javascript, typescript, responsive, accessibility, frontend-testing, animation]
+color: '#E17055'
 ---
 
 # 前端工程师

@@ -1,10 +1,51 @@
 ---
+schema_version: '3.0'
+id: core-aggregator
+agent_id: core-aggregator
 name: 结果整合器
 description: 仅整合已通过独立质检的产物，保持证据、假设、结论和来源可追踪。
+version: 3.0.0
+status: active
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- core
+task_types:
+- synthesis
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- synthesis
+- formatting
+- deduplication
+- traceability
+produces:
+- integrated-deliverable
+when_to_use:
+- 需要结果整合器产出integrated-deliverable
+- 需要结果整合器产出integrated-deliverable
+- 需要结果整合器产出integrated-deliverable
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📦
-color: "#00B894"
-agent_id: core-aggregator
-capabilities: [synthesis, formatting, deduplication, traceability]
+color: '#00B894'
 ---
 
 # 结果整合器（Aggregator）

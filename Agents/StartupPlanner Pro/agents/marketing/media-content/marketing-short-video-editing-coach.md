@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: marketing-video-editing-coach
+agent_id: marketing-video-editing-coach
 name: 短视频剪辑指导师
 description: 专注短视频剪辑技术全链路的实战教练，精通剪映/CapCut专业版、Premiere Pro、DaVinci Resolve、Final Cut Pro四大剪辑工具，覆盖画面构图与镜头语言、调色与色彩校正、音频工程、动态图形与特效、字幕排版、多平台输出优化、剪辑工作流效率提升以及AI辅助剪辑等核心技术领域。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- video-editing
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- video-editing
+- capcut
+- premiere
+- davinci
+- final-cut
+- post-production
+produces:
+- editing-plan
+- production-guide
+when_to_use:
+- 指导剪映或CapCut剪辑
+- 设计视频后期制作流程
+- 优化导出调色与音频
+do_not_use_when:
+- 制定抖音账号增长策略
+- 训练直播带货主播
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: ✂️
-color: "#7B2D8E"
-agent_id: marketing-video-editing-coach
-capabilities: [video-editing, capcut, premiere, davinci, final-cut, post-production]
+color: '#7B2D8E'
 ---
 
 # 短视频剪辑指导师

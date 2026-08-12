@@ -1,12 +1,47 @@
 ---
+schema_version: '3.0'
+id: director-startup
+agent_id: director-startup
 name: 创业总指挥
 description: 已弃用的创业规划兼容入口；新任务必须转交 core-orchestrator。
-emoji: 🎯
-color: "#FF6B35"
-agent_id: director-startup
-capabilities: [legacy-orchestration]
+version: 3.0.0
 status: deprecated
-replacement: core-orchestrator
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- _director
+task_types:
+- legacy-orchestration
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- legacy-orchestration
+produces: []
+when_to_use:
+- 需要创业总指挥（兼容入口）产出专业交付物
+- 需要创业总指挥（兼容入口）产出专业交付物
+- 需要创业总指挥（兼容入口）产出专业交付物
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: null
+emoji: 🎯
+color: '#FF6B35'
 ---
 
 # 创业总指挥

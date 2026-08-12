@@ -1,10 +1,57 @@
 ---
+schema_version: '3.0'
+id: core-orchestrator
+agent_id: core-orchestrator
 name: 通用主控
 description: 维护工作流状态、依赖调度、技能选择、真实委派、返工和交付控制，不执行专业领域任务。
+version: 3.0.0
+status: active
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- core
+task_types:
+- direction-discovery
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- orchestration
+- coordination
+- state-machine
+- retry-control
+- handoff
+- skill-routing
+- discovery-facilitation
+- ambiguity-detection
+produces:
+- direction-brief
+- execution-plan
+- execution-status
+when_to_use:
+- 创业
+- 创业方向
+- 商业计划书
+do_not_use_when:
+- 账号从0到1
+- 产品从0到1开发
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🎼
-color: "#2D3436"
-agent_id: core-orchestrator
-capabilities: [orchestration, coordination, state-machine, retry-control, handoff, skill-routing, discovery-facilitation, ambiguity-detection]
+color: '#2D3436'
 ---
 
 # 通用主控（Orchestrator）

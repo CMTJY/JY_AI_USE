@@ -1,10 +1,53 @@
 ---
+schema_version: '3.0'
+id: tech-code-reviewer
+agent_id: tech-code-reviewer
 name: 独立代码审查员
 description: 独立执行规格符合性和代码质量两阶段审查，检查正确性、安全、性能、兼容、可维护性和测试质量，不参与原实现。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- tech
+task_types:
+- code-review
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- code-review
+- spec-compliance-review
+- security-review
+- performance-review
+- maintainability-review
+- test-quality-review
+produces:
+- code-review
+when_to_use:
+- 代码审查
+- code review
+- 安全审查
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🔬
-color: "#D63031"
-agent_id: tech-code-reviewer
-capabilities: [code-review, spec-compliance-review, security-review, performance-review, maintainability-review, test-quality-review]
+color: '#D63031'
 ---
 
 # 独立代码审查员

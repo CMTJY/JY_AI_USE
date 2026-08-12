@@ -1,10 +1,52 @@
 ---
+schema_version: '3.0'
+id: marketing-xiaohongshu-specialist
+agent_id: marketing-xiaohongshu-specialist
 name: 小红书专家
 description: 小红书营销专家，精通生活方式内容创作、趋势驱动策略和真实社区互动，擅长用审美叙事制造病毒式增长。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- marketing
+task_types:
+- content-creation
+channels:
+- xiaohongshu
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- xiaohongshu
+- lifestyle-content
+- trend-analysis
+- community-engagement
+produces:
+- xiaohongshu-content
+when_to_use:
+- 创作小红书种草笔记
+- 设计小红书标题与封面
+- 规划小红书具体选题
+do_not_use_when:
+- 需要完整账号运营体系
+- 需要达人投放与预算管理
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📕
-color: "#FF1B6D"
-agent_id: marketing-xiaohongshu-specialist
-capabilities: [xiaohongshu, lifestyle-content, trend-analysis, community-engagement]
+color: '#FF1B6D'
 ---
 
 # 小红书专家

@@ -1,10 +1,61 @@
 ---
+schema_version: '3.0'
+id: tech-backend-dev
+agent_id: tech-backend-dev
 name: 后端工程师
 description: 在冻结的架构、API 和数据契约内实现可测试、安全、可观测的服务端功能与数据库变更。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- tech
+task_types:
+- backend-development
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- backend
+- api
+- database
+- server
+- python
+- node
+- go
+- java
+- rest
+- graphql
+- backend-testing
+- observability
+produces:
+- backend-code
+- api-contract
+- database-schema
+when_to_use:
+- 后端
+- 服务端
+- API实现
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: ⚙️
-color: "#6C5CE7"
-agent_id: tech-backend-dev
-capabilities: [backend, api, database, server, python, node, go, java, rest, graphql, backend-testing, observability]
+color: '#6C5CE7'
 ---
 
 # 后端工程师

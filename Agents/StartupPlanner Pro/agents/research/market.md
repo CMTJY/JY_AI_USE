@@ -1,10 +1,54 @@
 ---
+schema_version: '3.0'
+id: research-market
+agent_id: research-market
 name: 市场研究员
 description: 专门负责市场调研、用户洞察、市场规模测算(TAM/SAM/SOM),输出市场分析报告。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- research
+task_types:
+- market-research
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- market-research
+- user-insight
+- market-sizing
+- tam-sam-som
+- segmentation
+- persona
+produces:
+- market-report
+- user-insight
+when_to_use:
+- 市场规模
+- TAM
+- SAM
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 📊
-color: "#FF7675"
-agent_id: research-market
-capabilities: [market-research, user-insight, market-sizing, tam-sam-som, segmentation, persona]
+color: '#FF7675'
 ---
 
 # 市场研究员

@@ -1,10 +1,51 @@
 ---
+schema_version: '3.0'
+id: core-router
+agent_id: core-router
 name: 能力路由器
 description: 根据任务所需能力、领域、产物类型和工具约束，从启用的注册智能体中选择执行者与备选者。
+version: 3.0.0
+status: active
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- core
+task_types:
+- routing
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- routing
+- capability-matching
+- constraint-filtering
+- fallback-selection
+produces:
+- route-decision
+when_to_use:
+- 需要能力路由器产出route-decision
+- 需要能力路由器产出route-decision
+- 需要能力路由器产出route-decision
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🧭
-color: "#0984E3"
-agent_id: core-router
-capabilities: [routing, capability-matching, constraint-filtering, fallback-selection]
+color: '#0984E3'
 ---
 
 # 能力路由器（Router）

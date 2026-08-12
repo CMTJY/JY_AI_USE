@@ -1,10 +1,52 @@
 ---
+schema_version: '3.0'
+id: core-task-planner
+agent_id: core-task-planner
 name: 任务规划器
 description: 把目标转换为以产物依赖为核心的可执行 DAG，并为每个任务定义验收标准和失败策略。
+version: 3.0.0
+status: active
+visibility: internal
+invocation: system-only
+portable: false
+domains:
+- core
+task_types:
+- decomposition
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- decomposition
+- dependency-analysis
+- artifact-planning
+- acceptance-design
+- mvp-scoping
+produces:
+- workflow-dag
+when_to_use:
+- 需要任务规划器产出workflow-dag
+- 需要任务规划器产出workflow-dag
+- 需要任务规划器产出workflow-dag
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🧩
-color: "#6C5CE7"
-agent_id: core-task-planner
-capabilities: [decomposition, dependency-analysis, artifact-planning, acceptance-design, mvp-scoping]
+color: '#6C5CE7'
 ---
 
 # 任务规划器（Task Planner）

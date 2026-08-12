@@ -1,10 +1,56 @@
 ---
+schema_version: '3.0'
+id: tech-qa
+agent_id: tech-qa
 name: 质量与测试工程师
 description: 从需求阶段设计测试策略，并独立执行集成、端到端、性能、兼容和验收验证，输出可复现证据与发布结论。
+version: 3.0.0
+status: active
+visibility: specialist
+invocation: router-or-manual
+portable: true
+domains:
+- tech
+task_types:
+- quality-assurance
+channels: []
+lifecycle_stages:
+- discovery
+- validation
+- launch
+- growth
+- optimization
+- scale
+- release
+capabilities:
+- testing
+- qa
+- test-strategy
+- automation
+- performance-testing
+- e2e-testing
+- integration-testing
+- acceptance-testing
+produces:
+- test-plan
+- test-report
+when_to_use:
+- 测试
+- QA
+- 自动化测试
+do_not_use_when:
+- 任务属于其他明确专业领域
+- 只需要主控协调而不需要本角色专业产物
+required_inputs:
+- objective
+optional_inputs:
+- constraints
+- context
+- available_evidence
+handoff_targets: []
+reviewer: core-quality-reviewer
 emoji: 🧪
-color: "#74B9FF"
-agent_id: tech-qa
-capabilities: [testing, qa, test-strategy, automation, performance-testing, e2e-testing, integration-testing, acceptance-testing]
+color: '#74B9FF'
 ---
 
 # 质量与测试工程师

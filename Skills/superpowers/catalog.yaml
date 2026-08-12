@@ -1,6 +1,6 @@
 schema_version: "1.0"
 collection: superpowers
-baseline: "superpowers-portable-2026-07-18"
+baseline: "superpowers-portable-2026-08-12"
 
 skills:
   - {name: using-superpowers, category: entry, audience: [controller, maintainer]}

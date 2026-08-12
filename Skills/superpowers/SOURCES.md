@@ -12,6 +12,15 @@ This collection contains locally modified derivatives. Folder names and source l
 
 Local modifications include platform-neutral tool language, proportional gates, corrected verification/review ordering, self-contained task packets, and removal of unresolved local references.
 
+### brainstorming synchronization
+
+- Local files: `brainstorming/`
+- Synchronized snapshot: `~/.trae-cn/skills/brainstorming`
+- Synchronized at: 2026-08-12
+- Copy policy: complete-folder synchronization; no repository-specific edits inside the copied folder
+
+The synchronized `brainstorming` skill intentionally keeps the TRAE version's strict design-approval gate, written-spec review flow, visual companion guide, and local companion server scripts. It is therefore an explicit exception to the proportional-gate adaptation used by several other workflow skills in this collection.
+
 ## Anthropic frontend-design
 
 - Source: https://github.com/anthropics/skills/tree/main/skills/frontend-design

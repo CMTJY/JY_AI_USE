@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from token_budget import build_report, estimate_tokens  # noqa: E402
-from validate import validate_project, validate_routes, validate_workflows  # noqa: E402
+from validate import validate_project, validate_routes, validate_runtime_routes, validate_workflows  # noqa: E402
 
 
 class ValidationTests(unittest.TestCase):
@@ -59,6 +59,49 @@ class ValidationTests(unittest.TestCase):
         names = {layer["name"] for layer in report["layers"]}
         self.assertTrue({"platform-entry", "routing-bootstrap", "specialist-roles", "skills"}.issubset(names))
         self.assertEqual(0, report["hard_errors"])
+        self.assertEqual(0, report["warnings"])
+
+    def test_runtime_route_shards_cover_source_routes_once(self):
+        source = yaml.safe_load((ROOT / "registry" / "routes.yaml").read_text(encoding="utf-8"))
+        index = yaml.safe_load((ROOT / "registry" / "route-index.yaml").read_text(encoding="utf-8"))
+        source_ids = [route["id"] for route in source["routes"]]
+        runtime_ids = []
+        for domain_id, _ in index["domains"]:
+            file = f"route-domains/{domain_id}.yaml"
+            shard = yaml.safe_load((ROOT / "registry" / file).read_text(encoding="utf-8"))
+            runtime_ids.extend(route["id"] for route in shard["routes"])
+        self.assertCountEqual(source_ids, runtime_ids)
+        self.assertEqual(len(runtime_ids), len(set(runtime_ids)))
+
+    def test_runtime_route_validator_rejects_duplicate_route(self):
+        source = yaml.safe_load((ROOT / "registry" / "routes.yaml").read_text(encoding="utf-8"))
+        index = yaml.safe_load((ROOT / "registry" / "route-index.yaml").read_text(encoding="utf-8"))
+        shards = {
+            domain_id: yaml.safe_load((ROOT / "registry" / f"route-domains/{domain_id}.yaml").read_text(encoding="utf-8"))
+            for domain_id, _ in index["domains"]
+        }
+        broken = copy.deepcopy(shards)
+        broken["core"]["routes"].append(copy.deepcopy(broken["tech"]["routes"][0]))
+        errors = validate_runtime_routes(source, index, broken)
+        self.assertTrue(any("duplicate" in error for error in errors))
+
+    def test_runtime_route_validator_rejects_stale_content(self):
+        source = yaml.safe_load((ROOT / "registry" / "routes.yaml").read_text(encoding="utf-8"))
+        index = yaml.safe_load((ROOT / "registry" / "route-index.yaml").read_text(encoding="utf-8"))
+        shards = {
+            domain_id: yaml.safe_load((ROOT / "registry" / f"route-domains/{domain_id}.yaml").read_text(encoding="utf-8"))
+            for domain_id, _ in index["domains"]
+        }
+        broken = copy.deepcopy(shards)
+        broken["tech"]["routes"][0]["signals"] = ["stale-signal"]
+        errors = validate_runtime_routes(source, index, broken)
+        self.assertTrue(any("stale" in error for error in errors))
+
+    def test_bootstrap_uses_progressive_route_loading(self):
+        bootstrap = (ROOT / "core" / "BOOTSTRAP.md").read_text(encoding="utf-8")
+        self.assertIn("registry/route-index.yaml", bootstrap)
+        self.assertNotIn("registry/routes.yaml", bootstrap)
+        self.assertNotIn("registry/generated-agents.yaml", bootstrap)
 
 
 if __name__ == "__main__":

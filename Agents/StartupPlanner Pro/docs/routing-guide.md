@@ -4,7 +4,16 @@
 
 槽位提取 → 复合任务拆分 → 候选召回 → 硬过滤 → 评分与冲突裁决。
 
-评分维度：任务类型 30%、能力 25%、领域 15%、产物 15%、渠道 10%、生命周期 5%。规则详情在 `registry/routes.yaml` 与 `core/routing.md`。
+评分维度：任务类型 30%、能力 25%、领域 15%、产物 15%、渠道 10%、生命周期 5%。完整维护事实源在 `registry/routes.yaml`，运行时先读 `registry/route-index.yaml`，再只读命中领域的 `registry/route-domains/*.yaml`。规则详情见 `core/routing.md`。
+
+修改完整路由表后运行：
+
+```powershell
+python "Agents/StartupPlanner Pro/tools/generate_runtime_routes.py"
+python "Agents/StartupPlanner Pro/tools/validate.py"
+```
+
+生成分片禁止手工修改；验证器会检查所有源路由是否恰好出现一次。
 
 ## 边界示例
 
@@ -24,4 +33,3 @@ python "Agents/StartupPlanner Pro/tools/route_eval.py"
 ```
 
 新增真实失败样本时，先加入 `evals/routing-cases.yaml` 并观察失败，再修改 route 信号或 Agent 契约。不要用一个过宽关键词修复单个场景。
-

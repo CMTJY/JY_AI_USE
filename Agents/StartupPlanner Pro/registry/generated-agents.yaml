@@ -1,11 +1,13 @@
 schema_version: '3.0'
 generated_from: agents/** role frontmatter
 agents:
-- id: core-aggregator
+- schema_version: '3.0'
+  id: core-aggregator
   name: 结果整合器
   version: 3.0.0
   status: active
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - core
@@ -43,11 +45,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: core/aggregator.md
-- id: core-orchestrator
+- schema_version: '3.0'
+  id: core-orchestrator
   name: 通用主控
   version: 3.0.0
   status: active
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - core
@@ -91,11 +95,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: core/orchestrator/orchestrator.md
-- id: core-quality-reviewer
+- schema_version: '3.0'
+  id: core-quality-reviewer
   name: 独立质量审核员
   version: 3.0.0
   status: active
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - core
@@ -134,11 +140,13 @@ agents:
   handoff_targets: []
   reviewer: null
   file: core/quality-reviewer.md
-- id: core-router
+- schema_version: '3.0'
+  id: core-router
   name: 能力路由器
   version: 3.0.0
   status: active
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - core
@@ -176,11 +184,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: core/router.md
-- id: core-task-planner
+- schema_version: '3.0'
+  id: core-task-planner
   name: 任务规划器
   version: 3.0.0
   status: active
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - core
@@ -219,11 +229,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: core/task-planner.md
-- id: director-bp
+- schema_version: '3.0'
+  id: director-bp
   name: BP总编
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - business-plan
@@ -261,11 +273,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: _director/director-bp.md
-- id: director-startup
+- schema_version: '3.0'
+  id: director-startup
   name: 创业总指挥
   version: 3.0.0
   status: deprecated
   visibility: internal
+  invocation: system-only
   portable: false
   domains:
   - _director
@@ -299,11 +313,13 @@ agents:
   handoff_targets: []
   reviewer: null
   file: _director/director-startup.md
-- id: finance-financial-analyst
+- schema_version: '3.0'
+  id: finance-financial-analyst
   name: 财务分析师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - finance
@@ -345,11 +361,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: finance/financial-analyst.md
-- id: finance-fundraising
+- schema_version: '3.0'
+  id: finance-fundraising
   name: 融资顾问
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - finance
@@ -389,11 +407,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: finance/fundraising-advisor.md
-- id: marketing-campaign-planner
+- schema_version: '3.0'
+  id: marketing-campaign-planner
   name: 产品曝光活动策划
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -431,11 +451,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/Product-EVENT/marketing-product-campaign-planner.md
-- id: marketing-content-creator
+- schema_version: '3.0'
+  id: marketing-content-creator
   name: 内容创作者
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -476,11 +498,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/media-content/marketing-content-creator.md
-- id: marketing-cross-border-ecommerce
+- schema_version: '3.0'
+  id: marketing-cross-border-ecommerce
   name: 跨境电商运营专家
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -524,11 +548,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/product-sales/marketing-cross-border-ecommerce.md
-- id: marketing-douyin-strategist
+- schema_version: '3.0'
+  id: marketing-douyin-strategist
   name: 抖音策略师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -568,11 +594,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/media-content/marketing-douyin-strategist.md
-- id: marketing-ecommerce
+- schema_version: '3.0'
+  id: marketing-ecommerce
   name: 电商运营师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -616,11 +644,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/product-sales/marketing-ecommerce-operator.md
-- id: marketing-growth-hacker
+- schema_version: '3.0'
+  id: marketing-growth-hacker
   name: 增长黑客
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -662,11 +692,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/Product-EVENT/marketing-growth-hacker.md
-- id: marketing-livestream-coach
+- schema_version: '3.0'
+  id: marketing-livestream-coach
   name: 直播电商主播教练
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -705,11 +737,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/product-sales/marketing-livestream-commerce-coach.md
-- id: marketing-private-domain
+- schema_version: '3.0'
+  id: marketing-private-domain
   name: 私域流量运营师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -750,11 +784,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/fans-domain/marketing-private-domain-operator.md
-- id: marketing-social-strategist
+- schema_version: '3.0'
+  id: marketing-social-strategist
   name: 社交媒体策略师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -795,11 +831,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/Product-EVENT/marketing-social-media-strategist.md
-- id: marketing-video-editing-coach
+- schema_version: '3.0'
+  id: marketing-video-editing-coach
   name: 短视频剪辑指导师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -840,11 +878,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/media-content/marketing-short-video-editing-coach.md
-- id: marketing-xiaohongshu-operator
+- schema_version: '3.0'
+  id: marketing-xiaohongshu-operator
   name: 小红书运营专家
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -884,11 +924,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/media-content/marketing-xiaohongshu-operator.md
-- id: marketing-xiaohongshu-specialist
+- schema_version: '3.0'
+  id: marketing-xiaohongshu-specialist
   name: 小红书专家
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - marketing
@@ -927,11 +969,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: marketing/media-content/marketing-xiaohongshu-specialist.md
-- id: org-architect
+- schema_version: '3.0'
+  id: org-architect
   name: 组织架构师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - organization
@@ -971,11 +1015,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: organization/org-architect.md
-- id: org-talent-planner
+- schema_version: '3.0'
+  id: org-talent-planner
   name: 人才规划师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - organization
@@ -1016,11 +1062,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: organization/talent-planner.md
-- id: product-director
+- schema_version: '3.0'
+  id: product-director
   name: 产品开发全流程统筹专家
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - product
@@ -1062,11 +1110,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: product/product-director/product-director.md
-- id: product-mvp-designer
+- schema_version: '3.0'
+  id: product-mvp-designer
   name: MVP设计师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - product
@@ -1106,11 +1156,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: product/mvp-designer.md
-- id: product-pm
+- schema_version: '3.0'
+  id: product-pm
   name: product-manager
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - product
@@ -1154,11 +1206,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: product/product-manager/product-manager.md
-- id: research-analyst
+- schema_version: '3.0'
+  id: research-analyst
   name: 通用调研分析师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - research
@@ -1199,11 +1253,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: research/analyst.md
-- id: research-competitor
+- schema_version: '3.0'
+  id: research-competitor
   name: 竞品分析师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - research
@@ -1242,11 +1298,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: research/competitor.md
-- id: research-market
+- schema_version: '3.0'
+  id: research-market
   name: 市场研究员
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - research
@@ -1287,11 +1345,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: research/market.md
-- id: risk-manager
+- schema_version: '3.0'
+  id: risk-manager
   name: 风险管理师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - risk
@@ -1332,11 +1392,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: risk/risk-manager.md
-- id: strategy-analyst
+- schema_version: '3.0'
+  id: strategy-analyst
   name: 战略分析师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - strategy
@@ -1377,11 +1439,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: strategy/strategy-analyst.md
-- id: strategy-market-researcher
+- schema_version: '3.0'
+  id: strategy-market-researcher
   name: 市场调研员
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - strategy
@@ -1421,11 +1485,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: strategy/market-researcher.md
-- id: strategy-opc
+- schema_version: '3.0'
+  id: strategy-opc
   name: OPC战略师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - strategy
@@ -1464,11 +1530,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: strategy/opc-strategist/opc-strategist.md
-- id: tech-architect
+- schema_version: '3.0'
+  id: tech-architect
   name: 技术负责人兼架构师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1513,11 +1581,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/architect/architect.md
-- id: tech-backend-dev
+- schema_version: '3.0'
+  id: tech-backend-dev
   name: 后端工程师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1565,11 +1635,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/backend-dev/backend-dev.md
-- id: tech-code-reviewer
+- schema_version: '3.0'
+  id: tech-code-reviewer
   name: 独立代码审查员
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1609,11 +1681,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/code-reviewer/code-reviewer.md
-- id: tech-devops
+- schema_version: '3.0'
+  id: tech-devops
   name: 平台与可靠性工程师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1659,11 +1733,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/devops/devops.md
-- id: tech-frontend-dev
+- schema_version: '3.0'
+  id: tech-frontend-dev
   name: 前端工程师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1710,11 +1786,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/frontend-dev/frontend-dev.md
-- id: tech-mobile-dev
+- schema_version: '3.0'
+  id: tech-mobile-dev
   name: 移动端工程师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech
@@ -1758,11 +1836,13 @@ agents:
   handoff_targets: []
   reviewer: core-quality-reviewer
   file: tech/mobile-dev/mobile-dev.md
-- id: tech-qa
+- schema_version: '3.0'
+  id: tech-qa
   name: 质量与测试工程师
   version: 3.0.0
   status: active
   visibility: specialist
+  invocation: router-or-manual
   portable: true
   domains:
   - tech

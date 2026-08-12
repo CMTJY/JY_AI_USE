@@ -36,7 +36,7 @@ class DocumentationTests(unittest.TestCase):
 
     def test_evaluation_report_is_reproducible_and_honest(self):
         text = (ROOT / "docs" / "evaluation-report.md").read_text(encoding="utf-8")
-        for phrase in ["117", "100.00%", "3.12%", "离线规则", "不等于三平台实机", "python"]:
+        for phrase in ["117", "100.00%", "0.00%", "52", "离线规则", "不等于三平台实机", "python"]:
             self.assertIn(phrase, text)
 
 

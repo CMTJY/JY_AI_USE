@@ -76,7 +76,7 @@ docs/        架构、路由、平台、打包与实验说明
 
 ## 当前路由实验
 
-离线规则实验包含 117 条用例：117/117 通过，原子准确率 100.00%，专业 Agent 漏调率 0.00%，不必要调用率 3.12%，方向门误触发率 0.00%，BP 门禁漏检为 0。
+离线规则实验包含 117 条用例，实际走 `route-index + 最多两个领域分片` 的发布路径：117/117 通过，原子精确准确率 100.00%，专业 Agent 漏调率 0.00%，不必要调用率 0.00%，方向门误触发率 0.00%，BP 门禁漏检为 0。
 
 这些是本仓库确定性路由器的离线规则结果，不等于三平台实机模型表现。平台实机需要用同一语料抽测，结果单独记录在 [实验报告](docs/evaluation-report.md)。
 
@@ -87,6 +87,7 @@ python -m unittest discover -s "Agents/StartupPlanner Pro/tests" -v
 python "Agents/StartupPlanner Pro/tools/validate.py"
 python "Agents/StartupPlanner Pro/tools/route_eval.py"
 python "Agents/StartupPlanner Pro/tools/token_budget.py"
+python "Agents/StartupPlanner Pro/tools/generate_runtime_routes.py"
 ```
 
-新增或调整 Agent 后必须同步更新契约正反例、路由信号和评测语料；不要靠“感觉”修改提示词。
+新增或调整 Agent 后必须同步更新契约正反例、路由信号和评测语料；修改 `registry/routes.yaml` 后还要重新生成运行时路由分片。不要靠“感觉”修改提示词。

@@ -1,0 +1,1 @@
+{"schema_version":"3.0","domain":"organization","routes":[{"id":"organization","tasks":["organization-design"],"signals":["组织架构","股权设计","公司治理","岗位结构"],"agents":["org-architect"]},{"id":"hiring","tasks":["talent-planning"],"signals":["招聘","人才规划","JD","薪酬","团队文化"],"agents":["org-talent-planner"]}]}

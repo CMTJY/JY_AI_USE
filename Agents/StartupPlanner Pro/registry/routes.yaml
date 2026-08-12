@@ -36,11 +36,13 @@ routes:
     domains: [tech]
     task_types: [architecture]
     positive_signals: [架构, 技术选型, 系统设计, 数据库设计, API契约, scalability, architecture]
+    negative_signals: [组织架构, 团队架构, 股权架构]
     preferred_agents: [tech-architect]
   - id: backend-development
     domains: [tech]
     task_types: [backend-development]
     positive_signals: [后端, 服务端, API实现, 数据库实现, python, node, go, java, backend]
+    negative_signals: [GO/NO-GO]
     preferred_agents: [tech-backend-dev]
   - id: frontend-development
     domains: [tech]
@@ -108,6 +110,7 @@ routes:
     domains: [product]
     task_types: [mvp-design]
     positive_signals: [MVP, 最小可行产品, 原型, 范围裁剪, 验证指标]
+    negative_signals: [量产, 硬件量产, 发布就绪, 产品治理]
     preferred_agents: [product-mvp-designer]
   - id: product-governance
     domains: [product]

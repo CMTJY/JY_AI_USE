@@ -21,7 +21,7 @@ def contracts():
 
 
 def main():
-    fields = ["id", "name", "version", "status", "visibility", "portable", "domains", "task_types", "channels", "lifecycle_stages", "capabilities", "produces", "when_to_use", "do_not_use_when", "required_inputs", "optional_inputs", "handoff_targets", "reviewer", "file"]
+    fields = ["schema_version", "id", "name", "version", "status", "visibility", "invocation", "portable", "domains", "task_types", "channels", "lifecycle_stages", "capabilities", "produces", "when_to_use", "do_not_use_when", "required_inputs", "optional_inputs", "handoff_targets", "reviewer", "file"]
     agents = []
     seen = set()
     all_contracts = list(contracts())

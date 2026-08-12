@@ -68,7 +68,8 @@ def evaluate(cases_path=CASES_PATH, catalog_path=CATALOG_PATH):
         clarification_ok = actual["clarification_required"] == case.get("clarification_required", False)
         direction_expected = case.get("direction_gate_required", False)
         direction_ok = actual["direction_gate_required"] == direction_expected
-        passed = not missing and not forbidden_selected and clarification_ok and direction_ok
+        exact_match = not unexpected if len(expected) <= 1 else True
+        passed = not missing and not forbidden_selected and exact_match and clarification_ok and direction_ok
         expected_total += len(expected)
         expected_missing += len(missing)
         selected_total += len(selected)

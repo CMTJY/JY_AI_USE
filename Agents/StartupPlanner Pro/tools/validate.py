@@ -3,6 +3,7 @@ import argparse
 import json
 
 from common import load_yaml, parse_frontmatter, role_files
+from generate_runtime_routes import compact_route
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +24,34 @@ def validate_routes(routes, catalog):
     for agent_id, agent in agents.items():
         if agent["status"] == "active" and agent["visibility"] == "specialist" and agent_id not in routed:
             errors.append(f"unreachable active specialist: {agent_id}")
+    return errors
+
+
+def validate_runtime_routes(source, index, shards):
+    errors = []
+    expected = [route["id"] for route in source.get("routes", [])]
+    actual = []
+    indexed_domains = {item[0] for item in index.get("domains", [])}
+    if indexed_domains != set(shards):
+        errors.append("runtime route index differs from shard domains")
+    for domain, shard in shards.items():
+        if shard.get("domain") != domain:
+            errors.append(f"runtime route shard domain mismatch: {domain}")
+        actual.extend(route["id"] for route in shard.get("routes", []))
+    duplicates = sorted({route_id for route_id in actual if actual.count(route_id) > 1})
+    if duplicates:
+        errors.append(f"runtime route duplicate ids: {duplicates}")
+    missing = sorted(set(expected) - set(actual))
+    extra = sorted(set(actual) - set(expected))
+    if missing:
+        errors.append(f"runtime routes missing source ids: {missing}")
+    if extra:
+        errors.append(f"runtime routes contain unknown ids: {extra}")
+    source_routes = {route["id"]: compact_route(route) for route in source.get("routes", [])}
+    for shard in shards.values():
+        for route in shard.get("routes", []):
+            if route["id"] in source_routes and route != source_routes[route["id"]]:
+                errors.append(f"runtime route stale content: {route['id']}")
     return errors
 
 
@@ -92,6 +121,12 @@ def validate_project(root=ROOT):
         routes = load_yaml(root / "registry" / "routes.yaml")
         catalog = load_yaml(root / "registry" / "generated-agents.yaml")
         errors.extend(validate_routes(routes, catalog))
+        route_index = load_yaml(root / "registry" / "route-index.yaml")
+        route_shards = {
+            item[0]: load_yaml(root / "registry" / "route-domains" / f"{item[0]}.yaml")
+            for item in route_index.get("domains", [])
+        }
+        errors.extend(validate_runtime_routes(routes, route_index, route_shards))
         errors.extend(validate_contracts(root, catalog))
         workflows = {path.stem: load_yaml(path) for path in (root / "workflows").glob("*.yaml")}
         errors.extend(validate_workflows(workflows))
@@ -122,4 +157,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,0 +1,1 @@
+{"schema_version":"3.0","domain":"finance","routes":[{"id":"financial-model","tasks":["financial-modeling"],"signals":["财务模型","预算","现金流","盈亏平衡","LTV","CAC","单位经济"],"agents":["finance-financial-analyst"]},{"id":"fundraising","tasks":["fundraising"],"signals":["融资","估值","投资人","路演","资金用途","pitch deck"],"agents":["finance-fundraising"]}]}

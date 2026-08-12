@@ -1,0 +1,1 @@
+{"schema_version":"3.0","domain":"risk","routes":[{"id":"risk","tasks":["risk-review"],"signals":["风险","合规","法律","监管","风险矩阵"],"agents":["risk-manager"]}]}

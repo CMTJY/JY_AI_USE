@@ -1,0 +1,15 @@
+---
+description: Use StartupPlanner Pro v3 for cross-domain startup, product, marketing, research, finance, risk, or software delivery work.
+globs:
+alwaysApply: false
+---
+
+# StartupPlanner Pro v3
+
+读取 `Agents/StartupPlanner Pro/core/BOOTSTRAP.md`，按其渐进加载协议执行。
+
+- 先拆分复合请求，再为每个原子任务选择最聚焦的专业角色。
+- 仅加载命中角色和必要技能，不读取全部 Agent。
+- Cursor 支持独立 Agent/并行能力时使用真实委派；否则标记“单 Agent 串行角色模拟”。
+- 报告路由理由、真实使用角色、验证证据和已知限制。
+

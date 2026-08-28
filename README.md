@@ -38,7 +38,6 @@ AWENAI-TOOL/
 ├── Agents/                           # 🤖 AI 智能体团队
 │   ├── ProjectExpert/                #   全行业 AI 项目专家
 │   ├── StartupPlanner Pro/           #   创业规划平台（旗舰）
-│   ├── Marketing_Workspace/          #   营销工作区（市场专家）
 │   └── E-debbug agent/               #   嵌入式代码修改助手
 │
 ├── Skills/                           # 🧩 AI 技能模块
@@ -127,24 +126,7 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 
 ---
 
-### 2. Marketing_Workspace（营销工作区 · 市场专家）
-
-配套 StartupPlanner Pro 的营销落地专家：承接市场调研、定位策略、内容创意、投放执行、增长与销售转化，交付可执行、可衡量、能带来营收的方案。
-
-**方法论驱动：** 每次行动前查询 `docs/INDEX.md` 方法论库，按任务类型匹配 8 篇方法论文档（替代物性价比法、定位与差异化、增长飞轮与漏斗模型、内容营销与信任资产、数据驱动与实验优化、品牌溢价与长期资产、整合营销与战役打法、渠道运营与销售转化）。
-
-**工作流程：**
-
-```text
-用户任务 → 查询方法论索引 → 明确目标/受众/预算/交付物
-→（按需委派 StartupPlanner 子智能体）→ 审核产出 → 交付 + 复盘
-```
-
-> 📂 位置：[Agents/Marketing_Workspace/](Agents/Marketing_Workspace/)
-
----
-
-### 3. ProjectExpert（全行业 AI 项目专家）
+### 2. ProjectExpert（全行业 AI 项目专家）
 
 覆盖 **软件、游戏、硬件、建筑、金融、制造、医疗、教育** 8 大行业的项目分析智能体团队。
 
@@ -172,7 +154,7 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 
 ---
 
-### 4. E-debbug Agent（嵌入式代码修改助手）
+### 3. E-debbug Agent（嵌入式代码修改助手）
 
 针对嵌入式开发的代码修改智能体，支持 ESP-IDF / STM32 / RT-Thread / FreeRTOS / Linux 驱动 / Arduino 等多平台。
 
@@ -253,7 +235,6 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 ```
 @ProjectExpert 我想了解一下 LangChain 这个项目
 @StartupPlanner 我想做一个 AI 宠物社交平台
-@Marketing_Workspace 我想为我的跨境电商产品制定一份美国市场推广方案
 ```
 
 **方式二：通过 Skill 调用**

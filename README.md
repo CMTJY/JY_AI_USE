@@ -36,6 +36,7 @@
 AWENAI-TOOL/
 │
 ├── Agents/                           # 🤖 AI 智能体团队
+│   ├── PROJECT_BOOTSTRAP.md          #   常规新项目一键启动模板
 │   ├── ProjectExpert/                #   全行业 AI 项目专家
 │   ├── StartupPlanner Pro/           #   创业规划平台（旗舰）
 │   └── E-debbug agent/               #   嵌入式代码修改助手
@@ -56,6 +57,15 @@ AWENAI-TOOL/
 ---
 
 ## 🤖 Agents — AI 智能体团队
+
+### 新项目初始化模板
+
+| 模板 | 适用场景 | 默认动作 |
+|---|---|---|
+| [`Agents/PROJECT_BOOTSTRAP.md`](Agents/PROJECT_BOOTSTRAP.md) | 尚未创建项目目录的常规新项目 | 确认项目名称、目标和保存位置，创建新目录并生成标准 `AGENTS.md` |
+| [`Agents/StartupPlanner Pro/PROJECT_AGENTS_TEMPLATE.md`](Agents/StartupPlanner%20Pro/PROJECT_AGENTS_TEMPLATE.md) | 已由人工创建并打开项目目录，需要接入 StartupPlanner Pro | 生成或安全合并项目 `AGENTS.md`，并通过 Git sparse clone 安装团队框架 |
+
+两个模板的目录前提不同：常规模板负责创建新的项目文件夹，StartupPlanner Pro 模板只在当前已存在的项目文件夹中执行。
 
 ### 1. StartupPlanner Pro（创业规划平台）⭐ 旗舰项目
 
@@ -101,6 +111,8 @@ v3 是一个面向 **Codex、Cursor、TRAE** 的平台无关智能体团队框�
 > 📂 位置：[Agents/StartupPlanner Pro/](Agents/StartupPlanner%20Pro/)
 
 #### StartupPlanner Pro v3 快速接入
+
+已经人工创建好新项目文件夹时，可把 [`PROJECT_AGENTS_TEMPLATE.md`](Agents/StartupPlanner%20Pro/PROJECT_AGENTS_TEMPLATE.md) 直接交给 Codex、Cursor 或 TRAE。AI 会在当前项目中生成专用 `AGENTS.md`，并通过可持续更新的 Git sparse clone 接入 StartupPlanner Pro；模板本身不会创建新的项目根目录。
 
 | AI 工具 | 接入文件 | 建议位置 |
 |---|---|---|

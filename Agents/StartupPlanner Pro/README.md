@@ -46,6 +46,16 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 
 ## 三平台快速开始
 
+### 人工新建项目文件夹后接入
+
+把 [`PROJECT_AGENTS_TEMPLATE.md`](PROJECT_AGENTS_TEMPLATE.md) 交给 Codex、Cursor 或 TRAE，并让 AI 在人工已经创建和打开的项目文件夹中执行。模板会指导 AI：
+
+1. 根据当前项目需求生成或安全合并根目录 `AGENTS.md`；
+2. 通过 Git sparse clone 将最新版 StartupPlanner Pro 安装到项目内 `startupplanner-pro/`；
+3. 写入统一的团队调用入口，并验证远程仓库、分支、commit 和核心协议路径。
+
+模板不会创建项目根目录，也不会默认生成业务代码、初始化外层 Git、安装业务依赖、提交、推送或部署。
+
 ### Codex
 
 把 [Codex 入口片段](adapters/codex/AGENTS.snippet.md) 合并到目标项目根目录 `AGENTS.md`，或在本子项目目录中启动任务。
@@ -63,6 +73,7 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 ## 目录
 
 ```text
+PROJECT_AGENTS_TEMPLATE.md  人工新建项目后的 AGENTS 初始化入口
 core/        平台无关启动、路由、编排和质量协议
 registry/    taxonomy、路由、工作流索引和生成的 Agent 目录
 agents/      角色正文与角色私有技能

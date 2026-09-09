@@ -39,6 +39,7 @@ AWENAI-TOOL/
 │   ├── PROJECT_BOOTSTRAP.md          #   常规新项目一键启动模板
 │   ├── ProjectExpert/                #   全行业 AI 项目专家
 │   ├── StartupPlanner Pro/           #   创业规划平台（旗舰）
+│   ├── wiki-memory-agent/            #   跨工具项目长期记忆模板
 │   └── E-debbug agent/               #   嵌入式代码修改助手
 │
 ├── Skills/                           # 🧩 AI 技能模块
@@ -173,6 +174,16 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 **核心原则：** 方案先行 → 用户审批 → 可逆可查
 
 > 📂 位置：[Agents/E-debbug agent/](Agents/E-debbug%20agent/)
+
+---
+
+### 4. Wiki Memory Agent（项目长期记忆模板）
+
+面向 **Codex、Cursor、TRAE** 等 AI 工具的项目级 Wiki 记忆协议。它要求 AI 每轮先读取短索引，再按当前任务渐进加载少量主题页；最终答复前仅把经过确认或验证、具有长期价值的信息写入记忆。
+
+模板使用普通 `AGENTS.md`、Markdown 和相对链接，不依赖数据库、向量检索或 MCP。接入时把 `template/AGENTS.md` 和 `template/memory/INDEX.md` 合并或复制到目标项目根目录即可。
+
+> 📂 位置：[Agents/wiki-memory-agent/](Agents/wiki-memory-agent/)
 
 ---
 
@@ -326,4 +337,4 @@ python "Agents/StartupPlanner Pro/tools/token_budget.py"
 
 ---
 
-*最后更新：2026-08-07*
+*最后更新：2026-09-09*

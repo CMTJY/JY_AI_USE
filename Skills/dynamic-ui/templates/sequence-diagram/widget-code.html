@@ -1,0 +1,507 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+:root[data-widget-theme="dark"] {
+  color-scheme: dark;
+  --surface: #171717;
+  --surface-muted: #262626;
+  --text: #E5E5E5;
+  --text-muted: #A1A1AA;
+  --border: rgba(229, 229, 229, 0.12);
+  --brand: #6054F1;
+  --brand-soft: #1A1759;
+  --brand-soft-strong: #3C2ECA;
+  --brand-text: #CFD8FF;
+  --chart-series-1: #4B3FE3;
+  --chart-other: #D3D4DA;
+  --accent-soft: #123F3C;
+  --accent-text: #CCFBF1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.sequenceCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.sequenceHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--spacer-16);
+}
+
+.sequenceTitleGroup {
+  display: grid;
+  gap: var(--spacer-4);
+  min-width: 0;
+}
+
+.sequenceTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.sequenceBadge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 var(--spacer-12);
+  color: var(--brand-text);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: var(--radius-full);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.sequenceCanvas {
+  margin-top: var(--spacer-16);
+  overflow: hidden;
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: var(--radius);
+}
+
+.mobileSequence {
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.mobileActors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacer-8);
+}
+
+.mobileActor {
+  min-width: 0;
+  padding: var(--spacer-8) var(--spacer-12);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  border-radius: var(--radius);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.mobileActor[data-role="focus"] {
+  color: var(--brand-text);
+  border-color: color-mix(in srgb, var(--brand) 64%, var(--border));
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface));
+}
+
+.mobileMessages {
+  display: grid;
+  gap: var(--spacer-8);
+  margin-top: var(--spacer-12);
+}
+
+.mobileMessage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--spacer-8);
+  align-items: start;
+  padding: var(--spacer-8) var(--spacer-12);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  border-radius: var(--radius);
+}
+
+.mobileMessage[data-focus="true"] {
+  border-color: color-mix(in srgb, var(--brand) 54%, var(--border));
+  background: color-mix(in srgb, var(--brand) 5%, var(--surface));
+}
+
+.messageIndex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
+  border-radius: var(--radius-full);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.mobileMessage[data-focus="true"] .messageIndex {
+  color: var(--brand-on);
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+.messageRoute {
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.messageName {
+  margin-top: var(--spacer-4);
+  color: var(--text);
+  font: var(--weight-medium) var(--text-body) var(--font-sans);
+}
+
+.messageType {
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.sequenceSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.participantBox {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 92%, transparent);
+  stroke-width: 1;
+}
+
+.participant[data-role="focus"] .participantBox {
+  fill: color-mix(in srgb, var(--brand) 7%, var(--surface));
+  stroke: color-mix(in srgb, var(--brand) 72%, var(--border));
+}
+
+.participant[data-role="external"] .participantBox {
+  stroke: color-mix(in srgb, var(--text-muted) 42%, var(--border));
+}
+
+.participantLabel {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-body) var(--font-sans);
+}
+
+.participantCaption {
+  fill: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.participant[data-role="focus"] .participantLabel {
+  fill: var(--brand-text);
+}
+
+.participant[data-role="focus"] .participantCaption {
+  fill: var(--brand);
+}
+
+.lifeline {
+  fill: none;
+  stroke: color-mix(in srgb, var(--text-muted) 42%, transparent);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 7;
+  stroke-linecap: round;
+}
+
+.activation {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 92%, transparent);
+  stroke-width: 1;
+}
+
+.activation[data-role="focus"] {
+  fill: color-mix(in srgb, var(--brand) 8%, var(--surface));
+  stroke: color-mix(in srgb, var(--brand) 62%, var(--border));
+}
+
+.messagePath {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+}
+
+.messagePath[data-type="return"] {
+  stroke-dasharray: 7 6;
+}
+
+.messagePath[data-focus="true"] {
+  stroke: var(--brand);
+  stroke-width: 1.8;
+}
+
+.arrowHeadPath {
+  fill: var(--text-muted);
+}
+
+.arrowHeadPath[data-focus="true"] {
+  fill: var(--brand);
+}
+
+.labelBg {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.labelBg[data-focus="true"] {
+  fill: var(--brand-soft);
+  stroke: color-mix(in srgb, var(--brand) 42%, var(--border));
+}
+
+.messageLabel {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.messageLabel[data-focus="true"] {
+  fill: var(--brand-text);
+}
+
+.phaseChip {
+  fill: color-mix(in srgb, var(--surface-muted) 56%, var(--surface));
+  stroke: color-mix(in srgb, var(--border) 68%, transparent);
+}
+
+.phaseText {
+  fill: var(--text-muted);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+
+@media (max-width: 560px) {
+  .sequenceCard {
+    padding: var(--spacer-16);
+  }
+
+  .sequenceHeader {
+    display: grid;
+  }
+
+  .sequenceBadge {
+    width: fit-content;
+  }
+
+  .sequenceCanvas {
+    max-height: 0;
+    margin-top: 0;
+    border-width: 0;
+    opacity: 0;
+  }
+
+  .mobileSequence {
+    max-height: 680px;
+    margin-top: var(--spacer-16);
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="sequence-diagram">
+  <section class="sequenceCard" aria-label="ZenUML-style sequence diagram">
+    <div class="sequenceHeader">
+      <div class="sequenceTitleGroup">
+        <h3 class="sequenceTitle">Checkout Auth Sequence</h3>
+      </div>
+      <div class="sequenceBadge">6 messages</div>
+    </div>
+    <div class="sequenceCanvas">
+      <svg class="sequenceSvg" viewBox="0 0 720 430" role="img" aria-label="A sequence diagram with Client, Gateway, Auth, and Profile DB participants">
+          <defs>
+            <marker id="sequenceArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+              <path class="arrowHeadPath" d="M1 1 L7 4 L1 7 Z" />
+            </marker>
+            <marker id="sequenceArrowFocus" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+              <path class="arrowHeadPath" data-focus="true" d="M1 1 L7 4 L1 7 Z" />
+            </marker>
+          </defs>
+        <rect class="phaseChip" x="38" y="18" width="152" height="26" rx="13" />
+        <text class="phaseText" x="114" y="36" text-anchor="middle">ZenUML-style flow</text>
+        <rect class="phaseChip" x="540" y="18" width="142" height="26" rx="13" />
+        <text class="phaseText" x="611" y="36" text-anchor="middle">Auth before data</text>
+
+        <g class="participant" data-role="external" transform="translate(32 58)">
+          <rect class="participantBox" width="116" height="54" rx="8" />
+          <text class="participantLabel" x="58" y="23" text-anchor="middle">Client</text>
+          <text class="participantCaption" x="58" y="42" text-anchor="middle">browser</text>
+        </g>
+        <g class="participant" data-role="focus" transform="translate(207 58)">
+          <rect class="participantBox" width="116" height="54" rx="8" />
+          <text class="participantLabel" x="58" y="23" text-anchor="middle">Gateway</text>
+          <text class="participantCaption" x="58" y="42" text-anchor="middle">main focus</text>
+        </g>
+        <g class="participant" data-role="neutral" transform="translate(382 58)">
+          <rect class="participantBox" width="116" height="54" rx="8" />
+          <text class="participantLabel" x="58" y="23" text-anchor="middle">Auth</text>
+          <text class="participantCaption" x="58" y="42" text-anchor="middle">token service</text>
+        </g>
+        <g class="participant" data-role="neutral" transform="translate(557 58)">
+          <rect class="participantBox" width="116" height="54" rx="8" />
+          <text class="participantLabel" x="58" y="23" text-anchor="middle">Profile DB</text>
+          <text class="participantCaption" x="58" y="42" text-anchor="middle">user data</text>
+        </g>
+
+        <path class="lifeline" d="M90 118 V386" fill="none" />
+        <path class="lifeline" d="M265 118 V386" fill="none" />
+        <path class="lifeline" d="M440 118 V386" fill="none" />
+        <path class="lifeline" d="M615 118 V386" fill="none" />
+
+        <rect class="activation" data-role="focus" x="256" y="142" width="18" height="214" rx="6" />
+        <rect class="activation" x="431" y="198" width="18" height="48" rx="6" />
+        <rect class="activation" x="606" y="286" width="18" height="48" rx="6" />
+
+          <path class="messagePath" data-focus="true" d="M100 152 H250" marker-end="url(#sequenceArrowFocus)" fill="none" />
+        <rect class="labelBg" data-focus="true" x="119" y="140" width="116" height="24" rx="8" />
+        <text class="messageLabel" data-focus="true" x="177" y="157" text-anchor="middle">POST /checkout</text>
+
+          <path class="messagePath" d="M274 206 H425" marker-end="url(#sequenceArrow)" fill="none" />
+        <rect class="labelBg" x="299" y="194" width="106" height="24" rx="8" />
+        <text class="messageLabel" x="352" y="211" text-anchor="middle">validate token</text>
+
+          <path class="messagePath" data-type="return" d="M431 240 H280" marker-end="url(#sequenceArrow)" fill="none" />
+        <rect class="labelBg" x="318" y="228" width="70" height="24" rx="8" />
+        <text class="messageLabel" x="353" y="245" text-anchor="middle">token ok</text>
+
+          <path class="messagePath" d="M274 294 H602" marker-end="url(#sequenceArrow)" fill="none" />
+        <rect class="labelBg" x="386" y="282" width="106" height="24" rx="8" />
+        <text class="messageLabel" x="439" y="299" text-anchor="middle">read profile</text>
+
+          <path class="messagePath" data-type="return" d="M606 328 H280" marker-end="url(#sequenceArrow)" fill="none" />
+        <rect class="labelBg" x="390" y="316" width="104" height="24" rx="8" />
+        <text class="messageLabel" x="442" y="333" text-anchor="middle">profile data</text>
+
+          <path class="messagePath" data-type="return" d="M256 366 H106" marker-end="url(#sequenceArrow)" fill="none" />
+        <rect class="labelBg" x="127" y="354" width="100" height="24" rx="8" />
+        <text class="messageLabel" x="177" y="371" text-anchor="middle">200 response</text>
+      </svg>
+    </div>
+    <div class="mobileSequence" aria-label="Compact sequence message list">
+      <div class="mobileActors" aria-label="Participants">
+        <div class="mobileActor">Client</div>
+        <div class="mobileActor" data-role="focus">Gateway</div>
+        <div class="mobileActor">Auth</div>
+        <div class="mobileActor">Profile DB</div>
+      </div>
+      <div class="mobileMessages">
+        <div class="mobileMessage" data-focus="true" data-type="request">
+          <span class="messageIndex">1</span>
+          <div>
+            <div class="messageRoute">Client -> Gateway</div>
+            <div class="messageName">POST /checkout</div>
+            <div class="messageType">call</div>
+          </div>
+        </div>
+        <div class="mobileMessage" data-type="request">
+          <span class="messageIndex">2</span>
+          <div>
+            <div class="messageRoute">Gateway -> Auth</div>
+            <div class="messageName">validate token</div>
+            <div class="messageType">call</div>
+          </div>
+        </div>
+        <div class="mobileMessage" data-type="return">
+          <span class="messageIndex">3</span>
+          <div>
+            <div class="messageRoute">Auth -> Gateway</div>
+            <div class="messageName">token ok</div>
+            <div class="messageType">return</div>
+          </div>
+        </div>
+        <div class="mobileMessage" data-type="request">
+          <span class="messageIndex">4</span>
+          <div>
+            <div class="messageRoute">Gateway -> Profile DB</div>
+            <div class="messageName">read profile</div>
+            <div class="messageType">call</div>
+          </div>
+        </div>
+        <div class="mobileMessage" data-type="return">
+          <span class="messageIndex">5</span>
+          <div>
+            <div class="messageRoute">Profile DB -> Gateway</div>
+            <div class="messageName">profile data</div>
+            <div class="messageType">return</div>
+          </div>
+        </div>
+        <div class="mobileMessage" data-type="return">
+          <span class="messageIndex">6</span>
+          <div>
+            <div class="messageRoute">Gateway -> Client</div>
+            <div class="messageName">200 response</div>
+            <div class="messageType">return</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

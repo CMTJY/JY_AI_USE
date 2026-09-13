@@ -1,0 +1,711 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.chartCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacer-16);
+}
+
+.chartTitleBlock {
+  display: grid;
+  gap: var(--spacer-4);
+  min-width: 0;
+}
+
+.chartTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.peakBadge {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  color: var(--brand-text);
+  background: color-mix(in srgb, var(--surface-muted) 72%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--brand) 18%, var(--border));
+  border-radius: var(--radius-full);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  white-space: nowrap;
+}
+
+.chartShell {
+  position: relative;
+  margin-top: var(--spacer-16);
+}
+
+.heatmapSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.monthLabel {
+  fill: var(--text-muted);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  letter-spacing: 0;
+}
+
+.axisLabel {
+  fill: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  letter-spacing: 0;
+}
+
+.heatmapCell {
+  fill: var(--surface-muted);
+  stroke: color-mix(in srgb, var(--border) 72%, transparent);
+  stroke-width: 0.8;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 140ms ease, stroke 140ms ease, stroke-opacity 140ms ease, transform 140ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.heatmapCell[data-level="1"] {
+  fill: color-mix(in srgb, var(--chart-series-2) 28%, var(--surface));
+}
+
+.heatmapCell[data-level="2"] {
+  fill: color-mix(in srgb, var(--chart-series-2) 62%, var(--surface));
+}
+
+.heatmapCell[data-level="3"] {
+  fill: var(--chart-series-3);
+}
+
+.heatmapCell[data-level="4"] {
+  fill: var(--chart-series-1);
+}
+
+.heatmapCell:hover,
+.heatmapCell:focus {
+  outline: none;
+  stroke: var(--text);
+  stroke-opacity: 0.52;
+  transform: scale(1.08);
+}
+
+.chartCard[data-active-level] .heatmapCell {
+  opacity: 0.24;
+}
+
+.chartCard[data-active-level="0"] .heatmapCell[data-level="0"],
+.chartCard[data-active-level="1"] .heatmapCell[data-level="1"],
+.chartCard[data-active-level="2"] .heatmapCell[data-level="2"],
+.chartCard[data-active-level="3"] .heatmapCell[data-level="3"],
+.chartCard[data-active-level="4"] .heatmapCell[data-level="4"] {
+  opacity: 1;
+  stroke: var(--text);
+  stroke-opacity: 0.38;
+}
+
+.chartTooltip {
+  --tooltip-x: 0px;
+  --tooltip-y: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 156px;
+  padding: 7px 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, calc(-100% - 10px));
+  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chartTooltip {
+    background: color-mix(in srgb, var(--surface) 92%, #000000);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.chartTooltip[data-visible="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.chartTooltip[data-placement="bottom"] {
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, 10px);
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacer-8);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipDot {
+  box-sizing: border-box;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.tooltipDot[data-level="1"] {
+  background: color-mix(in srgb, var(--chart-series-2) 28%, var(--surface));
+}
+
+.tooltipDot[data-level="2"] {
+  background: color-mix(in srgb, var(--chart-series-2) 62%, var(--surface));
+}
+
+.tooltipDot[data-level="3"] {
+  background: var(--chart-series-3);
+  border-color: transparent;
+}
+
+.tooltipDot[data-level="4"] {
+  background: var(--chart-series-1);
+  border-color: transparent;
+}
+
+.tooltipName {
+  color: var(--text-muted);
+}
+
+.tooltipValue {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltipLevel {
+  display: block;
+  margin-top: 2px;
+  padding-left: calc(8px + var(--spacer-8));
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.heatmapLegend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacer-8);
+  margin-top: var(--spacer-12);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.legendScale {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-4);
+}
+
+.legendButton {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  appearance: none;
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: calc(var(--radius) / 2);
+  cursor: pointer;
+}
+
+.legendButton[data-level="1"] {
+  background: color-mix(in srgb, var(--chart-series-2) 28%, var(--surface));
+}
+
+.legendButton[data-level="2"] {
+  background: color-mix(in srgb, var(--chart-series-2) 62%, var(--surface));
+}
+
+.legendButton[data-level="3"] {
+  background: var(--chart-series-3);
+}
+
+.legendButton[data-level="4"] {
+  background: var(--chart-series-1);
+}
+
+.legendButton:hover,
+.legendButton:focus,
+.legendButton[data-active="true"],
+.legendButton[aria-pressed="true"] {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .heatmapCell {
+    animation: heatmapCellIn 420ms ease both;
+    animation-delay: calc(var(--i) * 8ms);
+  }
+
+  @keyframes heatmapCellIn {
+    from {
+      opacity: 0;
+      transform: translateY(3px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .chartCard {
+    padding: var(--spacer-16);
+  }
+
+  .chartHeader {
+    display: grid;
+    gap: var(--spacer-8);
+  }
+
+  .peakBadge {
+    width: max-content;
+  }
+
+  .heatmapLegend {
+    justify-content: flex-start;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="heatmap-chart">
+  <section class="chartCard" aria-label="Contribution heatmap">
+    <div class="chartHeader">
+      <div class="chartTitleBlock">
+        <h3 class="chartTitle">Heatmap Chart</h3>
+      </div>
+      <span class="peakBadge">Peak 30</span>
+    </div>
+    <div class="chartShell">
+      <svg class="heatmapSvg" viewBox="0 0 680 210" role="img" aria-labelledby="heatmapChartTitle heatmapChartDesc">
+        <title id="heatmapChartTitle">Contribution heatmap</title>
+        <desc id="heatmapChartDesc">Twenty-four weekly columns and seven weekday rows showing contribution intensity from January through June 2024.</desc>
+        <g class="heatmapPlot" transform="translate(-10 0)">
+          <g aria-hidden="true">
+          <text class="monthLabel" x="154" y="30" text-anchor="middle">Jan</text>
+          <text class="monthLabel" x="242" y="30" text-anchor="middle">Feb</text>
+          <text class="monthLabel" x="330" y="30" text-anchor="middle">Mar</text>
+          <text class="monthLabel" x="418" y="30" text-anchor="middle">Apr</text>
+          <text class="monthLabel" x="506" y="30" text-anchor="middle">May</text>
+          <text class="monthLabel" x="594" y="30" text-anchor="middle">Jun</text>
+          <text class="axisLabel" x="64" y="63" dominant-baseline="central">Mon</text>
+          <text class="axisLabel" x="64" y="83" dominant-baseline="central">Tue</text>
+          <text class="axisLabel" x="64" y="103" dominant-baseline="central">Wed</text>
+          <text class="axisLabel" x="64" y="123" dominant-baseline="central">Thu</text>
+          <text class="axisLabel" x="64" y="143" dominant-baseline="central">Fri</text>
+          <text class="axisLabel" x="64" y="163" dominant-baseline="central">Sat</text>
+          <text class="axisLabel" x="64" y="183" dominant-baseline="central">Sun</text>
+          </g>
+          <g class="heatmapCells">
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-01" x="112" y="54" width="18" height="18" rx="3" style="--i:0" tabindex="0" aria-label="0 contributions on Jan 1"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-02" x="112" y="74" width="18" height="18" rx="3" style="--i:1" tabindex="0" aria-label="0 contributions on Jan 2"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-03" x="112" y="94" width="18" height="18" rx="3" style="--i:2" tabindex="0" aria-label="6 contributions on Jan 3"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-04" x="112" y="114" width="18" height="18" rx="3" style="--i:3" tabindex="0" aria-label="4 contributions on Jan 4"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-05" x="112" y="134" width="18" height="18" rx="3" style="--i:4" tabindex="0" aria-label="0 contributions on Jan 5"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-06" x="112" y="154" width="18" height="18" rx="3" style="--i:5" tabindex="0" aria-label="6 contributions on Jan 6"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-07" x="112" y="174" width="18" height="18" rx="3" style="--i:6" tabindex="0" aria-label="0 contributions on Jan 7"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-08" x="134" y="54" width="18" height="18" rx="3" style="--i:7" tabindex="0" aria-label="0 contributions on Jan 8"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-09" x="134" y="74" width="18" height="18" rx="3" style="--i:8" tabindex="0" aria-label="6 contributions on Jan 9"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-10" x="134" y="94" width="18" height="18" rx="3" style="--i:9" tabindex="0" aria-label="4 contributions on Jan 10"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-01-11" x="134" y="114" width="18" height="18" rx="3" style="--i:10" tabindex="0" aria-label="11 contributions on Jan 11"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-12" x="134" y="134" width="18" height="18" rx="3" style="--i:11" tabindex="0" aria-label="6 contributions on Jan 12"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-13" x="134" y="154" width="18" height="18" rx="3" style="--i:12" tabindex="0" aria-label="4 contributions on Jan 13"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-14" x="134" y="174" width="18" height="18" rx="3" style="--i:13" tabindex="0" aria-label="0 contributions on Jan 14"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-15" x="156" y="54" width="18" height="18" rx="3" style="--i:14" tabindex="0" aria-label="6 contributions on Jan 15"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-16" x="156" y="74" width="18" height="18" rx="3" style="--i:15" tabindex="0" aria-label="4 contributions on Jan 16"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-01-17" x="156" y="94" width="18" height="18" rx="3" style="--i:16" tabindex="0" aria-label="11 contributions on Jan 17"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-01-18" x="156" y="114" width="18" height="18" rx="3" style="--i:17" tabindex="0" aria-label="12 contributions on Jan 18"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-01-19" x="156" y="134" width="18" height="18" rx="3" style="--i:18" tabindex="0" aria-label="10 contributions on Jan 19"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-01-20" x="156" y="154" width="18" height="18" rx="3" style="--i:19" tabindex="0" aria-label="5 contributions on Jan 20"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-21" x="156" y="174" width="18" height="18" rx="3" style="--i:20" tabindex="0" aria-label="0 contributions on Jan 21"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-22" x="178" y="54" width="18" height="18" rx="3" style="--i:21" tabindex="0" aria-label="4 contributions on Jan 22"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-01-23" x="178" y="74" width="18" height="18" rx="3" style="--i:22" tabindex="0" aria-label="11 contributions on Jan 23"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-01-24" x="178" y="94" width="18" height="18" rx="3" style="--i:23" tabindex="0" aria-label="12 contributions on Jan 24"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-01-25" x="178" y="114" width="18" height="18" rx="3" style="--i:24" tabindex="0" aria-label="17 contributions on Jan 25"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-01-26" x="178" y="134" width="18" height="18" rx="3" style="--i:25" tabindex="0" aria-label="11 contributions on Jan 26"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-27" x="178" y="154" width="18" height="18" rx="3" style="--i:26" tabindex="0" aria-label="6 contributions on Jan 27"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-01-28" x="178" y="174" width="18" height="18" rx="3" style="--i:27" tabindex="0" aria-label="4 contributions on Jan 28"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-01-29" x="200" y="54" width="18" height="18" rx="3" style="--i:28" tabindex="0" aria-label="0 contributions on Jan 29"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-01-30" x="200" y="74" width="18" height="18" rx="3" style="--i:29" tabindex="0" aria-label="6 contributions on Jan 30"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-01-31" x="200" y="94" width="18" height="18" rx="3" style="--i:30" tabindex="0" aria-label="10 contributions on Jan 31"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-02-01" x="200" y="114" width="18" height="18" rx="3" style="--i:31" tabindex="0" aria-label="18 contributions on Feb 1"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-02-02" x="200" y="134" width="18" height="18" rx="3" style="--i:32" tabindex="0" aria-label="19 contributions on Feb 2"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-02-03" x="200" y="154" width="18" height="18" rx="3" style="--i:33" tabindex="0" aria-label="10 contributions on Feb 3"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-02-04" x="200" y="174" width="18" height="18" rx="3" style="--i:34" tabindex="0" aria-label="5 contributions on Feb 4"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-02-05" x="222" y="54" width="18" height="18" rx="3" style="--i:35" tabindex="0" aria-label="6 contributions on Feb 5"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-02-06" x="222" y="74" width="18" height="18" rx="3" style="--i:36" tabindex="0" aria-label="10 contributions on Feb 6"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-02-07" x="222" y="94" width="18" height="18" rx="3" style="--i:37" tabindex="0" aria-label="18 contributions on Feb 7"/>
+          <rect class="heatmapCell" data-level="4" data-count="30" data-date="2024-02-08" x="222" y="114" width="18" height="18" rx="3" style="--i:38" tabindex="0" aria-label="30 contributions on Feb 8"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-02-09" x="222" y="134" width="18" height="18" rx="3" style="--i:39" tabindex="0" aria-label="17 contributions on Feb 9"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-02-10" x="222" y="154" width="18" height="18" rx="3" style="--i:40" tabindex="0" aria-label="11 contributions on Feb 10"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-02-11" x="222" y="174" width="18" height="18" rx="3" style="--i:41" tabindex="0" aria-label="6 contributions on Feb 11"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-02-12" x="244" y="54" width="18" height="18" rx="3" style="--i:42" tabindex="0" aria-label="4 contributions on Feb 12"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-02-13" x="244" y="74" width="18" height="18" rx="3" style="--i:43" tabindex="0" aria-label="11 contributions on Feb 13"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-02-14" x="244" y="94" width="18" height="18" rx="3" style="--i:44" tabindex="0" aria-label="19 contributions on Feb 14"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-02-15" x="244" y="114" width="18" height="18" rx="3" style="--i:45" tabindex="0" aria-label="28 contributions on Feb 15"/>
+          <rect class="heatmapCell" data-level="4" data-count="29" data-date="2024-02-16" x="244" y="134" width="18" height="18" rx="3" style="--i:46" tabindex="0" aria-label="29 contributions on Feb 16"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-02-17" x="244" y="154" width="18" height="18" rx="3" style="--i:47" tabindex="0" aria-label="19 contributions on Feb 17"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-02-18" x="244" y="174" width="18" height="18" rx="3" style="--i:48" tabindex="0" aria-label="4 contributions on Feb 18"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-02-19" x="266" y="54" width="18" height="18" rx="3" style="--i:49" tabindex="0" aria-label="0 contributions on Feb 19"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-02-20" x="266" y="74" width="18" height="18" rx="3" style="--i:50" tabindex="0" aria-label="6 contributions on Feb 20"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-02-21" x="266" y="94" width="18" height="18" rx="3" style="--i:51" tabindex="0" aria-label="10 contributions on Feb 21"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-02-22" x="266" y="114" width="18" height="18" rx="3" style="--i:52" tabindex="0" aria-label="18 contributions on Feb 22"/>
+          <rect class="heatmapCell" data-level="4" data-count="30" data-date="2024-02-23" x="266" y="134" width="18" height="18" rx="3" style="--i:53" tabindex="0" aria-label="30 contributions on Feb 23"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-02-24" x="266" y="154" width="18" height="18" rx="3" style="--i:54" tabindex="0" aria-label="17 contributions on Feb 24"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-02-25" x="266" y="174" width="18" height="18" rx="3" style="--i:55" tabindex="0" aria-label="11 contributions on Feb 25"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-02-26" x="288" y="54" width="18" height="18" rx="3" style="--i:56" tabindex="0" aria-label="6 contributions on Feb 26"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-02-27" x="288" y="74" width="18" height="18" rx="3" style="--i:57" tabindex="0" aria-label="10 contributions on Feb 27"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-02-28" x="288" y="94" width="18" height="18" rx="3" style="--i:58" tabindex="0" aria-label="18 contributions on Feb 28"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-02-29" x="288" y="114" width="18" height="18" rx="3" style="--i:59" tabindex="0" aria-label="19 contributions on Feb 29"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-03-01" x="288" y="134" width="18" height="18" rx="3" style="--i:60" tabindex="0" aria-label="28 contributions on Mar 1"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-03-02" x="288" y="154" width="18" height="18" rx="3" style="--i:61" tabindex="0" aria-label="18 contributions on Mar 2"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-03-03" x="288" y="174" width="18" height="18" rx="3" style="--i:62" tabindex="0" aria-label="6 contributions on Mar 3"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-03-04" x="310" y="54" width="18" height="18" rx="3" style="--i:63" tabindex="0" aria-label="4 contributions on Mar 4"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-03-05" x="310" y="74" width="18" height="18" rx="3" style="--i:64" tabindex="0" aria-label="11 contributions on Mar 5"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-03-06" x="310" y="94" width="18" height="18" rx="3" style="--i:65" tabindex="0" aria-label="19 contributions on Mar 6"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-03-07" x="310" y="114" width="18" height="18" rx="3" style="--i:66" tabindex="0" aria-label="28 contributions on Mar 7"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-03-08" x="310" y="134" width="18" height="18" rx="3" style="--i:67" tabindex="0" aria-label="18 contributions on Mar 8"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-03-09" x="310" y="154" width="18" height="18" rx="3" style="--i:68" tabindex="0" aria-label="12 contributions on Mar 9"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-03-10" x="310" y="174" width="18" height="18" rx="3" style="--i:69" tabindex="0" aria-label="4 contributions on Mar 10"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-03-11" x="332" y="54" width="18" height="18" rx="3" style="--i:70" tabindex="0" aria-label="0 contributions on Mar 11"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-03-12" x="332" y="74" width="18" height="18" rx="3" style="--i:71" tabindex="0" aria-label="6 contributions on Mar 12"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-03-13" x="332" y="94" width="18" height="18" rx="3" style="--i:72" tabindex="0" aria-label="10 contributions on Mar 13"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-03-14" x="332" y="114" width="18" height="18" rx="3" style="--i:73" tabindex="0" aria-label="18 contributions on Mar 14"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-03-15" x="332" y="134" width="18" height="18" rx="3" style="--i:74" tabindex="0" aria-label="19 contributions on Mar 15"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-03-16" x="332" y="154" width="18" height="18" rx="3" style="--i:75" tabindex="0" aria-label="10 contributions on Mar 16"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-03-17" x="332" y="174" width="18" height="18" rx="3" style="--i:76" tabindex="0" aria-label="5 contributions on Mar 17"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-03-18" x="354" y="54" width="18" height="18" rx="3" style="--i:77" tabindex="0" aria-label="6 contributions on Mar 18"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-03-19" x="354" y="74" width="18" height="18" rx="3" style="--i:78" tabindex="0" aria-label="4 contributions on Mar 19"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-03-20" x="354" y="94" width="18" height="18" rx="3" style="--i:79" tabindex="0" aria-label="11 contributions on Mar 20"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-03-21" x="354" y="114" width="18" height="18" rx="3" style="--i:80" tabindex="0" aria-label="19 contributions on Mar 21"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-03-22" x="354" y="134" width="18" height="18" rx="3" style="--i:81" tabindex="0" aria-label="10 contributions on Mar 22"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-03-23" x="354" y="154" width="18" height="18" rx="3" style="--i:82" tabindex="0" aria-label="11 contributions on Mar 23"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-03-24" x="354" y="174" width="18" height="18" rx="3" style="--i:83" tabindex="0" aria-label="0 contributions on Mar 24"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-03-25" x="376" y="54" width="18" height="18" rx="3" style="--i:84" tabindex="0" aria-label="0 contributions on Mar 25"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-03-26" x="376" y="74" width="18" height="18" rx="3" style="--i:85" tabindex="0" aria-label="5 contributions on Mar 26"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-03-27" x="376" y="94" width="18" height="18" rx="3" style="--i:86" tabindex="0" aria-label="12 contributions on Mar 27"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-03-28" x="376" y="114" width="18" height="18" rx="3" style="--i:87" tabindex="0" aria-label="10 contributions on Mar 28"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-03-29" x="376" y="134" width="18" height="18" rx="3" style="--i:88" tabindex="0" aria-label="18 contributions on Mar 29"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-03-30" x="376" y="154" width="18" height="18" rx="3" style="--i:89" tabindex="0" aria-label="12 contributions on Mar 30"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-03-31" x="376" y="174" width="18" height="18" rx="3" style="--i:90" tabindex="0" aria-label="4 contributions on Mar 31"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-04-01" x="398" y="54" width="18" height="18" rx="3" style="--i:91" tabindex="0" aria-label="5 contributions on Apr 1"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-04-02" x="398" y="74" width="18" height="18" rx="3" style="--i:92" tabindex="0" aria-label="12 contributions on Apr 2"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-04-03" x="398" y="94" width="18" height="18" rx="3" style="--i:93" tabindex="0" aria-label="10 contributions on Apr 3"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-04-04" x="398" y="114" width="18" height="18" rx="3" style="--i:94" tabindex="0" aria-label="18 contributions on Apr 4"/>
+          <rect class="heatmapCell" data-level="4" data-count="30" data-date="2024-04-05" x="398" y="134" width="18" height="18" rx="3" style="--i:95" tabindex="0" aria-label="30 contributions on Apr 5"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-04-06" x="398" y="154" width="18" height="18" rx="3" style="--i:96" tabindex="0" aria-label="17 contributions on Apr 6"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-04-07" x="398" y="174" width="18" height="18" rx="3" style="--i:97" tabindex="0" aria-label="5 contributions on Apr 7"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-04-08" x="420" y="54" width="18" height="18" rx="3" style="--i:98" tabindex="0" aria-label="6 contributions on Apr 8"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-04-09" x="420" y="74" width="18" height="18" rx="3" style="--i:99" tabindex="0" aria-label="10 contributions on Apr 9"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-04-10" x="420" y="94" width="18" height="18" rx="3" style="--i:100" tabindex="0" aria-label="18 contributions on Apr 10"/>
+          <rect class="heatmapCell" data-level="4" data-count="30" data-date="2024-04-11" x="420" y="114" width="18" height="18" rx="3" style="--i:101" tabindex="0" aria-label="30 contributions on Apr 11"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-04-12" x="420" y="134" width="18" height="18" rx="3" style="--i:102" tabindex="0" aria-label="28 contributions on Apr 12"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-04-13" x="420" y="154" width="18" height="18" rx="3" style="--i:103" tabindex="0" aria-label="18 contributions on Apr 13"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-04-14" x="420" y="174" width="18" height="18" rx="3" style="--i:104" tabindex="0" aria-label="12 contributions on Apr 14"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-04-15" x="442" y="54" width="18" height="18" rx="3" style="--i:105" tabindex="0" aria-label="0 contributions on Apr 15"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-04-16" x="442" y="74" width="18" height="18" rx="3" style="--i:106" tabindex="0" aria-label="5 contributions on Apr 16"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-04-17" x="442" y="94" width="18" height="18" rx="3" style="--i:107" tabindex="0" aria-label="12 contributions on Apr 17"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-04-18" x="442" y="114" width="18" height="18" rx="3" style="--i:108" tabindex="0" aria-label="17 contributions on Apr 18"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-04-19" x="442" y="134" width="18" height="18" rx="3" style="--i:109" tabindex="0" aria-label="18 contributions on Apr 19"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-04-20" x="442" y="154" width="18" height="18" rx="3" style="--i:110" tabindex="0" aria-label="12 contributions on Apr 20"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-04-21" x="442" y="174" width="18" height="18" rx="3" style="--i:111" tabindex="0" aria-label="4 contributions on Apr 21"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-04-22" x="464" y="54" width="18" height="18" rx="3" style="--i:112" tabindex="0" aria-label="0 contributions on Apr 22"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-04-23" x="464" y="74" width="18" height="18" rx="3" style="--i:113" tabindex="0" aria-label="6 contributions on Apr 23"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-04-24" x="464" y="94" width="18" height="18" rx="3" style="--i:114" tabindex="0" aria-label="10 contributions on Apr 24"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-04-25" x="464" y="114" width="18" height="18" rx="3" style="--i:115" tabindex="0" aria-label="11 contributions on Apr 25"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-04-26" x="464" y="134" width="18" height="18" rx="3" style="--i:116" tabindex="0" aria-label="19 contributions on Apr 26"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-04-27" x="464" y="154" width="18" height="18" rx="3" style="--i:117" tabindex="0" aria-label="10 contributions on Apr 27"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-04-28" x="464" y="174" width="18" height="18" rx="3" style="--i:118" tabindex="0" aria-label="5 contributions on Apr 28"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-04-29" x="486" y="54" width="18" height="18" rx="3" style="--i:119" tabindex="0" aria-label="6 contributions on Apr 29"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-04-30" x="486" y="74" width="18" height="18" rx="3" style="--i:120" tabindex="0" aria-label="10 contributions on Apr 30"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-05-01" x="486" y="94" width="18" height="18" rx="3" style="--i:121" tabindex="0" aria-label="11 contributions on May 1"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-05-02" x="486" y="114" width="18" height="18" rx="3" style="--i:122" tabindex="0" aria-label="19 contributions on May 2"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-05-03" x="486" y="134" width="18" height="18" rx="3" style="--i:123" tabindex="0" aria-label="17 contributions on May 3"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-05-04" x="486" y="154" width="18" height="18" rx="3" style="--i:124" tabindex="0" aria-label="11 contributions on May 4"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-05-05" x="486" y="174" width="18" height="18" rx="3" style="--i:125" tabindex="0" aria-label="6 contributions on May 5"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-05-06" x="508" y="54" width="18" height="18" rx="3" style="--i:126" tabindex="0" aria-label="4 contributions on May 6"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-05-07" x="508" y="74" width="18" height="18" rx="3" style="--i:127" tabindex="0" aria-label="5 contributions on May 7"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-05-08" x="508" y="94" width="18" height="18" rx="3" style="--i:128" tabindex="0" aria-label="12 contributions on May 8"/>
+          <rect class="heatmapCell" data-level="3" data-count="17" data-date="2024-05-09" x="508" y="114" width="18" height="18" rx="3" style="--i:129" tabindex="0" aria-label="17 contributions on May 9"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-05-10" x="508" y="134" width="18" height="18" rx="3" style="--i:130" tabindex="0" aria-label="18 contributions on May 10"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-05-11" x="508" y="154" width="18" height="18" rx="3" style="--i:131" tabindex="0" aria-label="12 contributions on May 11"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-05-12" x="508" y="174" width="18" height="18" rx="3" style="--i:132" tabindex="0" aria-label="0 contributions on May 12"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-05-13" x="530" y="54" width="18" height="18" rx="3" style="--i:133" tabindex="0" aria-label="0 contributions on May 13"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-05-14" x="530" y="74" width="18" height="18" rx="3" style="--i:134" tabindex="0" aria-label="6 contributions on May 14"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-05-15" x="530" y="94" width="18" height="18" rx="3" style="--i:135" tabindex="0" aria-label="10 contributions on May 15"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-05-16" x="530" y="114" width="18" height="18" rx="3" style="--i:136" tabindex="0" aria-label="11 contributions on May 16"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-05-17" x="530" y="134" width="18" height="18" rx="3" style="--i:137" tabindex="0" aria-label="12 contributions on May 17"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-05-18" x="530" y="154" width="18" height="18" rx="3" style="--i:138" tabindex="0" aria-label="4 contributions on May 18"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-05-19" x="530" y="174" width="18" height="18" rx="3" style="--i:139" tabindex="0" aria-label="0 contributions on May 19"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-05-20" x="552" y="54" width="18" height="18" rx="3" style="--i:140" tabindex="0" aria-label="6 contributions on May 20"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-05-21" x="552" y="74" width="18" height="18" rx="3" style="--i:141" tabindex="0" aria-label="10 contributions on May 21"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-05-22" x="552" y="94" width="18" height="18" rx="3" style="--i:142" tabindex="0" aria-label="18 contributions on May 22"/>
+          <rect class="heatmapCell" data-level="4" data-count="30" data-date="2024-05-23" x="552" y="114" width="18" height="18" rx="3" style="--i:143" tabindex="0" aria-label="30 contributions on May 23"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-05-24" x="552" y="134" width="18" height="18" rx="3" style="--i:144" tabindex="0" aria-label="28 contributions on May 24"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-05-25" x="552" y="154" width="18" height="18" rx="3" style="--i:145" tabindex="0" aria-label="18 contributions on May 25"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-05-26" x="552" y="174" width="18" height="18" rx="3" style="--i:146" tabindex="0" aria-label="6 contributions on May 26"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-05-27" x="574" y="54" width="18" height="18" rx="3" style="--i:147" tabindex="0" aria-label="4 contributions on May 27"/>
+          <rect class="heatmapCell" data-level="2" data-count="11" data-date="2024-05-28" x="574" y="74" width="18" height="18" rx="3" style="--i:148" tabindex="0" aria-label="11 contributions on May 28"/>
+          <rect class="heatmapCell" data-level="3" data-count="19" data-date="2024-05-29" x="574" y="94" width="18" height="18" rx="3" style="--i:149" tabindex="0" aria-label="19 contributions on May 29"/>
+          <rect class="heatmapCell" data-level="4" data-count="28" data-date="2024-05-30" x="574" y="114" width="18" height="18" rx="3" style="--i:150" tabindex="0" aria-label="28 contributions on May 30"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-05-31" x="574" y="134" width="18" height="18" rx="3" style="--i:151" tabindex="0" aria-label="18 contributions on May 31"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-06-01" x="574" y="154" width="18" height="18" rx="3" style="--i:152" tabindex="0" aria-label="12 contributions on Jun 1"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-06-02" x="574" y="174" width="18" height="18" rx="3" style="--i:153" tabindex="0" aria-label="4 contributions on Jun 2"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-06-03" x="596" y="54" width="18" height="18" rx="3" style="--i:154" tabindex="0" aria-label="0 contributions on Jun 3"/>
+          <rect class="heatmapCell" data-level="1" data-count="6" data-date="2024-06-04" x="596" y="74" width="18" height="18" rx="3" style="--i:155" tabindex="0" aria-label="6 contributions on Jun 4"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-06-05" x="596" y="94" width="18" height="18" rx="3" style="--i:156" tabindex="0" aria-label="10 contributions on Jun 5"/>
+          <rect class="heatmapCell" data-level="3" data-count="18" data-date="2024-06-06" x="596" y="114" width="18" height="18" rx="3" style="--i:157" tabindex="0" aria-label="18 contributions on Jun 6"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-06-07" x="596" y="134" width="18" height="18" rx="3" style="--i:158" tabindex="0" aria-label="12 contributions on Jun 7"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-06-08" x="596" y="154" width="18" height="18" rx="3" style="--i:159" tabindex="0" aria-label="4 contributions on Jun 8"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-06-09" x="596" y="174" width="18" height="18" rx="3" style="--i:160" tabindex="0" aria-label="0 contributions on Jun 9"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-06-10" x="618" y="54" width="18" height="18" rx="3" style="--i:161" tabindex="0" aria-label="0 contributions on Jun 10"/>
+          <rect class="heatmapCell" data-level="1" data-count="4" data-date="2024-06-11" x="618" y="74" width="18" height="18" rx="3" style="--i:162" tabindex="0" aria-label="4 contributions on Jun 11"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-06-12" x="618" y="94" width="18" height="18" rx="3" style="--i:163" tabindex="0" aria-label="5 contributions on Jun 12"/>
+          <rect class="heatmapCell" data-level="2" data-count="12" data-date="2024-06-13" x="618" y="114" width="18" height="18" rx="3" style="--i:164" tabindex="0" aria-label="12 contributions on Jun 13"/>
+          <rect class="heatmapCell" data-level="2" data-count="10" data-date="2024-06-14" x="618" y="134" width="18" height="18" rx="3" style="--i:165" tabindex="0" aria-label="10 contributions on Jun 14"/>
+          <rect class="heatmapCell" data-level="1" data-count="5" data-date="2024-06-15" x="618" y="154" width="18" height="18" rx="3" style="--i:166" tabindex="0" aria-label="5 contributions on Jun 15"/>
+          <rect class="heatmapCell" data-level="0" data-count="0" data-date="2024-06-16" x="618" y="174" width="18" height="18" rx="3" style="--i:167" tabindex="0" aria-label="0 contributions on Jun 16"/>
+          </g>
+        </g>
+      </svg>
+      <div class="chartTooltip" data-visible="false" data-placement="top" aria-hidden="true">
+        <div class="tooltipRow">
+          <span class="tooltipDot" data-level="0"></span>
+          <span class="tooltipName">Jan 1, 2024</span>
+          <span class="tooltipValue">0 contributions</span>
+        </div>
+        <span class="tooltipLevel">Level 0: None</span>
+      </div>
+    </div>
+    <div class="heatmapLegend" aria-label="Contribution intensity legend">
+      <span>Less</span>
+      <span class="legendScale">
+        <button class="legendButton" type="button" data-level="0" aria-label="Highlight none activity" aria-pressed="false"></button>
+        <button class="legendButton" type="button" data-level="1" aria-label="Highlight low activity" aria-pressed="false"></button>
+        <button class="legendButton" type="button" data-level="2" aria-label="Highlight medium activity" aria-pressed="false"></button>
+        <button class="legendButton" type="button" data-level="3" aria-label="Highlight high activity" aria-pressed="false"></button>
+        <button class="legendButton" type="button" data-level="4" aria-label="Highlight peak activity" aria-pressed="false"></button>
+      </span>
+      <span>More</span>
+    </div>
+  </section>
+</div>
+<script>
+(() => {
+  const rootSelector = '.widget[data-dynamic-ui-widget][data-template="heatmap-chart"]:not([data-mounted])';
+  const widgets = Array.from(document.querySelectorAll(rootSelector));
+  if (widgets.length === 0) {
+    return;
+  }
+
+  const levelLabels = ["None", "Low", "Medium", "High", "Peak"];
+  const formatDate = (value) => {
+    const date = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    }).format(date);
+  };
+
+  const initWidget = (widget) => {
+    widget.dataset.mounted = "true";
+    const card = widget.querySelector(".chartCard");
+    const shell = widget.querySelector(".chartShell");
+    const tooltip = widget.querySelector(".chartTooltip");
+    const tooltipDot = widget.querySelector(".tooltipDot");
+    const tooltipName = widget.querySelector(".tooltipName");
+    const tooltipValue = widget.querySelector(".tooltipValue");
+    const tooltipLevel = widget.querySelector(".tooltipLevel");
+    const cells = Array.from(widget.querySelectorAll(".heatmapCell"));
+    const legendButtons = Array.from(widget.querySelectorAll(".legendButton"));
+    let lockedLevel = null;
+
+    if (!card || !shell || !tooltip || !tooltipDot || !tooltipName || !tooltipValue || !tooltipLevel) {
+      return;
+    }
+
+    const setActiveLevel = (level) => {
+      if (level === null) {
+        delete card.dataset.activeLevel;
+      } else {
+        card.dataset.activeLevel = String(level);
+      }
+      legendButtons.forEach((button) => {
+        button.dataset.active = level !== null && button.dataset.level === String(level) ? "true" : "false";
+      });
+    };
+
+    const updatePressed = () => {
+      legendButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", lockedLevel !== null && button.dataset.level === String(lockedLevel) ? "true" : "false");
+      });
+    };
+
+    const clearTemporaryLevel = () => {
+      setActiveLevel(lockedLevel);
+    };
+
+    const positionTooltip = (cell, event) => {
+      const shellRect = shell.getBoundingClientRect();
+      const cellRect = cell.getBoundingClientRect();
+      const rawX = event && typeof event.clientX === "number"
+        ? event.clientX - shellRect.left
+        : cellRect.left + cellRect.width / 2 - shellRect.left;
+      const rawY = event && typeof event.clientY === "number"
+        ? event.clientY - shellRect.top
+        : cellRect.top + cellRect.height / 2 - shellRect.top;
+      const tooltipWidth = tooltip.offsetWidth || 156;
+      const minX = tooltipWidth / 2 + 8;
+      const maxX = Math.max(minX, shellRect.width - tooltipWidth / 2 - 8);
+      const x = Math.min(Math.max(rawX, minX), maxX);
+      const y = Math.min(Math.max(rawY, 12), shellRect.height - 12);
+      tooltip.dataset.placement = y < 54 ? "bottom" : "top";
+      tooltip.style.setProperty("--tooltip-x", `${Math.round(x)}px`);
+      tooltip.style.setProperty("--tooltip-y", `${Math.round(y)}px`);
+    };
+
+    const showTooltip = (cell, event) => {
+      const count = Number.parseInt(cell.dataset.count || "0", 10);
+      const level = Math.max(0, Math.min(4, Number.parseInt(cell.dataset.level || "0", 10)));
+      const safeCount = Number.isFinite(count) ? count : 0;
+      tooltipDot.dataset.level = String(level);
+      tooltipName.textContent = formatDate(cell.dataset.date || "");
+      tooltipValue.textContent = `${safeCount} ${safeCount === 1 ? "contribution" : "contributions"}`;
+      tooltipLevel.textContent = `Level ${level}: ${levelLabels[level]}`;
+      positionTooltip(cell, event);
+      tooltip.dataset.visible = "true";
+      tooltip.setAttribute("aria-hidden", "false");
+    };
+
+    const hideTooltip = () => {
+      tooltip.dataset.visible = "false";
+      tooltip.setAttribute("aria-hidden", "true");
+    };
+
+    cells.forEach((cell) => {
+      cell.addEventListener("pointerenter", (event) => showTooltip(cell, event));
+      cell.addEventListener("pointermove", (event) => positionTooltip(cell, event));
+      cell.addEventListener("pointerleave", hideTooltip);
+      cell.addEventListener("focus", () => showTooltip(cell));
+      cell.addEventListener("blur", hideTooltip);
+    });
+
+    legendButtons.forEach((button) => {
+      const level = button.dataset.level;
+      button.addEventListener("pointerenter", () => setActiveLevel(level));
+      button.addEventListener("pointerleave", clearTemporaryLevel);
+      button.addEventListener("focus", () => setActiveLevel(level));
+      button.addEventListener("blur", clearTemporaryLevel);
+      button.addEventListener("click", () => {
+        lockedLevel = lockedLevel === level ? null : level;
+        setActiveLevel(lockedLevel);
+        updatePressed();
+      });
+    });
+
+    updatePressed();
+  };
+
+  widgets.forEach(initWidget);
+})();
+</script>

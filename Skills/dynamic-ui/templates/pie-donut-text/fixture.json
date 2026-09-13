@@ -1,0 +1,38 @@
+{
+  "title": "Pie Chart - Donut with Text",
+  "nameKey": "browser",
+  "dataKey": "visitors",
+  "centerLabel": "Visitors",
+  "chartData": [
+    { "browser": "chrome", "visitors": 275, "fill": "var(--chart-series-1)" },
+    { "browser": "safari", "visitors": 200, "fill": "var(--chart-series-2)" },
+    { "browser": "firefox", "visitors": 287, "fill": "var(--chart-series-3)" },
+    { "browser": "edge", "visitors": 173, "fill": "var(--chart-series-4)" },
+    { "browser": "other", "visitors": 190, "fill": "var(--chart-other)" }
+  ],
+  "chartConfig": {
+    "visitors": {
+      "label": "Visitors"
+    },
+    "chrome": {
+      "label": "Chrome",
+      "color": "var(--chart-series-1)"
+    },
+    "safari": {
+      "label": "Safari",
+      "color": "var(--chart-series-2)"
+    },
+    "firefox": {
+      "label": "Firefox",
+      "color": "var(--chart-series-3)"
+    },
+    "edge": {
+      "label": "Edge",
+      "color": "var(--chart-series-4)"
+    },
+    "other": {
+      "label": "Other",
+      "color": "var(--chart-other)"
+    }
+  }
+}

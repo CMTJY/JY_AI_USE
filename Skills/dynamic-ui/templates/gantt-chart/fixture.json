@@ -1,0 +1,71 @@
+{
+  "title": "Launch schedule",
+  "start": "2026-07-01",
+  "end": "2026-08-16",
+  "today": "2026-07-24",
+  "tasks": [
+    {
+      "id": "discovery",
+      "name": "Discovery",
+      "owner": "PM",
+      "start": "2026-07-01",
+      "end": "2026-07-08",
+      "progress": 100,
+      "status": "Done",
+      "dependencies": [],
+      "critical": true
+    },
+    {
+      "id": "ux-spec",
+      "name": "UX spec",
+      "owner": "Design",
+      "start": "2026-07-10",
+      "end": "2026-07-19",
+      "progress": 72,
+      "status": "In progress",
+      "dependencies": ["discovery"],
+      "critical": true
+    },
+    {
+      "id": "build",
+      "name": "Build",
+      "owner": "Frontend",
+      "start": "2026-07-20",
+      "end": "2026-08-04",
+      "progress": 46,
+      "status": "In progress",
+      "dependencies": ["ux-spec"],
+      "critical": true
+    },
+    {
+      "id": "integration",
+      "name": "Integration",
+      "owner": "QA",
+      "start": "2026-08-05",
+      "end": "2026-08-12",
+      "progress": 18,
+      "status": "Blocked risk",
+      "dependencies": ["build"],
+      "critical": true
+    },
+    {
+      "id": "launch-prep",
+      "name": "Launch prep",
+      "owner": "Ops",
+      "start": "2026-08-13",
+      "end": "2026-08-16",
+      "progress": 0,
+      "status": "Queued",
+      "dependencies": ["integration"],
+      "critical": false
+    }
+  ],
+  "holidays": [
+    { "start": "2026-07-04", "end": "2026-07-06", "label": "Weekend" },
+    { "start": "2026-07-11", "end": "2026-07-13", "label": "Weekend" },
+    { "start": "2026-07-18", "end": "2026-07-20", "label": "Weekend" },
+    { "start": "2026-07-25", "end": "2026-07-27", "label": "Weekend" },
+    { "start": "2026-08-01", "end": "2026-08-03", "label": "Weekend" },
+    { "start": "2026-08-08", "end": "2026-08-10", "label": "Weekend" }
+  ]
+}

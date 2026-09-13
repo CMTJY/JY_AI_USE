@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "templateRoot": "templates",
+  "outputFile": "widget-code.html",
+  "templates": [
+    {
+      "id": "line-trend",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "trend_over_time"
+    },
+    {
+      "id": "bar-chart-multiple",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "grouped_bar_comparison"
+    },
+    {
+      "id": "scatter-chart",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "correlation_scatterplot"
+    },
+    {
+      "id": "gantt-chart",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "architecture-and-flow",
+      "intent": "project_schedule_gantt"
+    },
+    {
+      "id": "funnel-bar-chart",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "pipeline_conversion_funnel_bar"
+    },
+    {
+      "id": "sankey-chart",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "flow_magnitude_sankey"
+    },
+    {
+      "id": "heatmap-chart",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "contribution_heatmap"
+    },
+    {
+      "id": "pie-donut-text",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "composition_with_center_metric"
+    },
+    {
+      "id": "bar-stacked-legend",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "stacked_part_to_whole"
+    },
+    {
+      "id": "pie-chart-label-list",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "part_to_whole_label_list"
+    },
+    {
+      "id": "radar-chart-legend",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "radar_profile_comparison"
+    },
+    {
+      "id": "radar-chart-lines-only",
+      "status": "ready",
+      "kind": "chart",
+      "scene": "data-visualization",
+      "intent": "radar_profile_lines_only"
+    },
+    {
+      "id": "comparison-cards",
+      "status": "ready",
+      "kind": "comparison",
+      "scene": "comparison-and-decision",
+      "intent": "multi_option_comparison_cards"
+    },
+    {
+      "id": "tree-flow",
+      "status": "ready",
+      "kind": "diagram",
+      "scene": "architecture-and-flow",
+      "intent": "horizontal_node_tree_flow"
+    },
+    {
+      "id": "architecture-elements",
+      "status": "ready",
+      "kind": "diagram",
+      "scene": "architecture-and-flow",
+      "intent": "architecture_element_palette"
+    },
+    {
+      "id": "sequence-diagram",
+      "status": "ready",
+      "kind": "diagram",
+      "scene": "architecture-and-flow",
+      "intent": "sequence_diagram_call_chain"
+    }
+  ]
+}

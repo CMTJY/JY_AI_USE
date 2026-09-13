@@ -1,0 +1,883 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.ganttCard {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.ganttHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacer-16);
+}
+
+.ganttTitleBlock {
+  display: grid;
+  gap: var(--spacer-4);
+  min-width: 0;
+}
+
+.ganttTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacer-8);
+  margin-top: var(--spacer-16);
+}
+
+.summaryItem {
+  min-width: 0;
+  padding: var(--spacer-8) var(--spacer-12);
+  background: color-mix(in srgb, var(--surface-muted) 48%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
+  border-radius: var(--radius);
+}
+
+.summaryValue {
+  display: block;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.summaryLabel {
+  display: block;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ganttGrid {
+  display: grid;
+  grid-template-columns: minmax(118px, 164px) minmax(0, 1fr);
+  margin-top: var(--spacer-16);
+  border: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.taskHead,
+.timelineHead {
+  min-width: 0;
+  background: color-mix(in srgb, var(--surface-muted) 68%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+}
+
+.taskHead {
+  display: flex;
+  align-items: end;
+  padding: var(--spacer-12);
+  color: var(--text-muted);
+  border-right: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.timelineHead {
+  display: grid;
+  grid-template-rows: 30px 30px;
+}
+
+.timelineBand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacer-8);
+  padding: 0 var(--spacer-12);
+  color: var(--text-muted);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.todayBadge {
+  color: var(--brand);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.tickRow {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: center;
+}
+
+.tickLabel {
+  min-width: 0;
+  padding: 0 var(--spacer-8);
+  color: var(--text-muted);
+  border-left: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tickLabel:first-child {
+  border-left: 0;
+}
+
+.taskNames {
+  display: grid;
+  grid-template-rows: repeat(5, 48px);
+  background: var(--surface);
+  border-right: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+}
+
+.taskName {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-8);
+  min-width: 0;
+  padding: 0 var(--spacer-12);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+}
+
+.taskName:last-child {
+  border-bottom: 0;
+}
+
+.taskDot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.taskName[data-critical="false"] .taskDot {
+  background: var(--chart-series-2);
+}
+
+.taskText {
+  min-width: 0;
+}
+
+.taskLabel {
+  display: block;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskOwner {
+  display: block;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trackWrap {
+  position: relative;
+  display: grid;
+  grid-template-rows: repeat(5, 48px);
+  min-width: 0;
+  background-image:
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 58%, transparent) 1px, transparent 1px);
+  background-size: 100% 48px;
+}
+
+.calendarBand,
+.gridLayer,
+.todayLine,
+.dependencyLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.calendarBand {
+  top: 0;
+  bottom: 0;
+  left: var(--x);
+  z-index: 0;
+  width: var(--w);
+  background: color-mix(in srgb, var(--surface-muted) 28%, transparent);
+  opacity: 0.4;
+}
+
+.gridLayer {
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.gridLine {
+  min-width: 0;
+  border-left: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+}
+
+.gridLine:first-child {
+  border-left: 0;
+}
+
+.todayLine {
+  left: var(--today-x);
+  width: 0;
+  border-left: 1.5px solid var(--brand);
+  opacity: 0.86;
+  z-index: 2;
+}
+
+.todayLine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--brand);
+}
+
+.dependencyLayer {
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dependencyPath {
+  fill: none;
+  stroke: color-mix(in srgb, var(--text-muted) 42%, transparent);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.lane {
+  position: relative;
+  min-width: 0;
+}
+
+.taskBar {
+  position: absolute;
+  top: 10px;
+  left: var(--x);
+  z-index: 4;
+  box-sizing: border-box;
+  width: var(--w);
+  min-width: 44px;
+  max-width: calc(100% - var(--x));
+  height: 28px;
+  padding: 0 var(--spacer-8);
+  color: var(--brand-on);
+  background: color-mix(in srgb, var(--brand) 86%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--brand) 88%, var(--surface));
+  border-radius: var(--radius);
+  box-shadow: none;
+  cursor: default;
+  overflow: hidden;
+  text-align: left;
+}
+
+.taskBar[data-critical="false"] {
+  color: var(--brand-text);
+  background: color-mix(in srgb, var(--chart-series-2) 46%, var(--surface));
+  border-color: color-mix(in srgb, var(--chart-series-2) 78%, var(--surface));
+  box-shadow: none;
+}
+
+.taskBar:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--brand) 52%, transparent);
+  outline-offset: 2px;
+}
+
+.taskBar.is-active {
+  transform: translateY(-1px);
+}
+
+.barLabel {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chartTooltip {
+  --tooltip-x: 0px;
+  --tooltip-y: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  min-width: 190px;
+  padding: 8px 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--border) 74%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 28px rgba(23, 23, 23, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.chartTooltip[data-show="true"] {
+  opacity: 1;
+}
+
+.tooltipHeader {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--spacer-8);
+  margin-bottom: var(--spacer-4);
+}
+
+.tooltipDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.tooltipDot[data-critical="false"] {
+  background: var(--chart-series-2);
+}
+
+.tooltipName {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacer-12);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipValue {
+  color: var(--text);
+  text-align: right;
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.ganttStatus {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  opacity: 0;
+}
+
+.ganttCard[data-error="true"] .ganttStatus {
+  max-height: 40px;
+  margin: var(--spacer-8) 0 0;
+  opacity: 1;
+}
+
+
+@media (max-width: 560px) {
+  .ganttCard {
+    padding: var(--spacer-16);
+  }
+
+  .ganttHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .ganttHeader {
+    display: grid;
+  }
+
+  .summaryRow {
+    grid-template-columns: 1fr;
+  }
+
+  .ganttGrid {
+    grid-template-columns: minmax(104px, 124px) minmax(0, 1fr);
+  }
+
+  .taskHead,
+  .taskName {
+    padding-left: var(--spacer-8);
+    padding-right: var(--spacer-8);
+  }
+
+  .timelineBand {
+    padding: 0 var(--spacer-8);
+  }
+
+  .tickLabel {
+    padding: 0 4px;
+  }
+
+  .barLabel {
+    font: var(--weight-medium) 11px/16px var(--font-sans);
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="gantt-chart">
+  <section class="ganttCard" data-start="2026-07-01" data-end="2026-08-16" data-today="2026-07-24">
+    <div class="ganttHeader">
+      <div class="ganttTitleBlock">
+        <h3 class="ganttTitle">Launch schedule</h3>
+      </div>
+    </div>
+
+    <div class="summaryRow" aria-label="Schedule summary">
+      <div class="summaryItem">
+        <span class="summaryValue">47 days</span>
+        <span class="summaryLabel">project window</span>
+      </div>
+      <div class="summaryItem">
+        <span class="summaryValue">5 tasks</span>
+        <span class="summaryLabel">visible scope</span>
+      </div>
+      <div class="summaryItem">
+        <span class="summaryValue">4 links</span>
+        <span class="summaryLabel">critical dependencies</span>
+      </div>
+    </div>
+
+    <div class="ganttGrid">
+      <div class="taskHead">Task</div>
+      <div class="timelineHead">
+        <div class="timelineBand">
+          <span>Jul 1 - Aug 16</span>
+          <span class="todayBadge">Today Jul 24</span>
+        </div>
+        <div class="tickRow" data-tick-row>
+          <span class="tickLabel">Jul 1</span>
+          <span class="tickLabel">Jul 8</span>
+          <span class="tickLabel">Jul 15</span>
+          <span class="tickLabel">Jul 22</span>
+          <span class="tickLabel">Jul 29</span>
+          <span class="tickLabel">Aug 5</span>
+          <span class="tickLabel">Aug 12</span>
+        </div>
+      </div>
+
+      <div class="taskNames">
+        <div class="taskName" data-task-name="discovery" data-critical="true">
+          <span class="taskDot"></span>
+          <span class="taskText"><span class="taskLabel">Discovery</span><span class="taskOwner">PM</span></span>
+        </div>
+        <div class="taskName" data-task-name="ux-spec" data-critical="true">
+          <span class="taskDot"></span>
+          <span class="taskText"><span class="taskLabel">UX spec</span><span class="taskOwner">Design</span></span>
+        </div>
+        <div class="taskName" data-task-name="build" data-critical="true">
+          <span class="taskDot"></span>
+          <span class="taskText"><span class="taskLabel">Build</span><span class="taskOwner">Frontend</span></span>
+        </div>
+        <div class="taskName" data-task-name="integration" data-critical="true">
+          <span class="taskDot"></span>
+          <span class="taskText"><span class="taskLabel">Integration</span><span class="taskOwner">QA</span></span>
+        </div>
+        <div class="taskName" data-task-name="launch-prep" data-critical="false">
+          <span class="taskDot"></span>
+          <span class="taskText"><span class="taskLabel">Launch prep</span><span class="taskOwner">Ops</span></span>
+        </div>
+      </div>
+
+      <div class="trackWrap" data-track-wrap>
+        <span class="gridLayer" data-grid-layer aria-hidden="true" style="grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 5fr;">
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+          <span class="gridLine"></span>
+        </span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-07-04" data-end="2026-07-06" style="--x: 6.38%; --w: 4.26%;"></span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-07-11" data-end="2026-07-13" style="--x: 21.28%; --w: 4.26%;"></span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-07-18" data-end="2026-07-20" style="--x: 36.17%; --w: 4.26%;"></span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-07-25" data-end="2026-07-27" style="--x: 51.06%; --w: 4.26%;"></span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-08-01" data-end="2026-08-03" style="--x: 65.96%; --w: 4.26%;"></span>
+        <span class="calendarBand" data-holiday="Weekend" data-start="2026-08-08" data-end="2026-08-10" style="--x: 80.85%; --w: 4.26%;"></span>
+        <span class="todayLine" aria-hidden="true" style="--today-x: 48.94%;"></span>
+        <svg class="dependencyLayer" viewBox="0 0 1000 240" preserveAspectRatio="none" aria-hidden="true">
+          <path class="dependencyPath" d="M142 24H184Q190 24 190 30V66Q190 72 196 72H204"></path>
+          <path class="dependencyPath" d="M382 72H424Q430 72 430 78V114Q430 120 424 120H424"></path>
+          <path class="dependencyPath" d="M752 120H784Q790 120 790 126V162Q790 168 784 168H794"></path>
+          <path class="dependencyPath" d="M942 168H969Q975 168 975 174V210Q975 216 969 216H914"></path>
+        </svg>
+        <div class="lane">
+          <button class="taskBar" type="button" data-id="discovery" data-name="Discovery" data-owner="PM" data-start="2026-07-01" data-end="2026-07-08" data-progress="100" data-status="Done" data-critical="true" data-dependencies="" style="--x: 0%; --w: 17.02%;">
+            <span class="barLabel">Discovery</span>
+          </button>
+        </div>
+        <div class="lane">
+          <button class="taskBar" type="button" data-id="ux-spec" data-name="UX spec" data-owner="Design" data-start="2026-07-10" data-end="2026-07-19" data-progress="72" data-status="In progress" data-critical="true" data-dependencies="discovery" style="--x: 19.15%; --w: 21.28%;">
+            <span class="barLabel">UX spec</span>
+          </button>
+        </div>
+        <div class="lane">
+          <button class="taskBar" type="button" data-id="build" data-name="Build" data-owner="Frontend" data-start="2026-07-20" data-end="2026-08-04" data-progress="46" data-status="In progress" data-critical="true" data-dependencies="ux-spec" style="--x: 40.43%; --w: 34.04%;">
+            <span class="barLabel">Build</span>
+          </button>
+        </div>
+        <div class="lane">
+          <button class="taskBar" type="button" data-id="integration" data-name="Integration" data-owner="QA" data-start="2026-08-05" data-end="2026-08-12" data-progress="18" data-status="Blocked risk" data-critical="true" data-dependencies="build" style="--x: 74.47%; --w: 17.02%;">
+            <span class="barLabel">Integration</span>
+          </button>
+        </div>
+        <div class="lane">
+          <button class="taskBar" type="button" data-id="launch-prep" data-name="Launch prep" data-owner="Ops" data-start="2026-08-13" data-end="2026-08-16" data-progress="0" data-status="Queued" data-critical="false" data-dependencies="integration" style="--x: 91.49%; --w: 8.51%;">
+            <span class="barLabel">Launch</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p class="ganttStatus" data-status-message aria-hidden="true">Invalid task dates were skipped.</p>
+    <div class="chartTooltip" aria-hidden="true">
+      <div class="tooltipHeader">
+        <span class="tooltipDot" data-critical="true"></span>
+        <p class="tooltipName">Task</p>
+      </div>
+      <div class="tooltipRow"><span>Window</span><span class="tooltipValue" data-tooltip="window">-</span></div>
+      <div class="tooltipRow"><span>Owner</span><span class="tooltipValue" data-tooltip="owner">-</span></div>
+      <div class="tooltipRow"><span>Progress</span><span class="tooltipValue" data-tooltip="progress">-</span></div>
+      <div class="tooltipRow"><span>Status</span><span class="tooltipValue" data-tooltip="status">-</span></div>
+    </div>
+  </section>
+</div>
+<script>
+(() => {
+  const rootSelector = '.widget[data-dynamic-ui-widget][data-template="gantt-chart"]:not([data-mounted])';
+  const dayMs = 24 * 60 * 60 * 1000;
+  const svgNs = 'http://www.w3.org/2000/svg';
+
+  const parseDate = (value) => {
+    if (!value) return null;
+    const date = new Date(`${value}T00:00:00`);
+    return Number.isNaN(date.getTime()) ? null : date;
+  };
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  const formatDate = (date) => {
+    if (!date) return '-';
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  const percentBetween = (date, start, totalDays) => {
+    if (!date) return 0;
+    return clamp(((date - start) / dayMs / totalDays) * 100, 0, 100);
+  };
+
+  const makeSvgNode = (tag, attrs = {}) => {
+    const node = document.createElementNS(svgNs, tag);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+    return node;
+  };
+
+  const roundedConnectorPath = (sourceX, sourceY, elbowX, targetY, targetX) => {
+    const horizontalIn = Math.sign(elbowX - sourceX) || 1;
+    const vertical = Math.sign(targetY - sourceY) || 1;
+    const horizontalOut = Math.sign(targetX - elbowX) || 1;
+    const firstRadius = Math.max(3, Math.min(
+      10,
+      Math.abs(elbowX - sourceX) / 2,
+      Math.abs(targetY - sourceY) / 2
+    ));
+    const secondRadius = Math.max(3, Math.min(
+      10,
+      Math.abs(targetY - sourceY) / 2,
+      Math.abs(targetX - elbowX) / 2
+    ));
+    const beforeElbowX = elbowX - horizontalIn * firstRadius;
+    const afterElbowY = sourceY + vertical * firstRadius;
+    const beforeTargetY = targetY - vertical * secondRadius;
+    const afterTargetX = elbowX + horizontalOut * secondRadius;
+    return [
+      `M${sourceX.toFixed(1)} ${sourceY}`,
+      `H${beforeElbowX.toFixed(1)}`,
+      `Q${elbowX.toFixed(1)} ${sourceY} ${elbowX.toFixed(1)} ${afterElbowY.toFixed(1)}`,
+      `V${beforeTargetY.toFixed(1)}`,
+      `Q${elbowX.toFixed(1)} ${targetY} ${afterTargetX.toFixed(1)} ${targetY}`,
+      `H${targetX.toFixed(1)}`
+    ].join('');
+  };
+
+  const weekTicks = {
+    labels: ['Jul 1', 'Jul 8', 'Jul 15', 'Jul 22', 'Jul 29', 'Aug 5', 'Aug 12'],
+    weights: [7, 7, 7, 7, 7, 7, 5]
+  };
+
+  document.querySelectorAll(rootSelector).forEach((widget) => {
+    widget.setAttribute('data-mounted', 'true');
+
+    const card = widget.querySelector('.ganttCard');
+    const track = widget.querySelector('[data-track-wrap]');
+    const tickRow = widget.querySelector('[data-tick-row]');
+    const gridLayer = widget.querySelector('[data-grid-layer]');
+    const tooltip = widget.querySelector('.chartTooltip');
+    const svg = widget.querySelector('.dependencyLayer');
+    const statusMessage = widget.querySelector('[data-status-message]');
+    const start = parseDate(card.dataset.start);
+    const end = parseDate(card.dataset.end);
+    const today = parseDate(card.dataset.today);
+
+    if (!card || !track || !tickRow || !svg || !start || !end || end <= start) {
+      if (card) card.dataset.error = 'true';
+      return;
+    }
+
+    const totalDays = Math.max(1, Math.round((end - start) / dayMs) + 1);
+    const bars = [...widget.querySelectorAll('.taskBar')];
+    const lanes = [...widget.querySelectorAll('.lane')];
+    const taskMap = new Map();
+    let invalidCount = 0;
+
+    const tasks = bars.map((bar, index) => {
+      const taskStart = parseDate(bar.dataset.start);
+      const taskEnd = parseDate(bar.dataset.end);
+      const isValid = taskStart && taskEnd && taskEnd >= taskStart;
+      const progress = clamp(Number.parseFloat(bar.dataset.progress || '0') || 0, 0, 100);
+      const task = {
+        id: bar.dataset.id,
+        name: bar.dataset.name || 'Task',
+        owner: bar.dataset.owner || '-',
+        start: taskStart,
+        end: taskEnd,
+        progress,
+        status: bar.dataset.status || '-',
+        dependencies: (bar.dataset.dependencies || '').split(',').map((item) => item.trim()).filter(Boolean),
+        critical: bar.dataset.critical !== 'false',
+        bar,
+        index
+      };
+
+      if (!isValid) {
+        invalidCount += 1;
+        bar.dataset.invalid = 'true';
+      }
+
+      taskMap.set(task.id, task);
+      return task;
+    });
+
+    const placeTimeItems = () => {
+      tasks.forEach((task) => {
+        if (!task.start || !task.end || task.end < task.start) return;
+        const startPct = percentBetween(task.start, start, totalDays);
+        const rawEndPct = percentBetween(new Date(task.end.getTime() + dayMs), start, totalDays);
+        const widthPct = Math.max(rawEndPct - startPct, 2.5);
+        task.bar.style.setProperty('--x', `${startPct.toFixed(2)}%`);
+        task.bar.style.setProperty('--w', `${Math.min(widthPct, 100 - startPct).toFixed(2)}%`);
+      });
+
+      widget.querySelectorAll('.calendarBand').forEach((band) => {
+        const bandStart = parseDate(band.dataset.start);
+        const bandEnd = parseDate(band.dataset.end);
+        if (!bandStart || !bandEnd || bandEnd < bandStart) return;
+        const x = percentBetween(bandStart, start, totalDays);
+        const endPct = percentBetween(bandEnd, start, totalDays);
+        band.style.setProperty('--x', `${x.toFixed(2)}%`);
+        band.style.setProperty('--w', `${Math.max(endPct - x, 1.5).toFixed(2)}%`);
+      });
+
+      const todayLine = widget.querySelector('.todayLine');
+      if (todayLine && today) {
+        const todayPct = percentBetween(today, start, totalDays);
+        todayLine.style.setProperty('--today-x', `${todayPct.toFixed(2)}%`);
+        todayLine.style.opacity = today < start || today > end ? '0.18' : '0.86';
+      }
+    };
+
+    const drawDependencies = () => {
+      const height = Math.max(48, lanes.length * 48);
+      svg.setAttribute('viewBox', `0 0 1000 ${height}`);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      tasks.forEach((task) => {
+        task.dependencies.forEach((dependencyId) => {
+          const dependency = taskMap.get(dependencyId);
+          if (!dependency || !dependency.start || !dependency.end || !task.start) return;
+
+          const sourceX = Math.max(0, percentBetween(new Date(dependency.end.getTime() + dayMs), start, totalDays) * 10 - 8);
+          const targetX = Math.min(1000, percentBetween(task.start, start, totalDays) * 10 + 14);
+          const sourceY = dependency.index * 48 + 24;
+          const targetY = task.index * 48 + 24;
+          const elbow = Math.min(990, Math.max(sourceX + 24, targetX + 18, 24));
+          const path = makeSvgNode('path', {
+            class: 'dependencyPath',
+            d: roundedConnectorPath(sourceX, sourceY, elbow, targetY, targetX)
+          });
+          svg.appendChild(path);
+        });
+      });
+    };
+
+    const renderWeekTicks = () => {
+      const ticks = weekTicks;
+      const totalWeight = ticks.weights.reduce((sum, weight) => sum + weight, 0);
+      tickRow.style.gridTemplateColumns = ticks.weights.map((weight) => `${weight}fr`).join(' ');
+      if (gridLayer) gridLayer.style.gridTemplateColumns = tickRow.style.gridTemplateColumns;
+      tickRow.replaceChildren(...ticks.labels.map((label) => {
+        const item = document.createElement('span');
+        item.className = 'tickLabel';
+        item.textContent = label;
+        return item;
+      }));
+      if (gridLayer && totalWeight > 0) {
+        const gridLines = ticks.weights.map(() => {
+          const line = document.createElement('span');
+          line.className = 'gridLine';
+          return line;
+        });
+        gridLayer.replaceChildren(...gridLines);
+      }
+      window.requestAnimationFrame(drawDependencies);
+    };
+
+    const showTooltip = (event, task) => {
+      if (!tooltip || !task) return;
+      const tooltipDot = tooltip.querySelector('.tooltipDot');
+      if (tooltipDot) tooltipDot.dataset.critical = task.critical ? 'true' : 'false';
+      tooltip.querySelector('.tooltipName').textContent = task.name;
+      tooltip.querySelector('[data-tooltip="window"]').textContent = `${formatDate(task.start)} - ${formatDate(task.end)}`;
+      tooltip.querySelector('[data-tooltip="owner"]').textContent = task.owner;
+      tooltip.querySelector('[data-tooltip="progress"]').textContent = `${Math.round(task.progress)}%`;
+      tooltip.querySelector('[data-tooltip="status"]').textContent = task.status;
+      tooltip.dataset.show = 'true';
+      tooltip.setAttribute('aria-hidden', 'false');
+
+      const cardRect = card.getBoundingClientRect();
+      const barRect = task.bar.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const pointerX = event && 'clientX' in event ? event.clientX : barRect.left + barRect.width / 2;
+      const rawX = pointerX - cardRect.left - tooltipRect.width / 2;
+      const x = clamp(rawX, 8, Math.max(8, cardRect.width - tooltipRect.width - 8));
+      const aboveY = barRect.top - cardRect.top - tooltipRect.height - 8;
+      const belowY = barRect.bottom - cardRect.top + 8;
+      const y = aboveY < 4 ? belowY : aboveY;
+      tooltip.style.setProperty('--tooltip-x', `${x}px`);
+      tooltip.style.setProperty('--tooltip-y', `${y}px`);
+    };
+
+    const hideTooltip = () => {
+      if (!tooltip) return;
+      tooltip.dataset.show = 'false';
+      tooltip.setAttribute('aria-hidden', 'true');
+      bars.forEach((bar) => bar.classList.remove('is-active'));
+    };
+
+    tasks.forEach((task) => {
+      task.bar.addEventListener('pointerenter', (event) => {
+        task.bar.classList.add('is-active');
+        showTooltip(event, task);
+      });
+      task.bar.addEventListener('pointermove', (event) => showTooltip(event, task));
+      task.bar.addEventListener('pointerleave', hideTooltip);
+      task.bar.addEventListener('focus', (event) => {
+        task.bar.classList.add('is-active');
+        showTooltip(event, task);
+      });
+      task.bar.addEventListener('blur', hideTooltip);
+    });
+
+    placeTimeItems();
+    renderWeekTicks();
+    if (invalidCount > 0 && statusMessage) {
+      card.dataset.error = 'true';
+      statusMessage.textContent = `${invalidCount} invalid task date${invalidCount === 1 ? '' : 's'} skipped.`;
+      statusMessage.setAttribute('aria-hidden', 'false');
+    }
+    window.addEventListener('resize', drawDependencies, { passive: true });
+  });
+})();
+</script>

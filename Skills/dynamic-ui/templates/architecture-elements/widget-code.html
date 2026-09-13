@@ -1,0 +1,421 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.paletteCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.paletteHeader {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.paletteTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.paletteSurface {
+  margin-top: var(--spacer-16);
+  display: grid;
+  gap: var(--spacer-16);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: var(--radius);
+  padding: var(--spacer-16);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--spacer-8);
+  color: var(--text-muted);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.blockGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacer-12);
+}
+
+.sampleBlock {
+  box-sizing: border-box;
+  min-height: 84px;
+  display: grid;
+  align-content: center;
+  gap: var(--spacer-4);
+  padding: var(--spacer-12);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-radius: var(--radius);
+}
+
+.sampleBlock[data-role="brand"] {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 6%, var(--surface));
+}
+
+.sampleBlock[data-role="boundary"] {
+  min-height: 84px;
+  border-style: dashed;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+}
+
+.sampleBlock[data-role="external"] {
+  border-color: color-mix(in srgb, var(--text-muted) 42%, var(--border));
+}
+
+.blockLabel {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-body) var(--font-sans);
+}
+
+.sampleBlock[data-role="brand"] .blockLabel {
+  color: var(--brand-text);
+}
+
+.blockCaption {
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.sampleBlock[data-role="brand"] .blockCaption {
+  color: var(--brand);
+}
+
+.portRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-8);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.portDot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 1.5px solid color-mix(in srgb, var(--brand) 64%, var(--border));
+}
+
+.lineGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacer-12);
+}
+
+.lineSample {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) auto;
+  align-items: center;
+  gap: var(--spacer-12);
+  min-height: 54px;
+  padding: var(--spacer-12);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-radius: var(--radius);
+}
+
+.lineLabel {
+  min-width: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.lineCaption {
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.lineSvg {
+  width: 150px;
+  height: 28px;
+  overflow: visible;
+}
+
+.linePath {
+  fill: none;
+  stroke: color-mix(in srgb, var(--text-muted) 60%, transparent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.linePath[data-role="primary"] {
+  stroke: var(--brand);
+  stroke-width: 1.7;
+  stroke-dasharray: 8 7;
+}
+
+.linePath[data-role="optional"] {
+  stroke-dasharray: 5 6;
+  opacity: 0.72;
+}
+
+.arrowHeadPath {
+  fill: color-mix(in srgb, var(--text-muted) 72%, transparent);
+}
+
+.arrowHeadPath[data-role="primary"] {
+  fill: var(--brand);
+}
+
+.edgeLabelBg {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.edgeLabel {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.handle {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--brand) 64%, var(--border));
+  stroke-width: 1.5;
+}
+
+.ruleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacer-8);
+}
+
+.ruleItem {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-8);
+  padding: 0 var(--spacer-12);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-radius: var(--radius);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.ruleIndex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: var(--text);
+  background: #F3F4F6;
+  border: 1px solid #DADDE3;
+  border-radius: var(--radius-full);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.paletteFooter {
+  margin-top: var(--spacer-12);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+@media (max-width: 640px) {
+  .blockGrid,
+  .lineGrid,
+  .ruleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .lineSample {
+    grid-template-columns: 1fr;
+  }
+
+  .lineSvg {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .paletteCard {
+    padding: var(--spacer-16);
+  }
+
+  .paletteSurface {
+    padding: var(--spacer-12);
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="architecture-elements">
+  <section class="paletteCard" aria-label="Architecture element palette">
+    <div class="paletteHeader">
+      <h3 class="paletteTitle">Architecture Elements</h3>
+    </div>
+    <div class="paletteSurface">
+      <section aria-label="Block elements">
+        <p class="sectionTitle">Blocks</p>
+        <div class="blockGrid">
+          <div class="sampleBlock" data-role="neutral">
+            <span class="blockLabel">Neutral module</span>
+            <span class="blockCaption">service / store</span>
+          </div>
+          <div class="sampleBlock" data-role="brand">
+            <span class="blockLabel">Brand module</span>
+            <span class="blockCaption">main focus</span>
+          </div>
+          <div class="sampleBlock" data-role="boundary">
+            <span class="blockLabel">Boundary</span>
+            <span class="blockCaption">runtime scope</span>
+          </div>
+          <div class="sampleBlock" data-role="external">
+            <span class="blockLabel">External</span>
+            <span class="blockCaption">input / output</span>
+          </div>
+        </div>
+      </section>
+      <section aria-label="Connector elements">
+        <p class="sectionTitle">Lines</p>
+        <div class="lineGrid">
+          <div class="lineSample">
+            <div>
+              <div class="lineLabel">Directed solid</div>
+              <div class="lineCaption">auto arrow</div>
+            </div>
+            <svg class="lineSvg" viewBox="0 0 150 28" aria-hidden="true">
+              <defs>
+                <marker id="arrowNeutralAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+                  <path class="arrowHeadPath" d="M1 1 L7 4 L1 7 Z" />
+                </marker>
+              </defs>
+              <path class="linePath" d="M10 14 H134" marker-end="url(#arrowNeutralAuto)" fill="none" />
+              <circle class="handle" cx="10" cy="14" r="3.5" />
+            </svg>
+          </div>
+          <div class="lineSample">
+            <div>
+              <div class="lineLabel">Brand dashed</div>
+              <div class="lineCaption">primary path</div>
+            </div>
+            <svg class="lineSvg" viewBox="0 0 150 28" aria-hidden="true">
+              <defs>
+                <marker id="arrowBrandAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+                  <path class="arrowHeadPath" data-role="primary" d="M1 1 L7 4 L1 7 Z" />
+                </marker>
+              </defs>
+              <path class="linePath" data-role="primary" d="M10 14 H134" marker-end="url(#arrowBrandAuto)" fill="none" />
+              <circle class="handle" cx="10" cy="14" r="3.5" />
+            </svg>
+          </div>
+          <div class="lineSample">
+            <div>
+              <div class="lineLabel">Reverse arrow</div>
+              <div class="lineCaption">same marker</div>
+            </div>
+            <svg class="lineSvg" viewBox="0 0 150 28" aria-hidden="true">
+              <defs>
+                <marker id="arrowReverseAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+                  <path class="arrowHeadPath" d="M1 1 L7 4 L1 7 Z" />
+                </marker>
+              </defs>
+              <path class="linePath" data-role="optional" d="M140 14 H16" marker-end="url(#arrowReverseAuto)" fill="none" />
+              <circle class="handle" cx="140" cy="14" r="3.5" />
+            </svg>
+          </div>
+          <div class="lineSample">
+            <div>
+              <div class="lineLabel">Labeled edge</div>
+              <div class="lineCaption">1-2 word label</div>
+            </div>
+            <svg class="lineSvg" viewBox="0 0 150 28" aria-hidden="true">
+              <path class="linePath" d="M10 14 H140" fill="none" />
+              <rect class="edgeLabelBg" x="53" y="3" width="44" height="22" rx="8" />
+              <text class="edgeLabel" x="75" y="18" text-anchor="middle">read</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+      <section aria-label="Architecture generation rules">
+        <p class="sectionTitle">Use for architecture diagrams</p>
+        <div class="ruleGrid">
+          <div class="ruleItem"><span class="ruleIndex">1</span><span>Start from boundary</span></div>
+          <div class="ruleItem"><span class="ruleIndex">2</span><span>Pick one focus</span></div>
+          <div class="ruleItem"><span class="ruleIndex">3</span><span>Connect real deps</span></div>
+        </div>
+      </section>
+    </div>
+    <p class="paletteFooter">Do not copy this board as the final diagram; compose the user's architecture from these elements.</p>
+  </section>
+</div>

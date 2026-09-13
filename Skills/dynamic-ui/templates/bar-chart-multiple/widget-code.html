@@ -1,0 +1,598 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.chartCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.chartHeader {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.chartTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.chartLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacer-12);
+  margin-top: var(--spacer-12);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-8);
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius);
+  background: var(--chart-series-1);
+}
+
+.legendSwatch[data-series="mobile"] {
+  background: var(--chart-series-2);
+}
+
+.chartShell {
+  position: relative;
+  height: clamp(220px, 32vw, 320px);
+  margin-top: var(--spacer-16);
+}
+
+.chartShell canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.chartFallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  padding: var(--spacer-8) var(--spacer-8) 0;
+  pointer-events: none;
+}
+
+.chartFallback[data-ready="true"] {
+  opacity: 0;
+}
+
+.fallbackSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fallbackGrid {
+  stroke: color-mix(in srgb, var(--border) 42%, transparent);
+  stroke-width: 1;
+}
+
+.fallbackAxisLabel {
+  fill: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.fallbackBar {
+  rx: var(--radius);
+}
+
+.fallbackBar[data-series="desktop"] {
+  fill: var(--chart-series-1);
+}
+
+.fallbackBar[data-series="mobile"] {
+  fill: var(--chart-series-2);
+}
+
+.chartStatus {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  opacity: 0;
+}
+
+.chartCard[data-error="true"] .chartStatus {
+  max-height: 40px;
+  margin: var(--spacer-8) 0 0;
+  opacity: 1;
+}
+
+.chartTooltip {
+  --tooltip-x: 0px;
+  --tooltip-y: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 156px;
+  padding: 6px 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, calc(-100% - 10px));
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chartTooltip {
+    background: color-mix(in srgb, var(--surface) 92%, #000000);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.chartTooltip[data-visible="true"] {
+  opacity: 1;
+}
+
+.chartTooltip[data-placement="bottom"] {
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, 10px);
+}
+
+.tooltipTitle {
+  margin-bottom: var(--spacer-4);
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.tooltipRows {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacer-8);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.tooltipName {
+  color: var(--text-muted);
+}
+
+.tooltipValue {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-code) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+
+@media (max-width: 520px) {
+  .chartCard {
+    padding: var(--spacer-16);
+  }
+
+  .chartShell {
+    height: 220px;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="bar-chart-multiple">
+  <section class="chartCard" aria-label="Grouped bar chart for desktop and mobile visitors">
+    <div class="chartHeader">
+      <h3 class="chartTitle">Bar Chart - Multiple</h3>
+    </div>
+    <div class="chartLegend" aria-label="Chart legend">
+      <span class="legendItem"><span class="legendSwatch" data-series="desktop"></span>Desktop</span>
+      <span class="legendItem"><span class="legendSwatch" data-series="mobile"></span>Mobile</span>
+    </div>
+    <div class="chartShell">
+      <canvas aria-label="Desktop and mobile visitors by month" role="img"></canvas>
+      <div class="chartFallback" aria-hidden="true">
+        <svg class="fallbackSvg" viewBox="0 0 640 260" role="img" aria-label="Desktop and mobile visitor grouped bar fallback">
+          <path class="fallbackGrid" d="M16 34H624M16 80H624M16 126H624M16 172H624M16 218H624" fill="none"/>
+          <rect class="fallbackBar" data-series="desktop" x="40" y="111" width="20" height="107"/>
+          <rect class="fallbackBar" data-series="mobile" x="66" y="172" width="20" height="46"/>
+          <rect class="fallbackBar" data-series="desktop" x="142" y="43" width="20" height="175"/>
+          <rect class="fallbackBar" data-series="mobile" x="168" y="103" width="20" height="115"/>
+          <rect class="fallbackBar" data-series="desktop" x="244" y="82" width="20" height="136"/>
+          <rect class="fallbackBar" data-series="mobile" x="270" y="149" width="20" height="69"/>
+          <rect class="fallbackBar" data-series="desktop" x="346" y="176" width="20" height="42"/>
+          <rect class="fallbackBar" data-series="mobile" x="372" y="109" width="20" height="109"/>
+          <rect class="fallbackBar" data-series="desktop" x="448" y="98" width="20" height="120"/>
+          <rect class="fallbackBar" data-series="mobile" x="474" y="143" width="20" height="75"/>
+          <rect class="fallbackBar" data-series="desktop" x="550" y="95" width="20" height="123"/>
+          <rect class="fallbackBar" data-series="mobile" x="576" y="138" width="20" height="80"/>
+          <text class="fallbackAxisLabel" x="63" y="244" text-anchor="middle">Jan</text>
+          <text class="fallbackAxisLabel" x="165" y="244" text-anchor="middle">Feb</text>
+          <text class="fallbackAxisLabel" x="267" y="244" text-anchor="middle">Mar</text>
+          <text class="fallbackAxisLabel" x="369" y="244" text-anchor="middle">Apr</text>
+          <text class="fallbackAxisLabel" x="471" y="244" text-anchor="middle">May</text>
+          <text class="fallbackAxisLabel" x="573" y="244" text-anchor="middle">Jun</text>
+        </svg>
+      </div>
+      <div class="chartTooltip" data-visible="false" data-placement="top" aria-hidden="true">
+        <div class="tooltipTitle">January</div>
+        <div class="tooltipRows">
+          <div class="tooltipRow">
+            <span class="tooltipDot"></span>
+            <span class="tooltipName">Desktop</span>
+            <span class="tooltipValue">186</span>
+          </div>
+          <div class="tooltipRow">
+            <span class="tooltipDot"></span>
+            <span class="tooltipName">Mobile</span>
+            <span class="tooltipValue">80</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="chartStatus">Chart runtime failed to load; static fallback remains visible.</p>
+  </section>
+</div>
+<script>
+(() => {
+  const rootSelector = '.widget[data-dynamic-ui-widget][data-template="bar-chart-multiple"]:not([data-mounted])';
+  const widgets = Array.from(document.querySelectorAll(rootSelector));
+  if (widgets.length === 0) {
+    return;
+  }
+
+  const chartData = [
+    { month: "January", desktop: 186, mobile: 80 },
+    { month: "February", desktop: 305, mobile: 200 },
+    { month: "March", desktop: 237, mobile: 120 },
+    { month: "April", desktop: 73, mobile: 190 },
+    { month: "May", desktop: 209, mobile: 130 },
+    { month: "June", desktop: 214, mobile: 140 }
+  ];
+  const xDataKey = "month";
+  const seriesKeys = ["desktop", "mobile"];
+  const chartConfig = {
+    desktop: {
+      label: "Desktop",
+      color: "var(--chart-series-1)"
+    },
+    mobile: {
+      label: "Mobile",
+      color: "var(--chart-series-2)"
+    }
+  };
+
+  const loadChartJs = (onReady, onError) => {
+    if (window.Chart) {
+      onReady();
+      return;
+    }
+
+    const existingLoader = document.querySelector('script[data-dynamic-ui-chartjs="true"]');
+    if (existingLoader) {
+      if (existingLoader.dataset.status === "ready" && window.Chart) {
+        onReady();
+        return;
+      }
+      if (existingLoader.dataset.status === "error") {
+        onError();
+        return;
+      }
+      existingLoader.addEventListener("load", onReady, { once: true });
+      existingLoader.addEventListener("error", onError, { once: true });
+      return;
+    }
+
+    const loader = document.createElement("script");
+    loader.src = "https://cdn.jsdelivr.net/npm/chart.js@4";
+    loader.async = true;
+    loader.dataset.dynamicUiChartjs = "true";
+    loader.dataset.status = "loading";
+    loader.onload = () => {
+      loader.dataset.status = "ready";
+      onReady();
+    };
+    loader.onerror = () => {
+      loader.dataset.status = "error";
+      onError();
+    };
+    (document.head || document.documentElement).appendChild(loader);
+  };
+
+  const initWidget = (widget) => {
+    widget.dataset.mounted = "true";
+    const canvas = widget.querySelector("canvas");
+    const fallback = widget.querySelector(".chartFallback");
+    const status = widget.querySelector(".chartStatus");
+    const card = widget.querySelector(".chartCard");
+    const tooltipEl = widget.querySelector(".chartTooltip");
+    const tooltipTitle = widget.querySelector(".tooltipTitle");
+    const tooltipRows = widget.querySelector(".tooltipRows");
+    const styles = getComputedStyle(widget);
+    const readVar = (name) => styles.getPropertyValue(name).trim();
+    const resolveColor = (value) => {
+      const match = /^var\((--[^)]+)\)$/.exec(value.trim());
+      return match ? readVar(match[1]) || value : value;
+    };
+    const fadeRgba = (value, factor) => {
+      const match = /rgba?\(([^)]+)\)/.exec(value);
+      if (!match) {
+        return value;
+      }
+      const parts = match[1].split(",").map((part) => part.trim());
+      const alpha = parts[3] === undefined ? 1 : Number.parseFloat(parts[3]);
+      const nextAlpha = Number.isFinite(alpha) ? Math.max(0, Math.min(1, alpha * factor)) : 0.05;
+      return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${nextAlpha})`;
+    };
+    const rows = chartData
+      .map((row) => {
+        const label = String(row[xDataKey] ?? "");
+        const values = {};
+        seriesKeys.forEach((key) => {
+          const raw = row[key];
+          values[key] = typeof raw === "number" && Number.isFinite(raw) ? raw : null;
+        });
+        return { label, values };
+      })
+      .filter((row) => row.label.length > 0);
+    const hasRenderableValue = rows.some((row) => seriesKeys.some((key) => row.values[key] !== null));
+
+    if (!canvas || !hasRenderableValue) {
+      if (card) {
+        card.dataset.error = "true";
+      }
+      if (status) {
+        status.textContent = "No valid chart data available.";
+      }
+      return;
+    }
+
+    const renderTooltipRows = (dataPoints) => {
+      if (!tooltipRows) {
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      dataPoints.forEach((point) => {
+        const key = point.dataset.key;
+        const row = document.createElement("div");
+        const dot = document.createElement("span");
+        const name = document.createElement("span");
+        const value = document.createElement("span");
+        row.className = "tooltipRow";
+        dot.className = "tooltipDot";
+        dot.style.backgroundColor = point.dataset.backgroundColor;
+        name.className = "tooltipName";
+        name.textContent = chartConfig[key].label;
+        value.className = "tooltipValue";
+        value.textContent = point.formattedValue;
+        row.append(dot, name, value);
+        fragment.append(row);
+      });
+      tooltipRows.replaceChildren(fragment);
+    };
+
+    const renderChart = () => {
+      const colors = Object.fromEntries(seriesKeys.map((key) => [key, resolveColor(chartConfig[key].color)]));
+      const textMuted = readVar("--text-muted");
+      const border = readVar("--border");
+      const grid = fadeRgba(border, 0.42);
+      const barRadius = Number.parseFloat(readVar("--radius")) || 8;
+      const ctx = canvas.getContext("2d");
+      if (!ctx || !window.Chart) {
+        return;
+      }
+
+      const externalTooltip = ({ chart, tooltip }) => {
+        if (!tooltipEl || !tooltipTitle) {
+          return;
+        }
+        if (tooltip.opacity === 0 || !tooltip.dataPoints || tooltip.dataPoints.length === 0) {
+          tooltipEl.dataset.visible = "false";
+          return;
+        }
+
+        tooltipTitle.textContent = tooltip.title && tooltip.title.length > 0 ? tooltip.title[0] : "";
+        renderTooltipRows(tooltip.dataPoints);
+
+        const width = chart.width;
+        const tooltipWidth = tooltipEl.offsetWidth || 156;
+        const x = Math.min(Math.max(tooltip.caretX, tooltipWidth / 2 + 6), width - tooltipWidth / 2 - 6);
+        const y = tooltip.caretY;
+        tooltipEl.dataset.placement = y < 64 ? "bottom" : "top";
+        tooltipEl.style.setProperty("--tooltip-x", `${Math.round(x)}px`);
+        tooltipEl.style.setProperty("--tooltip-y", `${Math.round(y)}px`);
+        tooltipEl.dataset.visible = "true";
+      };
+
+      new window.Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: rows.map((row) => row.label),
+          datasets: seriesKeys.map((key) => ({
+            key,
+            label: chartConfig[key].label,
+            data: rows.map((row) => row.values[key]),
+            backgroundColor: colors[key],
+            borderColor: colors[key],
+            borderWidth: 0,
+            borderRadius: barRadius,
+            borderSkipped: false,
+            categoryPercentage: 0.72,
+            barPercentage: 0.82
+          }))
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 220,
+            easing: "easeOutQuart"
+          },
+          transitions: {
+            active: {
+              animation: {
+                duration: 120,
+                easing: "easeOutQuart"
+              }
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: "index",
+            axis: "x"
+          },
+          hover: {
+            intersect: false,
+            mode: "index"
+          },
+          layout: {
+            padding: { top: 14, right: 18, bottom: 0, left: 18 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: false,
+              external: externalTooltip
+            }
+          },
+          scales: {
+            x: {
+              border: { display: false },
+              grid: { display: false },
+              ticks: {
+                color: textMuted,
+                font: { size: 12, family: readVar("--font-sans") },
+                maxRotation: 0,
+                padding: 8,
+                callback(value) {
+                  const label = this.getLabelForValue(value);
+                  return String(label).slice(0, 3);
+                }
+              }
+            },
+            y: {
+              beginAtZero: true,
+              suggestedMax: 320,
+              border: { display: false },
+              grid: {
+                color: grid,
+                lineWidth: 1,
+                drawTicks: false
+              },
+              ticks: {
+                display: false,
+                maxTicksLimit: 4
+              }
+            }
+          }
+        }
+      });
+
+      if (fallback) {
+        fallback.dataset.ready = "true";
+      }
+      if (status) {
+        status.textContent = "";
+      }
+    };
+
+    loadChartJs(renderChart, () => {
+      if (card) {
+        card.dataset.error = "true";
+      }
+      if (status) {
+        status.textContent = "Chart runtime failed to load; static fallback remains visible.";
+      }
+    });
+  };
+
+  widgets.forEach(initWidget);
+})();
+</script>

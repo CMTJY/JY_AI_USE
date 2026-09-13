@@ -1,0 +1,1256 @@
+{
+  "title": "Heatmap Chart",
+  "xDataKey": "bin",
+  "yDataKey": "bin",
+  "valueKey": "count",
+  "levelKey": "level",
+  "dateKey": "date",
+  "chartData": [
+    {
+      "bin": 0,
+      "label": "Week 1",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-01"
+        },
+        {
+          "bin": 1,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-02"
+        },
+        {
+          "bin": 2,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-03"
+        },
+        {
+          "bin": 3,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-04"
+        },
+        {
+          "bin": 4,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-05"
+        },
+        {
+          "bin": 5,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-06"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-07"
+        }
+      ]
+    },
+    {
+      "bin": 1,
+      "label": "Week 2",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-08"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-09"
+        },
+        {
+          "bin": 2,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-10"
+        },
+        {
+          "bin": 3,
+          "count": 11,
+          "level": 2,
+          "date": "2024-01-11"
+        },
+        {
+          "bin": 4,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-12"
+        },
+        {
+          "bin": 5,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-13"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-14"
+        }
+      ]
+    },
+    {
+      "bin": 2,
+      "label": "Week 3",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-15"
+        },
+        {
+          "bin": 1,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-16"
+        },
+        {
+          "bin": 2,
+          "count": 11,
+          "level": 2,
+          "date": "2024-01-17"
+        },
+        {
+          "bin": 3,
+          "count": 12,
+          "level": 2,
+          "date": "2024-01-18"
+        },
+        {
+          "bin": 4,
+          "count": 10,
+          "level": 2,
+          "date": "2024-01-19"
+        },
+        {
+          "bin": 5,
+          "count": 5,
+          "level": 1,
+          "date": "2024-01-20"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-21"
+        }
+      ]
+    },
+    {
+      "bin": 3,
+      "label": "Week 4",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-22"
+        },
+        {
+          "bin": 1,
+          "count": 11,
+          "level": 2,
+          "date": "2024-01-23"
+        },
+        {
+          "bin": 2,
+          "count": 12,
+          "level": 2,
+          "date": "2024-01-24"
+        },
+        {
+          "bin": 3,
+          "count": 17,
+          "level": 3,
+          "date": "2024-01-25"
+        },
+        {
+          "bin": 4,
+          "count": 11,
+          "level": 2,
+          "date": "2024-01-26"
+        },
+        {
+          "bin": 5,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-27"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-01-28"
+        }
+      ]
+    },
+    {
+      "bin": 4,
+      "label": "Week 5",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-01-29"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-01-30"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-01-31"
+        },
+        {
+          "bin": 3,
+          "count": 18,
+          "level": 3,
+          "date": "2024-02-01"
+        },
+        {
+          "bin": 4,
+          "count": 19,
+          "level": 3,
+          "date": "2024-02-02"
+        },
+        {
+          "bin": 5,
+          "count": 10,
+          "level": 2,
+          "date": "2024-02-03"
+        },
+        {
+          "bin": 6,
+          "count": 5,
+          "level": 1,
+          "date": "2024-02-04"
+        }
+      ]
+    },
+    {
+      "bin": 5,
+      "label": "Week 6",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-02-05"
+        },
+        {
+          "bin": 1,
+          "count": 10,
+          "level": 2,
+          "date": "2024-02-06"
+        },
+        {
+          "bin": 2,
+          "count": 18,
+          "level": 3,
+          "date": "2024-02-07"
+        },
+        {
+          "bin": 3,
+          "count": 30,
+          "level": 4,
+          "date": "2024-02-08"
+        },
+        {
+          "bin": 4,
+          "count": 17,
+          "level": 3,
+          "date": "2024-02-09"
+        },
+        {
+          "bin": 5,
+          "count": 11,
+          "level": 2,
+          "date": "2024-02-10"
+        },
+        {
+          "bin": 6,
+          "count": 6,
+          "level": 1,
+          "date": "2024-02-11"
+        }
+      ]
+    },
+    {
+      "bin": 6,
+      "label": "Week 7",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 4,
+          "level": 1,
+          "date": "2024-02-12"
+        },
+        {
+          "bin": 1,
+          "count": 11,
+          "level": 2,
+          "date": "2024-02-13"
+        },
+        {
+          "bin": 2,
+          "count": 19,
+          "level": 3,
+          "date": "2024-02-14"
+        },
+        {
+          "bin": 3,
+          "count": 28,
+          "level": 4,
+          "date": "2024-02-15"
+        },
+        {
+          "bin": 4,
+          "count": 29,
+          "level": 4,
+          "date": "2024-02-16"
+        },
+        {
+          "bin": 5,
+          "count": 19,
+          "level": 3,
+          "date": "2024-02-17"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-02-18"
+        }
+      ]
+    },
+    {
+      "bin": 7,
+      "label": "Week 8",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-02-19"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-02-20"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-02-21"
+        },
+        {
+          "bin": 3,
+          "count": 18,
+          "level": 3,
+          "date": "2024-02-22"
+        },
+        {
+          "bin": 4,
+          "count": 30,
+          "level": 4,
+          "date": "2024-02-23"
+        },
+        {
+          "bin": 5,
+          "count": 17,
+          "level": 3,
+          "date": "2024-02-24"
+        },
+        {
+          "bin": 6,
+          "count": 11,
+          "level": 2,
+          "date": "2024-02-25"
+        }
+      ]
+    },
+    {
+      "bin": 8,
+      "label": "Week 9",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-02-26"
+        },
+        {
+          "bin": 1,
+          "count": 10,
+          "level": 2,
+          "date": "2024-02-27"
+        },
+        {
+          "bin": 2,
+          "count": 18,
+          "level": 3,
+          "date": "2024-02-28"
+        },
+        {
+          "bin": 3,
+          "count": 19,
+          "level": 3,
+          "date": "2024-02-29"
+        },
+        {
+          "bin": 4,
+          "count": 28,
+          "level": 4,
+          "date": "2024-03-01"
+        },
+        {
+          "bin": 5,
+          "count": 18,
+          "level": 3,
+          "date": "2024-03-02"
+        },
+        {
+          "bin": 6,
+          "count": 6,
+          "level": 1,
+          "date": "2024-03-03"
+        }
+      ]
+    },
+    {
+      "bin": 9,
+      "label": "Week 10",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 4,
+          "level": 1,
+          "date": "2024-03-04"
+        },
+        {
+          "bin": 1,
+          "count": 11,
+          "level": 2,
+          "date": "2024-03-05"
+        },
+        {
+          "bin": 2,
+          "count": 19,
+          "level": 3,
+          "date": "2024-03-06"
+        },
+        {
+          "bin": 3,
+          "count": 28,
+          "level": 4,
+          "date": "2024-03-07"
+        },
+        {
+          "bin": 4,
+          "count": 18,
+          "level": 3,
+          "date": "2024-03-08"
+        },
+        {
+          "bin": 5,
+          "count": 12,
+          "level": 2,
+          "date": "2024-03-09"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-03-10"
+        }
+      ]
+    },
+    {
+      "bin": 10,
+      "label": "Week 11",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-03-11"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-03-12"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-03-13"
+        },
+        {
+          "bin": 3,
+          "count": 18,
+          "level": 3,
+          "date": "2024-03-14"
+        },
+        {
+          "bin": 4,
+          "count": 19,
+          "level": 3,
+          "date": "2024-03-15"
+        },
+        {
+          "bin": 5,
+          "count": 10,
+          "level": 2,
+          "date": "2024-03-16"
+        },
+        {
+          "bin": 6,
+          "count": 5,
+          "level": 1,
+          "date": "2024-03-17"
+        }
+      ]
+    },
+    {
+      "bin": 11,
+      "label": "Week 12",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-03-18"
+        },
+        {
+          "bin": 1,
+          "count": 4,
+          "level": 1,
+          "date": "2024-03-19"
+        },
+        {
+          "bin": 2,
+          "count": 11,
+          "level": 2,
+          "date": "2024-03-20"
+        },
+        {
+          "bin": 3,
+          "count": 19,
+          "level": 3,
+          "date": "2024-03-21"
+        },
+        {
+          "bin": 4,
+          "count": 10,
+          "level": 2,
+          "date": "2024-03-22"
+        },
+        {
+          "bin": 5,
+          "count": 11,
+          "level": 2,
+          "date": "2024-03-23"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-03-24"
+        }
+      ]
+    },
+    {
+      "bin": 12,
+      "label": "Week 13",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-03-25"
+        },
+        {
+          "bin": 1,
+          "count": 5,
+          "level": 1,
+          "date": "2024-03-26"
+        },
+        {
+          "bin": 2,
+          "count": 12,
+          "level": 2,
+          "date": "2024-03-27"
+        },
+        {
+          "bin": 3,
+          "count": 10,
+          "level": 2,
+          "date": "2024-03-28"
+        },
+        {
+          "bin": 4,
+          "count": 18,
+          "level": 3,
+          "date": "2024-03-29"
+        },
+        {
+          "bin": 5,
+          "count": 12,
+          "level": 2,
+          "date": "2024-03-30"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-03-31"
+        }
+      ]
+    },
+    {
+      "bin": 13,
+      "label": "Week 14",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 5,
+          "level": 1,
+          "date": "2024-04-01"
+        },
+        {
+          "bin": 1,
+          "count": 12,
+          "level": 2,
+          "date": "2024-04-02"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-04-03"
+        },
+        {
+          "bin": 3,
+          "count": 18,
+          "level": 3,
+          "date": "2024-04-04"
+        },
+        {
+          "bin": 4,
+          "count": 30,
+          "level": 4,
+          "date": "2024-04-05"
+        },
+        {
+          "bin": 5,
+          "count": 17,
+          "level": 3,
+          "date": "2024-04-06"
+        },
+        {
+          "bin": 6,
+          "count": 5,
+          "level": 1,
+          "date": "2024-04-07"
+        }
+      ]
+    },
+    {
+      "bin": 14,
+      "label": "Week 15",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-04-08"
+        },
+        {
+          "bin": 1,
+          "count": 10,
+          "level": 2,
+          "date": "2024-04-09"
+        },
+        {
+          "bin": 2,
+          "count": 18,
+          "level": 3,
+          "date": "2024-04-10"
+        },
+        {
+          "bin": 3,
+          "count": 30,
+          "level": 4,
+          "date": "2024-04-11"
+        },
+        {
+          "bin": 4,
+          "count": 28,
+          "level": 4,
+          "date": "2024-04-12"
+        },
+        {
+          "bin": 5,
+          "count": 18,
+          "level": 3,
+          "date": "2024-04-13"
+        },
+        {
+          "bin": 6,
+          "count": 12,
+          "level": 2,
+          "date": "2024-04-14"
+        }
+      ]
+    },
+    {
+      "bin": 15,
+      "label": "Week 16",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-04-15"
+        },
+        {
+          "bin": 1,
+          "count": 5,
+          "level": 1,
+          "date": "2024-04-16"
+        },
+        {
+          "bin": 2,
+          "count": 12,
+          "level": 2,
+          "date": "2024-04-17"
+        },
+        {
+          "bin": 3,
+          "count": 17,
+          "level": 3,
+          "date": "2024-04-18"
+        },
+        {
+          "bin": 4,
+          "count": 18,
+          "level": 3,
+          "date": "2024-04-19"
+        },
+        {
+          "bin": 5,
+          "count": 12,
+          "level": 2,
+          "date": "2024-04-20"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-04-21"
+        }
+      ]
+    },
+    {
+      "bin": 16,
+      "label": "Week 17",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-04-22"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-04-23"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-04-24"
+        },
+        {
+          "bin": 3,
+          "count": 11,
+          "level": 2,
+          "date": "2024-04-25"
+        },
+        {
+          "bin": 4,
+          "count": 19,
+          "level": 3,
+          "date": "2024-04-26"
+        },
+        {
+          "bin": 5,
+          "count": 10,
+          "level": 2,
+          "date": "2024-04-27"
+        },
+        {
+          "bin": 6,
+          "count": 5,
+          "level": 1,
+          "date": "2024-04-28"
+        }
+      ]
+    },
+    {
+      "bin": 17,
+      "label": "Week 18",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-04-29"
+        },
+        {
+          "bin": 1,
+          "count": 10,
+          "level": 2,
+          "date": "2024-04-30"
+        },
+        {
+          "bin": 2,
+          "count": 11,
+          "level": 2,
+          "date": "2024-05-01"
+        },
+        {
+          "bin": 3,
+          "count": 19,
+          "level": 3,
+          "date": "2024-05-02"
+        },
+        {
+          "bin": 4,
+          "count": 17,
+          "level": 3,
+          "date": "2024-05-03"
+        },
+        {
+          "bin": 5,
+          "count": 11,
+          "level": 2,
+          "date": "2024-05-04"
+        },
+        {
+          "bin": 6,
+          "count": 6,
+          "level": 1,
+          "date": "2024-05-05"
+        }
+      ]
+    },
+    {
+      "bin": 18,
+      "label": "Week 19",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 4,
+          "level": 1,
+          "date": "2024-05-06"
+        },
+        {
+          "bin": 1,
+          "count": 5,
+          "level": 1,
+          "date": "2024-05-07"
+        },
+        {
+          "bin": 2,
+          "count": 12,
+          "level": 2,
+          "date": "2024-05-08"
+        },
+        {
+          "bin": 3,
+          "count": 17,
+          "level": 3,
+          "date": "2024-05-09"
+        },
+        {
+          "bin": 4,
+          "count": 18,
+          "level": 3,
+          "date": "2024-05-10"
+        },
+        {
+          "bin": 5,
+          "count": 12,
+          "level": 2,
+          "date": "2024-05-11"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-05-12"
+        }
+      ]
+    },
+    {
+      "bin": 19,
+      "label": "Week 20",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-05-13"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-05-14"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-05-15"
+        },
+        {
+          "bin": 3,
+          "count": 11,
+          "level": 2,
+          "date": "2024-05-16"
+        },
+        {
+          "bin": 4,
+          "count": 12,
+          "level": 2,
+          "date": "2024-05-17"
+        },
+        {
+          "bin": 5,
+          "count": 4,
+          "level": 1,
+          "date": "2024-05-18"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-05-19"
+        }
+      ]
+    },
+    {
+      "bin": 20,
+      "label": "Week 21",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 6,
+          "level": 1,
+          "date": "2024-05-20"
+        },
+        {
+          "bin": 1,
+          "count": 10,
+          "level": 2,
+          "date": "2024-05-21"
+        },
+        {
+          "bin": 2,
+          "count": 18,
+          "level": 3,
+          "date": "2024-05-22"
+        },
+        {
+          "bin": 3,
+          "count": 30,
+          "level": 4,
+          "date": "2024-05-23"
+        },
+        {
+          "bin": 4,
+          "count": 28,
+          "level": 4,
+          "date": "2024-05-24"
+        },
+        {
+          "bin": 5,
+          "count": 18,
+          "level": 3,
+          "date": "2024-05-25"
+        },
+        {
+          "bin": 6,
+          "count": 6,
+          "level": 1,
+          "date": "2024-05-26"
+        }
+      ]
+    },
+    {
+      "bin": 21,
+      "label": "Week 22",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 4,
+          "level": 1,
+          "date": "2024-05-27"
+        },
+        {
+          "bin": 1,
+          "count": 11,
+          "level": 2,
+          "date": "2024-05-28"
+        },
+        {
+          "bin": 2,
+          "count": 19,
+          "level": 3,
+          "date": "2024-05-29"
+        },
+        {
+          "bin": 3,
+          "count": 28,
+          "level": 4,
+          "date": "2024-05-30"
+        },
+        {
+          "bin": 4,
+          "count": 18,
+          "level": 3,
+          "date": "2024-05-31"
+        },
+        {
+          "bin": 5,
+          "count": 12,
+          "level": 2,
+          "date": "2024-06-01"
+        },
+        {
+          "bin": 6,
+          "count": 4,
+          "level": 1,
+          "date": "2024-06-02"
+        }
+      ]
+    },
+    {
+      "bin": 22,
+      "label": "Week 23",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-06-03"
+        },
+        {
+          "bin": 1,
+          "count": 6,
+          "level": 1,
+          "date": "2024-06-04"
+        },
+        {
+          "bin": 2,
+          "count": 10,
+          "level": 2,
+          "date": "2024-06-05"
+        },
+        {
+          "bin": 3,
+          "count": 18,
+          "level": 3,
+          "date": "2024-06-06"
+        },
+        {
+          "bin": 4,
+          "count": 12,
+          "level": 2,
+          "date": "2024-06-07"
+        },
+        {
+          "bin": 5,
+          "count": 4,
+          "level": 1,
+          "date": "2024-06-08"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-06-09"
+        }
+      ]
+    },
+    {
+      "bin": 23,
+      "label": "Week 24",
+      "bins": [
+        {
+          "bin": 0,
+          "count": 0,
+          "level": 0,
+          "date": "2024-06-10"
+        },
+        {
+          "bin": 1,
+          "count": 4,
+          "level": 1,
+          "date": "2024-06-11"
+        },
+        {
+          "bin": 2,
+          "count": 5,
+          "level": 1,
+          "date": "2024-06-12"
+        },
+        {
+          "bin": 3,
+          "count": 12,
+          "level": 2,
+          "date": "2024-06-13"
+        },
+        {
+          "bin": 4,
+          "count": 10,
+          "level": 2,
+          "date": "2024-06-14"
+        },
+        {
+          "bin": 5,
+          "count": 5,
+          "level": 1,
+          "date": "2024-06-15"
+        },
+        {
+          "bin": 6,
+          "count": 0,
+          "level": 0,
+          "date": "2024-06-16"
+        }
+      ]
+    }
+  ],
+  "levelStyles": [
+    {
+      "level": 0,
+      "label": "None",
+      "color": "var(--surface-muted)",
+      "fillMode": "solid"
+    },
+    {
+      "level": 1,
+      "label": "Low",
+      "color": "color-mix(in srgb, var(--chart-series-2) 28%, var(--surface))",
+      "fillMode": "solid"
+    },
+    {
+      "level": 2,
+      "label": "Medium",
+      "color": "color-mix(in srgb, var(--chart-series-2) 62%, var(--surface))",
+      "fillMode": "solid"
+    },
+    {
+      "level": 3,
+      "label": "High",
+      "color": "var(--chart-series-3)",
+      "fillMode": "solid"
+    },
+    {
+      "level": 4,
+      "label": "Peak",
+      "color": "var(--chart-series-1)",
+      "fillMode": "solid"
+    }
+  ],
+  "axis": {
+    "xLabels": [
+      {
+        "label": "Jan",
+        "bin": 1.5
+      },
+      {
+        "label": "Feb",
+        "bin": 5.5
+      },
+      {
+        "label": "Mar",
+        "bin": 9.5
+      },
+      {
+        "label": "Apr",
+        "bin": 13.5
+      },
+      {
+        "label": "May",
+        "bin": 17.5
+      },
+      {
+        "label": "Jun",
+        "bin": 21.5
+      }
+    ],
+    "yLabels": [
+      {
+        "label": "Mon",
+        "bin": 0
+      },
+      {
+        "label": "Tue",
+        "bin": 1
+      },
+      {
+        "label": "Wed",
+        "bin": 2
+      },
+      {
+        "label": "Thu",
+        "bin": 3
+      },
+      {
+        "label": "Fri",
+        "bin": 4
+      },
+      {
+        "label": "Sat",
+        "bin": 5
+      },
+      {
+        "label": "Sun",
+        "bin": 6
+      }
+    ]
+  },
+  "legend": {
+    "lessLabel": "Less",
+    "moreLabel": "More"
+  }
+}

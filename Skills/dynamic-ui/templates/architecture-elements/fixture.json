@@ -1,0 +1,60 @@
+{
+  "title": "Architecture Elements",
+  "blocks": [
+    {
+      "id": "neutral-module",
+      "label": "Neutral module",
+      "caption": "default block",
+      "role": "neutral"
+    },
+    {
+      "id": "brand-module",
+      "label": "Brand module",
+      "caption": "main focus",
+      "role": "brand"
+    },
+    {
+      "id": "boundary-block",
+      "label": "Boundary",
+      "caption": "runtime scope",
+      "role": "boundary"
+    },
+    {
+      "id": "external-block",
+      "label": "External",
+      "caption": "input/output",
+      "role": "external"
+    }
+  ],
+  "lines": [
+    {
+      "id": "directed-solid",
+      "label": "Directed edge",
+      "role": "neutral",
+      "style": "marker-end"
+    },
+    {
+      "id": "primary-dashed",
+      "label": "Primary path",
+      "role": "primary",
+      "style": "dashed-marker-end"
+    },
+    {
+      "id": "reverse-arrow",
+      "label": "Reverse arrow",
+      "role": "optional",
+      "style": "marker-end-auto"
+    },
+    {
+      "id": "labeled-edge",
+      "label": "Labeled edge",
+      "role": "neutral",
+      "style": "labeled"
+    }
+  ],
+  "rules": [
+    "Start from the boundary",
+    "Pick one focus block",
+    "Connect only real dependencies"
+  ]
+}

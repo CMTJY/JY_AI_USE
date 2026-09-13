@@ -1,0 +1,95 @@
+{
+  "title": "Checkout auth sequence",
+  "source": "https://docs.zenuml.com/",
+  "participants": [
+    {
+      "id": "client",
+      "label": "Client",
+      "caption": "browser",
+      "role": "external"
+    },
+    {
+      "id": "gateway",
+      "label": "Gateway",
+      "caption": "main focus",
+      "role": "focus"
+    },
+    {
+      "id": "auth",
+      "label": "Auth",
+      "caption": "token service",
+      "role": "neutral"
+    },
+    {
+      "id": "profile",
+      "label": "Profile DB",
+      "caption": "user data",
+      "role": "neutral"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "client",
+      "to": "gateway",
+      "label": "POST /checkout",
+      "type": "request",
+      "focus": true
+    },
+    {
+      "id": "m2",
+      "from": "gateway",
+      "to": "auth",
+      "label": "validate token",
+      "type": "request"
+    },
+    {
+      "id": "m3",
+      "from": "auth",
+      "to": "gateway",
+      "label": "token ok",
+      "type": "return"
+    },
+    {
+      "id": "m4",
+      "from": "gateway",
+      "to": "profile",
+      "label": "read profile",
+      "type": "request"
+    },
+    {
+      "id": "m5",
+      "from": "profile",
+      "to": "gateway",
+      "label": "profile data",
+      "type": "return"
+    },
+    {
+      "id": "m6",
+      "from": "gateway",
+      "to": "client",
+      "label": "200 response",
+      "type": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "gateway",
+      "start": "m1",
+      "end": "m6",
+      "role": "focus"
+    },
+    {
+      "participant": "auth",
+      "start": "m2",
+      "end": "m3",
+      "role": "neutral"
+    },
+    {
+      "participant": "profile",
+      "start": "m4",
+      "end": "m5",
+      "role": "neutral"
+    }
+  ]
+}

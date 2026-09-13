@@ -1,0 +1,382 @@
+{
+  "title": "Sankey Chart",
+  "aspectRatio": "840 / 860",
+  "nodeWidth": 16,
+  "nodePadding": 24,
+  "animationDuration": 700,
+  "valueUnit": "sessions",
+  "nodes": [
+    {
+      "name": "Organic Search",
+      "category": "source",
+      "value": 3200,
+      "color": "var(--brand)"
+    },
+    {
+      "name": "Paid Search",
+      "category": "source",
+      "value": 2400,
+      "color": "var(--chart-series-2)"
+    },
+    {
+      "name": "Email",
+      "category": "source",
+      "value": 1500,
+      "color": "var(--accent)"
+    },
+    {
+      "name": "Referral",
+      "category": "source",
+      "value": 900,
+      "color": "var(--chart-series-4)"
+    },
+    {
+      "name": "Direct",
+      "category": "source",
+      "value": 650,
+      "color": "var(--accent-2)"
+    },
+    {
+      "name": "Social Media",
+      "category": "source",
+      "value": 560,
+      "color": "var(--warning)"
+    },
+    {
+      "name": "Affiliate",
+      "category": "source",
+      "value": 430,
+      "color": "var(--chart-other)"
+    },
+    {
+      "name": "Blog",
+      "category": "landing",
+      "value": 3469,
+      "color": "var(--brand)"
+    },
+    {
+      "name": "Pricing",
+      "category": "landing",
+      "value": 3495,
+      "color": "var(--brand)"
+    },
+    {
+      "name": "Product",
+      "category": "landing",
+      "value": 2676,
+      "color": "var(--brand)"
+    },
+    {
+      "name": "Converted",
+      "category": "outcome",
+      "value": 4067,
+      "color": "var(--chart-series-4)"
+    },
+    {
+      "name": "Engaged",
+      "category": "outcome",
+      "value": 1989,
+      "color": "var(--accent)"
+    },
+    {
+      "name": "Trial",
+      "category": "outcome",
+      "value": 1253,
+      "color": "var(--warning)"
+    },
+    {
+      "name": "Bounced",
+      "category": "outcome",
+      "value": 736,
+      "color": "var(--chart-series-2)"
+    },
+    {
+      "name": "Returning",
+      "category": "outcome",
+      "value": 509,
+      "color": "var(--chart-series-3)"
+    },
+    {
+      "name": "Unsubscribed",
+      "category": "outcome",
+      "value": 447,
+      "color": "var(--accent-2)"
+    },
+    {
+      "name": "Refunded",
+      "category": "outcome",
+      "value": 639,
+      "color": "var(--chart-other)"
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 7,
+      "value": 1760
+    },
+    {
+      "source": 0,
+      "target": 8,
+      "value": 800
+    },
+    {
+      "source": 0,
+      "target": 9,
+      "value": 640
+    },
+    {
+      "source": 1,
+      "target": 7,
+      "value": 360
+    },
+    {
+      "source": 1,
+      "target": 8,
+      "value": 1320
+    },
+    {
+      "source": 1,
+      "target": 9,
+      "value": 720
+    },
+    {
+      "source": 2,
+      "target": 7,
+      "value": 450
+    },
+    {
+      "source": 2,
+      "target": 8,
+      "value": 600
+    },
+    {
+      "source": 2,
+      "target": 9,
+      "value": 450
+    },
+    {
+      "source": 3,
+      "target": 7,
+      "value": 315
+    },
+    {
+      "source": 3,
+      "target": 8,
+      "value": 270
+    },
+    {
+      "source": 3,
+      "target": 9,
+      "value": 315
+    },
+    {
+      "source": 4,
+      "target": 7,
+      "value": 162
+    },
+    {
+      "source": 4,
+      "target": 8,
+      "value": 227
+    },
+    {
+      "source": 4,
+      "target": 9,
+      "value": 261
+    },
+    {
+      "source": 5,
+      "target": 7,
+      "value": 336
+    },
+    {
+      "source": 5,
+      "target": 8,
+      "value": 84
+    },
+    {
+      "source": 5,
+      "target": 9,
+      "value": 140
+    },
+    {
+      "source": 6,
+      "target": 7,
+      "value": 86
+    },
+    {
+      "source": 6,
+      "target": 8,
+      "value": 194
+    },
+    {
+      "source": 6,
+      "target": 9,
+      "value": 150
+    },
+    {
+      "source": 7,
+      "target": 10,
+      "value": 1249
+    },
+    {
+      "source": 7,
+      "target": 11,
+      "value": 763
+    },
+    {
+      "source": 7,
+      "target": 12,
+      "value": 486
+    },
+    {
+      "source": 7,
+      "target": 13,
+      "value": 312
+    },
+    {
+      "source": 7,
+      "target": 14,
+      "value": 208
+    },
+    {
+      "source": 7,
+      "target": 15,
+      "value": 173
+    },
+    {
+      "source": 7,
+      "target": 16,
+      "value": 278
+    },
+    {
+      "source": 8,
+      "target": 10,
+      "value": 1748
+    },
+    {
+      "source": 8,
+      "target": 11,
+      "value": 664
+    },
+    {
+      "source": 8,
+      "target": 12,
+      "value": 419
+    },
+    {
+      "source": 8,
+      "target": 13,
+      "value": 210
+    },
+    {
+      "source": 8,
+      "target": 14,
+      "value": 140
+    },
+    {
+      "source": 8,
+      "target": 15,
+      "value": 140
+    },
+    {
+      "source": 8,
+      "target": 16,
+      "value": 174
+    },
+    {
+      "source": 9,
+      "target": 10,
+      "value": 1070
+    },
+    {
+      "source": 9,
+      "target": 11,
+      "value": 562
+    },
+    {
+      "source": 9,
+      "target": 12,
+      "value": 348
+    },
+    {
+      "source": 9,
+      "target": 13,
+      "value": 214
+    },
+    {
+      "source": 9,
+      "target": 14,
+      "value": 161
+    },
+    {
+      "source": 9,
+      "target": 15,
+      "value": 134
+    },
+    {
+      "source": 9,
+      "target": 16,
+      "value": 187
+    }
+  ],
+  "chartConfig": {
+    "organic": {
+      "label": "Organic Search",
+      "color": "var(--brand)"
+    },
+    "paid": {
+      "label": "Paid Search",
+      "color": "var(--chart-series-2)"
+    },
+    "email": {
+      "label": "Email",
+      "color": "var(--accent)"
+    },
+    "referral": {
+      "label": "Referral",
+      "color": "var(--chart-series-4)"
+    },
+    "direct": {
+      "label": "Direct",
+      "color": "var(--accent-2)"
+    },
+    "social": {
+      "label": "Social Media",
+      "color": "var(--warning)"
+    },
+    "affiliate": {
+      "label": "Affiliate",
+      "color": "var(--chart-other)"
+    },
+    "converted": {
+      "label": "Converted",
+      "color": "var(--chart-series-4)"
+    },
+    "engaged": {
+      "label": "Engaged",
+      "color": "var(--accent)"
+    },
+    "trial": {
+      "label": "Trial",
+      "color": "var(--warning)"
+    },
+    "bounced": {
+      "label": "Bounced",
+      "color": "var(--chart-series-2)"
+    },
+    "returning": {
+      "label": "Returning",
+      "color": "var(--chart-series-3)"
+    },
+    "unsubscribed": {
+      "label": "Unsubscribed",
+      "color": "var(--accent-2)"
+    },
+    "refunded": {
+      "label": "Refunded",
+      "color": "var(--chart-other)"
+    }
+  }
+}

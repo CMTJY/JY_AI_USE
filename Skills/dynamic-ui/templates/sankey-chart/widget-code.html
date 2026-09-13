@@ -1,0 +1,553 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-2: #F87454;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-2: #F87454;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.chartCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.chartHeader {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.chartTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.chartBody {
+  margin-top: var(--spacer-16);
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacer-8);
+  margin-bottom: var(--spacer-12);
+}
+
+.summaryItem {
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+  padding: var(--spacer-8) var(--spacer-12);
+}
+
+.summaryValue {
+  display: block;
+  color: var(--text);
+  font: var(--weight-strong) var(--text-title) var(--font-metric);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.summaryLabel {
+  display: block;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.chartShell {
+  position: relative;
+  border-radius: var(--radius-card);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  padding: var(--spacer-12);
+}
+
+.sankeySvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.stageLabel {
+  fill: var(--text-muted);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  letter-spacing: 0;
+}
+
+.sankeyLink {
+  stroke: none;
+  pointer-events: fill;
+  cursor: default;
+  opacity: 0.96;
+  transition: opacity 160ms ease;
+}
+
+.sankeyLink.is-faded {
+  opacity: 0.08;
+}
+
+.sankeyLink.is-active {
+  opacity: 1;
+}
+
+.sankeyNode {
+  outline: none;
+  cursor: default;
+  transition: opacity 160ms ease;
+}
+
+.sankeyNode.is-faded {
+  opacity: 0.3;
+}
+
+.sankeyNodeRect {
+  stroke-width: 1;
+  transition: stroke-width 160ms ease;
+}
+
+.sankeyNode.is-active .sankeyNodeRect,
+.sankeyNode:focus-visible .sankeyNodeRect {
+  stroke-width: 2;
+}
+
+.nodeSource,
+.nodeOutcome {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.nodeLanding {
+  fill: color-mix(in srgb, var(--brand) 20%, var(--surface));
+  stroke: color-mix(in srgb, var(--brand) 72%, var(--surface));
+}
+
+.nodeLabel {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+  letter-spacing: 0;
+}
+
+.nodeValue {
+  fill: var(--text-muted);
+  font: var(--weight-medium) var(--text-code) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.labelBack {
+  fill: color-mix(in srgb, var(--surface) 94%, transparent);
+  stroke: color-mix(in srgb, var(--border) 56%, transparent);
+  stroke-width: 1;
+}
+
+.chartTooltip {
+  --tx: 0px;
+  --ty: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 168px;
+  padding: var(--spacer-8) 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, var(--brand-on));
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--border) 52%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(var(--tx), var(--ty));
+  transition: opacity 120ms ease;
+}
+
+.chartTooltip[data-visible="true"] {
+  opacity: 1;
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacer-8);
+}
+
+.tooltipDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--brand);
+}
+
+.tooltipName {
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipValue {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-code) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltipMeta {
+  margin-top: var(--spacer-4);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+
+@media (max-width: 640px) {
+  .chartCard {
+    padding: var(--spacer-16);
+  }
+
+  .summaryRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+</style>
+
+<div class="widget" data-dynamic-ui-widget data-template="sankey-chart">
+  <section class="chartCard" aria-label="Sankey Chart, 7 traffic sources to 7 outcomes">
+    <div class="chartHeader">
+      <h3 class="chartTitle">Sankey Chart</h3>
+    </div>
+    <div class="chartBody">
+      <div class="summaryRow">
+        <div class="summaryItem"><span class="summaryValue">9.6k</span><span class="summaryLabel">Total sessions</span></div>
+        <div class="summaryItem"><span class="summaryValue">33.2%</span><span class="summaryLabel">Top channel share</span></div>
+        <div class="summaryItem"><span class="summaryValue">42.2%</span><span class="summaryLabel">Converted</span></div>
+        <div class="summaryItem"><span class="summaryValue">7 / 7</span><span class="summaryLabel">Sources / outcomes</span></div>
+      </div>
+      <div class="chartShell" id="shell">
+        <svg class="sankeySvg" id="sankeySvg" viewBox="0 0 840 860" role="img" aria-label="Sankey diagram of 7 traffic sources flowing through 3 landing pages to 7 outcomes">
+          <text class="stageLabel" x="190" y="34">Source</text>
+          <text class="stageLabel" x="428" y="34" text-anchor="middle">Landing</text>
+          <text class="stageLabel" x="714" y="34" text-anchor="end">Outcome</text>
+          <g id="sankeyContent"></g>
+        </svg>
+        <div class="chartTooltip" id="tooltip" data-visible="false" aria-hidden="true">
+          <div class="tooltipRow"><span class="tooltipDot" id="tipDot"></span><span class="tooltipName" id="tipName">Flow</span><span class="tooltipValue" id="tipValue">0</span></div>
+          <div class="tooltipMeta" id="tipMeta">source to target</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const nodes = [
+    { name: "Organic Search", category: "source", value: 3200, color: "var(--brand)" },
+    { name: "Paid Search", category: "source", value: 2400, color: "var(--chart-series-2)" },
+    { name: "Email", category: "source", value: 1500, color: "var(--accent)" },
+    { name: "Referral", category: "source", value: 900, color: "var(--chart-series-4)" },
+    { name: "Direct", category: "source", value: 650, color: "var(--accent-2)" },
+    { name: "Social Media", category: "source", value: 560, color: "var(--warning)" },
+    { name: "Affiliate", category: "source", value: 430, color: "var(--chart-other)" },
+    { name: "Blog", category: "landing", value: 3469, color: "var(--brand)" },
+    { name: "Pricing", category: "landing", value: 3495, color: "var(--brand)" },
+    { name: "Product", category: "landing", value: 2676, color: "var(--brand)" },
+    { name: "Converted", category: "outcome", value: 4067, color: "var(--chart-series-4)" },
+    { name: "Engaged", category: "outcome", value: 1989, color: "var(--accent)" },
+    { name: "Trial", category: "outcome", value: 1253, color: "var(--warning)" },
+    { name: "Bounced", category: "outcome", value: 736, color: "var(--chart-series-2)" },
+    { name: "Returning", category: "outcome", value: 509, color: "var(--chart-series-3)" },
+    { name: "Unsubscribed", category: "outcome", value: 447, color: "var(--accent-2)" },
+    { name: "Refunded", category: "outcome", value: 639, color: "var(--chart-other)" }
+  ];
+
+  const links = [
+    [0,7,1760],[0,8,800],[0,9,640],[1,7,360],[1,8,1320],[1,9,720],[2,7,450],[2,8,600],[2,9,450],
+    [3,7,315],[3,8,270],[3,9,315],[4,7,162],[4,8,227],[4,9,261],[5,7,336],[5,8,84],[5,9,140],
+    [6,7,86],[6,8,194],[6,9,150],
+    [7,10,1249],[7,11,763],[7,12,486],[7,13,312],[7,14,208],[7,15,173],[7,16,278],
+    [8,10,1748],[8,11,664],[8,12,419],[8,13,210],[8,14,140],[8,15,140],[8,16,174],
+    [9,10,1070],[9,11,562],[9,12,348],[9,13,214],[9,14,161],[9,15,134],[9,16,187]
+  ].map(([s,t,v],i) => ({ source: s, target: t, value: v, id: "l"+i }));
+
+  const layerX = { source: [182,198], landing: [420,436], outcome: [706,722] };
+  const targetHeight = 760;
+  const top = 60;
+  const totalFlow = 9640;
+  const scale = 698.25 / totalFlow;
+
+  const byCategory = { source: [], landing: [], outcome: [] };
+  nodes.forEach((n,i) => { n.idx = i; byCategory[n.category].push(n); });
+
+  Object.entries(byCategory).forEach(([cat, arr]) => {
+    const barTotal = arr.reduce((s,n) => s + n.value*scale, 0);
+    const gap = arr.length > 1 ? (targetHeight - barTotal) / (arr.length - 1) : 0;
+    let y = top;
+    arr.forEach(n => {
+      n.x0 = layerX[cat][0]; n.x1 = layerX[cat][1];
+      n.h = n.value * scale;
+      n.y0 = y; n.y1 = y + n.h;
+      y = n.y1 + gap;
+      n.outOffset = n.y0; n.inOffset = n.y0;
+    });
+  });
+
+  links.forEach(link => {
+    const s = nodes[link.source], t = nodes[link.target];
+    const h = link.value * scale;
+    link.sy0 = s.outOffset; link.sy1 = s.outOffset + h; s.outOffset = link.sy1;
+    link.ty0 = t.inOffset; link.ty1 = t.inOffset + h; t.inOffset = link.ty1;
+    link.h = h;
+  });
+
+  links.sort((a,b) => b.value - a.value);
+
+  const gradKey = (a,b,dir) => "g_" + a.replace(/[^a-zA-Z0-9]/g,"") + "_" + b.replace(/[^a-zA-Z0-9]/g,"") + "_" + dir;
+  const gradMap = new Map();
+  let defs = "<defs>";
+  links.forEach(link => {
+    const s = nodes[link.source], t = nodes[link.target];
+    const fromSource = s.category === "source";
+    const target = fromSource ? "var(--brand)" : t.color;
+    const startOpacity = fromSource ? 0.7 : 0.4;
+    const endOpacity = fromSource ? 0.4 : 0.7;
+    const dir = fromSource ? "src" : "out";
+    const key = gradKey(s.color, target, dir);
+    if (!gradMap.has(key)) {
+      gradMap.set(key, true);
+      defs += '<linearGradient id="'+key+'" x1="0" y1="0" x2="1" y2="0">'
+        + '<stop offset="0" stop-color="'+s.color+'" stop-opacity="'+startOpacity+'"/>'
+        + '<stop offset="1" stop-color="'+target+'" stop-opacity="'+endOpacity+'"/>'
+        + '</linearGradient>';
+    }
+    link.gradId = key;
+  });
+  defs += "</defs>";
+
+  function bezierPoint(p0,p1,p2,p3,t){
+    const mt=1-t;
+    return [
+      mt*mt*mt*p0[0] + 3*mt*mt*t*p1[0] + 3*mt*t*t*p2[0] + t*t*t*p3[0],
+      mt*mt*mt*p0[1] + 3*mt*mt*t*p1[1] + 3*mt*t*t*p2[1] + t*t*t*p3[1]
+    ];
+  }
+  function bezierTangent(p0,p1,p2,p3,t){
+    const mt=1-t;
+    return [
+      3*mt*mt*(p1[0]-p0[0]) + 6*mt*t*(p2[0]-p1[0]) + 3*t*t*(p3[0]-p2[0]),
+      3*mt*mt*(p1[1]-p0[1]) + 6*mt*t*(p2[1]-p1[1]) + 3*t*t*(p3[1]-p2[1])
+    ];
+  }
+  function taperedRibbonPath(p0,p1,p2,p3,h,N){
+    const top = [], bot = [];
+    for (let i=0;i<=N;i++){
+      const t = i/N;
+      const [x,y] = bezierPoint(p0,p1,p2,p3,t);
+      let [dx,dy] = bezierTangent(p0,p1,p2,p3,t);
+      const len = Math.sqrt(dx*dx+dy*dy) || 1;
+      dx/=len; dy/=len;
+      const px=-dy, py=dx;
+      const taper = 1 - 0.6*Math.sin(Math.PI*t);
+      const halfW = Math.max(h*taper/2, 0.75);
+      top.push([x+px*halfW, y+py*halfW]);
+      bot.push([x-px*halfW, y-py*halfW]);
+    }
+    let d = "M"+top[0][0].toFixed(2)+" "+top[0][1].toFixed(2);
+    for (let i=1;i<top.length;i++) d += " L"+top[i][0].toFixed(2)+" "+top[i][1].toFixed(2);
+    for (let i=bot.length-1;i>=0;i--) d += " L"+bot[i][0].toFixed(2)+" "+bot[i][1].toFixed(2);
+    return d + " Z";
+  }
+
+  let linkSvg = '<g class="sankeyLinks" aria-hidden="true">';
+  links.forEach(link => {
+    const s = nodes[link.source], t = nodes[link.target];
+    const cx = (s.x1 + t.x0) / 2;
+    const sMid = (link.sy0 + link.sy1) / 2;
+    const tMid = (link.ty0 + link.ty1) / 2;
+    const p0=[s.x1,sMid], p1=[cx,sMid], p2=[cx,tMid], p3=[t.x0,tMid];
+    const d = taperedRibbonPath(p0,p1,p2,p3,link.h,24);
+    linkSvg += '<path class="sankeyLink" data-link-id="'+link.id+'" data-source="'+link.source+'" data-target="'+link.target
+      + '" data-label="'+s.name+' \u2192 '+t.name+'" data-meta="'+s.category+' to '+t.category
+      + '" data-value="'+link.value+'" data-color="'+s.color+'" fill="url(#'+link.gradId+')" d="'+d+'" tabindex="0" aria-label="'
+      + s.name+' to '+t.name+', '+link.value+' sessions"/>';
+  });
+  linkSvg += "</g>";
+
+  const fmt = v => v >= 1000 ? (v/1000).toFixed(1).replace(/\\.0$/,"") + "k" : String(v);
+
+  let nodeSvg = '<g class="sankeyNodes">';
+  nodes.forEach(n => {
+    const cls = n.category === "source" ? "nodeSource" : n.category === "landing" ? "nodeLanding" : "nodeOutcome";
+    const midY = (n.y0+n.y1)/2;
+    let label = "";
+    if (n.category === "source") {
+      label = '<text class="nodeLabel" x="'+(n.x0-14)+'" y="'+(midY-3)+'" text-anchor="end">'+n.name+'</text>'
+        + '<text class="nodeValue" x="'+(n.x0-14)+'" y="'+(midY+13)+'" text-anchor="end">'+fmt(n.value)+'</text>';
+    } else if (n.category === "outcome") {
+      label = '<text class="nodeLabel" x="'+(n.x1+14)+'" y="'+(midY-3)+'">'+n.name+'</text>'
+        + '<text class="nodeValue" x="'+(n.x1+14)+'" y="'+(midY+13)+'">'+fmt(n.value)+'</text>';
+    } else {
+      const pillW = n.name.length * 8 + 26;
+      const cx = (n.x0+n.x1)/2;
+      label = '<rect class="labelBack" x="'+(cx-pillW/2)+'" y="'+(n.y0-26)+'" width="'+pillW+'" height="20" rx="var(--radius)"/>'
+        + '<text class="nodeLabel" x="'+cx+'" y="'+(n.y0-12)+'" text-anchor="middle">'+n.name+'</text>';
+    }
+    nodeSvg += '<g class="sankeyNode" data-node="'+n.idx+'" data-label="'+n.name+'" data-meta="'+n.category+' node" data-value="'
+      + n.value+'" data-color="'+n.color+'" tabindex="0" aria-label="'+n.name+' '+n.category+' node, '+n.value+' sessions" style="color:'+n.color+';">'
+      + '<rect class="sankeyNodeRect '+cls+'" x="'+n.x0+'" y="'+n.y0+'" width="16" height="'+n.h+'" rx="var(--spacer-4)"/>'
+      + label + '</g>';
+  });
+  nodeSvg += "</g>";
+
+  const root = document.querySelector('.widget[data-dynamic-ui-widget][data-template="sankey-chart"]:not([data-mounted])');
+  if (!root) return;
+  root.dataset.mounted = "true";
+
+  root.querySelector("#sankeyContent").innerHTML = defs + linkSvg + nodeSvg;
+
+  const shell = root.querySelector("#shell");
+  const tooltip = root.querySelector("#tooltip");
+  const tipName = root.querySelector("#tipName");
+  const tipValue = root.querySelector("#tipValue");
+  const tipMeta = root.querySelector("#tipMeta");
+  const tipDot = root.querySelector("#tipDot");
+  const linkEls = Array.from(root.querySelectorAll(".sankeyLink"));
+  const nodeEls = Array.from(root.querySelectorAll(".sankeyNode"));
+  const allEls = [...linkEls, ...nodeEls];
+
+  const placeTip = (target, evt) => {
+    const sr = shell.getBoundingClientRect();
+    const tr = target.getBoundingClientRect();
+    const hasPointer = evt && Number.isFinite(evt.clientX);
+    const px = hasPointer ? evt.clientX - sr.left : tr.left + tr.width/2 - sr.left;
+    const py = hasPointer ? evt.clientY - sr.top : tr.top + tr.height/2 - sr.top;
+    tooltip.dataset.visible = "true";
+    const tw = tooltip.offsetWidth || 168, th = tooltip.offsetHeight || 50;
+    const x = Math.min(Math.max(8, px - tw/2), Math.max(8, sr.width - tw - 8));
+    const placeBottom = py < th + 24;
+    const rawY = placeBottom ? py + 14 : py - th - 14;
+    const y = Math.min(Math.max(8, rawY), Math.max(8, sr.height - th - 8));
+    tooltip.style.setProperty("--tx", x+"px");
+    tooltip.style.setProperty("--ty", y+"px");
+  };
+
+  const clear = () => {
+    allEls.forEach(el => el.classList.remove("is-active","is-faded"));
+    tooltip.dataset.visible = "false";
+  };
+
+  const setTip = el => {
+    tipName.textContent = el.dataset.label;
+    tipValue.textContent = fmt(Number(el.dataset.value)) + " sessions";
+    tipMeta.textContent = el.dataset.meta;
+    tipDot.style.background = el.dataset.color;
+  };
+
+  const applyState = (activeNodes, activeLinks) => {
+    linkEls.forEach(l => { const a = activeLinks.has(l.dataset.linkId); l.classList.toggle("is-active",a); l.classList.toggle("is-faded",!a); });
+    nodeEls.forEach(n => { const a = activeNodes.has(n.dataset.node); n.classList.toggle("is-active",a); n.classList.toggle("is-faded",!a); });
+  };
+
+  linkEls.forEach(l => {
+    const inspect = evt => {
+      applyState(new Set([l.dataset.source,l.dataset.target]), new Set([l.dataset.linkId]));
+      setTip(l); placeTip(l, evt);
+    };
+    l.addEventListener("pointerenter", inspect);
+    l.addEventListener("pointermove", evt => placeTip(l, evt));
+    l.addEventListener("focus", inspect);
+    l.addEventListener("pointerleave", clear);
+    l.addEventListener("blur", clear);
+  });
+
+  nodeEls.forEach(n => {
+    const inspect = evt => {
+      const id = n.dataset.node;
+      const activeNodes = new Set([id]);
+      const activeLinks = new Set();
+      linkEls.forEach(l => {
+        if (l.dataset.source === id || l.dataset.target === id) {
+          activeLinks.add(l.dataset.linkId);
+          activeNodes.add(l.dataset.source);
+          activeNodes.add(l.dataset.target);
+        }
+      });
+      applyState(activeNodes, activeLinks);
+      setTip(n); placeTip(n, evt);
+    };
+    n.addEventListener("pointerenter", inspect);
+    n.addEventListener("pointermove", evt => placeTip(n, evt));
+    n.addEventListener("focus", inspect);
+    n.addEventListener("pointerleave", clear);
+    n.addEventListener("blur", clear);
+  });
+})();
+</script>

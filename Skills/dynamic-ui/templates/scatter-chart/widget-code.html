@@ -1,0 +1,732 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.chartCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.chartHeader {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.chartTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.chartLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacer-12);
+  margin-top: var(--spacer-12);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-8);
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.legendSwatch[data-series="organic"] {
+  background: var(--chart-series-2);
+}
+
+.legendSwatch[data-series="partner"] {
+  background: var(--chart-series-3);
+}
+
+.chartShell {
+  position: relative;
+  height: clamp(240px, 34vw, 340px);
+  margin-top: var(--spacer-16);
+}
+
+.chartShell canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.chartFallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  padding: var(--spacer-8) var(--spacer-8) 0;
+  pointer-events: none;
+}
+
+.chartFallback[data-ready="true"] {
+  opacity: 0;
+}
+
+.fallbackSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fallbackGrid {
+  stroke: color-mix(in srgb, var(--border) 42%, transparent);
+  stroke-width: 1;
+}
+
+.fallbackAxis {
+  stroke: color-mix(in srgb, var(--border) 72%, transparent);
+  stroke-width: 1;
+}
+
+.fallbackAxisLabel {
+  fill: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.fallbackPoint {
+  fill: var(--chart-series-1);
+  fill-opacity: 0.88;
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.fallbackPoint[data-series="organic"] {
+  fill: var(--chart-series-2);
+}
+
+.fallbackPoint[data-series="partner"] {
+  fill: var(--chart-series-3);
+}
+
+.chartStatus {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  opacity: 0;
+}
+
+.chartCard[data-error="true"] .chartStatus {
+  max-height: 40px;
+  margin: var(--spacer-8) 0 0;
+  opacity: 1;
+}
+
+.chartTooltip {
+  --tooltip-x: 0px;
+  --tooltip-y: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 176px;
+  padding: 6px 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, calc(-100% - 10px));
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chartTooltip {
+    background: color-mix(in srgb, var(--surface) 92%, #000000);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.chartTooltip[data-visible="true"] {
+  opacity: 1;
+}
+
+.chartTooltip[data-placement="bottom"] {
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, 10px);
+}
+
+.tooltipTitle {
+  margin-bottom: var(--spacer-4);
+  color: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.tooltipRows {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacer-8);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.tooltipName {
+  color: var(--text-muted);
+}
+
+.tooltipValue {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-code) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+
+@media (max-width: 520px) {
+  .chartCard {
+    padding: var(--spacer-16);
+  }
+
+  .chartShell {
+    height: 240px;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="scatter-chart">
+  <section class="chartCard" aria-label="Scatter plot for reach score and conversion rate">
+    <div class="chartHeader">
+      <h3 class="chartTitle">Scatter Chart</h3>
+    </div>
+    <div class="chartLegend" aria-label="Chart legend">
+      <span class="legendItem"><span class="legendSwatch" data-series="paid"></span>Paid search</span>
+      <span class="legendItem"><span class="legendSwatch" data-series="organic"></span>Organic</span>
+      <span class="legendItem"><span class="legendSwatch" data-series="partner"></span>Partner</span>
+    </div>
+    <div class="chartShell">
+      <canvas aria-label="Reach score and conversion rate scatter plot" role="img"></canvas>
+      <div class="chartFallback" aria-hidden="true">
+        <svg class="fallbackSvg" viewBox="0 0 640 300" role="img" aria-label="Scatter plot fallback">
+          <path class="fallbackGrid" d="M54 28V232M165 28V232M276 28V232M388 28V232M499 28V232M610 28V232M54 28H610M54 79H610M54 130H610M54 181H610M54 232H610" fill="none"/>
+          <path class="fallbackAxis" d="M54 28V232H610" fill="none"/>
+          <circle class="fallbackPoint" data-series="paid" cx="154" cy="176" r="7"/>
+          <circle class="fallbackPoint" data-series="paid" cx="288" cy="141" r="8"/>
+          <circle class="fallbackPoint" data-series="paid" cx="477" cy="91" r="10"/>
+          <circle class="fallbackPoint" data-series="organic" cx="187" cy="160" r="6"/>
+          <circle class="fallbackPoint" data-series="organic" cx="365" cy="118" r="8"/>
+          <circle class="fallbackPoint" data-series="organic" cx="543" cy="65" r="9"/>
+          <circle class="fallbackPoint" data-series="partner" cx="221" cy="193" r="5"/>
+          <circle class="fallbackPoint" data-series="partner" cx="404" cy="164" r="6"/>
+          <circle class="fallbackPoint" data-series="partner" cx="566" cy="136" r="7"/>
+          <text class="fallbackAxisLabel" x="54" y="258" text-anchor="middle">0</text>
+          <text class="fallbackAxisLabel" x="276" y="258" text-anchor="middle">40</text>
+          <text class="fallbackAxisLabel" x="499" y="258" text-anchor="middle">80</text>
+          <text class="fallbackAxisLabel" x="332" y="286" text-anchor="middle">Reach score</text>
+          <text class="fallbackAxisLabel" x="18" y="134" text-anchor="middle" transform="rotate(-90 18 134)">Conversion rate (%)</text>
+        </svg>
+      </div>
+      <div class="chartTooltip" data-visible="false" data-placement="top" aria-hidden="true">
+        <div class="tooltipTitle">Paid A</div>
+        <div class="tooltipRows">
+          <div class="tooltipRow">
+            <span class="tooltipDot"></span>
+            <span class="tooltipName">Series</span>
+            <span class="tooltipValue">Paid search</span>
+          </div>
+          <div class="tooltipRow">
+            <span class="tooltipDot"></span>
+            <span class="tooltipName">Reach</span>
+            <span class="tooltipValue">18</span>
+          </div>
+          <div class="tooltipRow">
+            <span class="tooltipDot"></span>
+            <span class="tooltipName">Conversion</span>
+            <span class="tooltipValue">5.5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="chartStatus">Chart runtime failed to load; static fallback remains visible.</p>
+  </section>
+</div>
+<script>
+(() => {
+  const rootSelector = '.widget[data-dynamic-ui-widget][data-template="scatter-chart"]:not([data-mounted])';
+  const widgets = Array.from(document.querySelectorAll(rootSelector));
+  if (widgets.length === 0) {
+    return;
+  }
+
+  const chartData = [
+    {
+      id: "paid",
+      data: [
+        { x: 18, y: 5.5, size: 52, label: "Paid A" },
+        { x: 42, y: 8.9, size: 72, label: "Paid B" },
+        { x: 76, y: 13.8, size: 93, label: "Paid C" }
+      ]
+    },
+    {
+      id: "organic",
+      data: [
+        { x: 24, y: 7.1, size: 38, label: "Organic A" },
+        { x: 56, y: 11.2, size: 66, label: "Organic B" },
+        { x: 88, y: 16.4, size: 80, label: "Organic C" }
+      ]
+    },
+    {
+      id: "partner",
+      data: [
+        { x: 30, y: 3.8, size: 28, label: "Partner A" },
+        { x: 63, y: 6.7, size: 45, label: "Partner B" },
+        { x: 92, y: 9.4, size: 54, label: "Partner C" }
+      ]
+    }
+  ];
+  const axis = {
+    x: "Reach score",
+    y: "Conversion rate (%)"
+  };
+  const scale = {
+    x: { min: 0, max: 100 },
+    y: { min: 0, max: 20 }
+  };
+  const sizeKey = "size";
+  const chartConfig = {
+    paid: {
+      label: "Paid search",
+      color: "var(--chart-series-1)"
+    },
+    organic: {
+      label: "Organic",
+      color: "var(--chart-series-2)"
+    },
+    partner: {
+      label: "Partner",
+      color: "var(--chart-series-3)"
+    }
+  };
+
+  const loadChartJs = (onReady, onError) => {
+    if (window.Chart) {
+      onReady();
+      return;
+    }
+
+    const existingLoader = document.querySelector('script[data-dynamic-ui-chartjs="true"]');
+    if (existingLoader) {
+      if (existingLoader.dataset.status === "ready" && window.Chart) {
+        onReady();
+        return;
+      }
+      if (existingLoader.dataset.status === "error") {
+        onError();
+        return;
+      }
+      existingLoader.addEventListener("load", onReady, { once: true });
+      existingLoader.addEventListener("error", onError, { once: true });
+      return;
+    }
+
+    const loader = document.createElement("script");
+    loader.src = "https://cdn.jsdelivr.net/npm/chart.js@4";
+    loader.async = true;
+    loader.dataset.dynamicUiChartjs = "true";
+    loader.dataset.status = "loading";
+    loader.onload = () => {
+      loader.dataset.status = "ready";
+      onReady();
+    };
+    loader.onerror = () => {
+      loader.dataset.status = "error";
+      onError();
+    };
+    (document.head || document.documentElement).appendChild(loader);
+  };
+
+  const initWidget = (widget) => {
+    widget.dataset.mounted = "true";
+    const canvas = widget.querySelector("canvas");
+    const fallback = widget.querySelector(".chartFallback");
+    const status = widget.querySelector(".chartStatus");
+    const card = widget.querySelector(".chartCard");
+    const tooltipEl = widget.querySelector(".chartTooltip");
+    const tooltipTitle = widget.querySelector(".tooltipTitle");
+    const tooltipRows = widget.querySelector(".tooltipRows");
+    const styles = getComputedStyle(widget);
+    const readVar = (name) => styles.getPropertyValue(name).trim();
+    const resolveColor = (value) => {
+      const match = /^var\((--[^)]+)\)$/.exec(value.trim());
+      return match ? readVar(match[1]) || value : value;
+    };
+    const fadeRgba = (value, factor) => {
+      const match = /rgba?\(([^)]+)\)/.exec(value);
+      if (!match) {
+        return value;
+      }
+      const parts = match[1].split(",").map((part) => part.trim());
+      const alpha = parts[3] === undefined ? 1 : Number.parseFloat(parts[3]);
+      const nextAlpha = Number.isFinite(alpha) ? Math.max(0, Math.min(1, alpha * factor)) : 0.05;
+      return `rgba(${parts[0]}, ${parts[1]}, ${parts[2]}, ${nextAlpha})`;
+    };
+    const parseFinite = (value) => typeof value === "number" && Number.isFinite(value) ? value : null;
+    const series = chartData
+      .map((serie) => ({
+        id: String(serie.id ?? ""),
+        data: Array.isArray(serie.data) ? serie.data : []
+      }))
+      .filter((serie) => serie.id && chartConfig[serie.id]);
+    const points = series.flatMap((serie) => serie.data
+      .map((point, index) => {
+        const x = parseFinite(point.x);
+        const y = parseFinite(point.y);
+        if (x === null || y === null) {
+          return null;
+        }
+        const rawSize = parseFinite(point[sizeKey]);
+        return {
+          x,
+          y,
+          rawSize,
+          seriesId: serie.id,
+          index,
+          pointLabel: String(point.label ?? `${chartConfig[serie.id].label} ${index + 1}`)
+        };
+      })
+      .filter(Boolean));
+
+    if (!canvas || points.length === 0) {
+      if (card) {
+        card.dataset.error = "true";
+      }
+      if (status) {
+        status.textContent = "No valid scatter data available.";
+      }
+      return;
+    }
+
+    const sizeValues = points
+      .map((point) => point.rawSize)
+      .filter((value) => value !== null);
+    const minSize = sizeValues.length > 0 ? Math.min(...sizeValues) : 0;
+    const maxSize = sizeValues.length > 0 ? Math.max(...sizeValues) : 1;
+    const scaleRadius = (value) => {
+      if (value === null || maxSize === minSize) {
+        return 6;
+      }
+      return 5 + ((value - minSize) / (maxSize - minSize)) * 5;
+    };
+    const xValues = points.map((point) => point.x);
+    const yValues = points.map((point) => point.y);
+    const expandRange = (values) => {
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      if (min === max) {
+        const pad = Math.max(1, Math.abs(min) * 0.1);
+        return { min: min - pad, max: max + pad };
+      }
+      const pad = (max - min) * 0.12;
+      return { min: Math.min(0, min - pad), max: max + pad };
+    };
+    const rangeFromScale = (values, axisScale) => {
+      const fallback = expandRange(values);
+      const min = parseFinite(axisScale && axisScale.min);
+      const max = parseFinite(axisScale && axisScale.max);
+      if (min !== null && max !== null && min < max) {
+        return { min, max };
+      }
+      return fallback;
+    };
+    const xRange = rangeFromScale(xValues, scale.x);
+    const yRange = rangeFromScale(yValues, scale.y);
+
+    const renderTooltipRows = (point, color) => {
+      if (!tooltipRows) {
+        return;
+      }
+      const rows = [
+        ["Series", chartConfig[point.seriesId].label, color],
+        [axis.x, point.x.toLocaleString(), "var(--text-muted)"],
+        [axis.y, `${point.y.toLocaleString()}%`, "var(--text-muted)"]
+      ];
+      if (point.rawSize !== null) {
+        rows.push(["Size", point.rawSize.toLocaleString(), "var(--text-muted)"]);
+      }
+
+      const fragment = document.createDocumentFragment();
+      rows.forEach(([nameText, valueText, dotColor]) => {
+        const row = document.createElement("div");
+        const dot = document.createElement("span");
+        const name = document.createElement("span");
+        const value = document.createElement("span");
+        row.className = "tooltipRow";
+        dot.className = "tooltipDot";
+        dot.style.backgroundColor = dotColor;
+        name.className = "tooltipName";
+        name.textContent = nameText;
+        value.className = "tooltipValue";
+        value.textContent = valueText;
+        row.append(dot, name, value);
+        fragment.append(row);
+      });
+      tooltipRows.replaceChildren(fragment);
+    };
+
+    const renderChart = () => {
+      const colors = Object.fromEntries(series.map((serie) => [serie.id, resolveColor(chartConfig[serie.id].color)]));
+      const surface = readVar("--surface");
+      const textMuted = readVar("--text-muted");
+      const border = readVar("--border");
+      const grid = fadeRgba(border, 0.42);
+      const axisColor = fadeRgba(border, 0.72);
+      const ctx = canvas.getContext("2d");
+      if (!ctx || !window.Chart) {
+        return;
+      }
+
+      const externalTooltip = ({ chart, tooltip }) => {
+        if (!tooltipEl || !tooltipTitle) {
+          return;
+        }
+        if (tooltip.opacity === 0 || !tooltip.dataPoints || tooltip.dataPoints.length === 0) {
+          tooltipEl.dataset.visible = "false";
+          return;
+        }
+
+        const point = tooltip.dataPoints[0].raw;
+        const color = colors[point.seriesId];
+        tooltipTitle.textContent = point.pointLabel;
+        renderTooltipRows(point, color);
+
+        const width = chart.width;
+        const tooltipWidth = tooltipEl.offsetWidth || 176;
+        const x = Math.min(Math.max(tooltip.caretX, tooltipWidth / 2 + 6), width - tooltipWidth / 2 - 6);
+        const y = tooltip.caretY;
+        tooltipEl.dataset.placement = y < 64 ? "bottom" : "top";
+        tooltipEl.style.setProperty("--tooltip-x", `${Math.round(x)}px`);
+        tooltipEl.style.setProperty("--tooltip-y", `${Math.round(y)}px`);
+        tooltipEl.dataset.visible = "true";
+      };
+
+      new window.Chart(ctx, {
+        type: "scatter",
+        data: {
+          datasets: series.map((serie) => ({
+            id: serie.id,
+            label: chartConfig[serie.id].label,
+            data: points
+              .filter((point) => point.seriesId === serie.id)
+              .map((point) => ({ ...point, r: scaleRadius(point.rawSize) })),
+            backgroundColor: colors[serie.id],
+            borderColor: surface,
+            borderWidth: 2,
+            pointRadius(context) {
+              return context.raw ? context.raw.r : 5;
+            },
+            pointHoverRadius(context) {
+              return context.raw ? context.raw.r + 2 : 7;
+            },
+            pointHoverBackgroundColor: surface,
+            pointHoverBorderColor: colors[serie.id],
+            pointHoverBorderWidth: 2,
+            pointHitRadius: 14,
+            clip: false
+          }))
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 220,
+            easing: "easeOutQuart"
+          },
+          transitions: {
+            active: {
+              animation: {
+                duration: 120,
+                easing: "easeOutQuart"
+              }
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: "nearest"
+          },
+          hover: {
+            intersect: false,
+            mode: "nearest"
+          },
+          layout: {
+            padding: { top: 14, right: 20, bottom: 2, left: 10 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: false,
+              external: externalTooltip
+            }
+          },
+          scales: {
+            x: {
+              min: xRange.min,
+              max: xRange.max,
+              border: { display: true, color: axisColor },
+              grid: {
+                color: grid,
+                lineWidth: 1,
+                drawTicks: false
+              },
+              title: {
+                display: true,
+                text: axis.x,
+                color: textMuted,
+                font: { size: 12, family: readVar("--font-sans") },
+                padding: { top: 8 }
+              },
+              ticks: {
+                color: textMuted,
+                font: { size: 12, family: readVar("--font-sans") },
+                maxTicksLimit: 5,
+                padding: 8
+              }
+            },
+            y: {
+              min: yRange.min,
+              max: yRange.max,
+              border: { display: true, color: axisColor },
+              grid: {
+                color: grid,
+                lineWidth: 1,
+                drawTicks: false
+              },
+              title: {
+                display: true,
+                text: axis.y,
+                color: textMuted,
+                font: { size: 12, family: readVar("--font-sans") },
+                padding: { bottom: 8 }
+              },
+              ticks: {
+                color: textMuted,
+                font: { size: 12, family: readVar("--font-sans") },
+                maxTicksLimit: 5,
+                stepSize: 5,
+                padding: 8,
+                callback(value) {
+                  return Number(value) === 0 ? "" : value;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      if (fallback) {
+        fallback.dataset.ready = "true";
+      }
+      if (status) {
+        status.textContent = "";
+      }
+    };
+
+    loadChartJs(renderChart, () => {
+      if (card) {
+        card.dataset.error = "true";
+      }
+      if (status) {
+        status.textContent = "Chart runtime failed to load; static fallback remains visible.";
+      }
+    });
+  };
+
+  widgets.forEach(initWidget);
+})();
+</script>

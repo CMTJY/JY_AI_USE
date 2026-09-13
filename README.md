@@ -44,6 +44,7 @@ AWENAI-TOOL/
 │
 ├── Skills/                           # 🧩 AI 技能模块
 │   ├── agent-team-builder/           #   通用智能体团队搭建
+│   ├── dynamic-ui/                    #   TRAE 动态图表与技术图示 Skill
 │   ├── intent-recognition/           #   需求意图识别
 │   ├── infra-module-decoupler/       #   嵌入式模块解耦器
 │   ├── lark-doc-local-publish/       #   本地 MD → 飞书文档
@@ -194,9 +195,12 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 | 技能 | 描述 | 核心能力 |
 |------|------|---------|
 | [agent-team-builder](Skills/agent-team-builder/) | 通用智能体团队搭建 | 需求识别 → 框架规划 → 实际搭建 三阶段流程 |
+| [dynamic-ui](Skills/dynamic-ui/) | TRAE 动态可视化 Skill | 程序框图、模块架构图、调用链、机制示意图和嵌入式接线图 |
 | [intent-recognition](Skills/intent-recognition/) | 需求意图识别 | 逐个问题引导，区分表面需求 vs 真正意图 |
 | [model-up](Skills/model-up/) | 多模态代理（图片/音频/视频→文本分析） | OpenAI 兼容接口，多模型自动降级 |
 | [skill-creator](Skills/skill-creator/) | 自定义技能工厂 | 新建 Skill / 将对话封装为 Skill |
+
+> `dynamic-ui` 是从本机 TRAE CN 全局内置 Skill 保存的原始快照，运行时依赖 TRAE 的 `PureShowWidget`。其上游目录未附独立开源许可证，根 MIT License 不自动覆盖这些上游文件；详情见 [UPSTREAM_NOTICE.md](Skills/dynamic-ui/UPSTREAM_NOTICE.md)。
 
 ### 嵌入式专项
 
@@ -337,4 +341,4 @@ python "Agents/StartupPlanner Pro/tools/token_budget.py"
 
 ---
 
-*最后更新：2026-09-09*
+*最后更新：2026-09-13*

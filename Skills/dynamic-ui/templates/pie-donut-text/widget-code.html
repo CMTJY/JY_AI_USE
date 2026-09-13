@@ -1,0 +1,588 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.chartCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.chartHeader {
+  display: grid;
+  gap: var(--spacer-4);
+  text-align: center;
+}
+
+.chartTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.donutShell {
+  position: relative;
+  width: min(100%, 250px);
+  height: min(64vw, 250px);
+  min-height: 220px;
+  max-height: 250px;
+  margin: var(--spacer-16) auto 0;
+}
+
+.donutShell canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.chartFallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.chartFallback[data-ready="true"] {
+  opacity: 0;
+}
+
+.fallbackSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.donutTrack {
+  fill: none;
+  stroke: color-mix(in srgb, var(--border) 55%, transparent);
+  stroke-width: 34;
+}
+
+.donutSlice {
+  fill: none;
+  stroke-width: 34;
+  stroke-linecap: butt;
+}
+
+.donutSlice[data-browser="chrome"] {
+  stroke: var(--chart-series-1);
+}
+
+.donutSlice[data-browser="safari"] {
+  stroke: var(--chart-series-2);
+}
+
+.donutSlice[data-browser="firefox"] {
+  stroke: var(--chart-series-3);
+}
+
+.donutSlice[data-browser="edge"] {
+  stroke: var(--chart-series-4);
+}
+
+.donutSlice[data-browser="other"] {
+  stroke: var(--chart-other);
+}
+
+.donutMetric {
+  fill: var(--text);
+  font: var(--weight-strong) var(--text-title) var(--font-metric);
+  font-variant-numeric: tabular-nums;
+}
+
+.donutLabel {
+  fill: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.chartLegend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacer-8) var(--spacer-12);
+  margin-top: var(--spacer-16);
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-8);
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.legendSwatch[data-browser="safari"] {
+  background: var(--chart-series-2);
+}
+
+.legendSwatch[data-browser="firefox"] {
+  background: var(--chart-series-3);
+}
+
+.legendSwatch[data-browser="edge"] {
+  background: var(--chart-series-4);
+}
+
+.legendSwatch[data-browser="other"] {
+  background: var(--chart-other);
+}
+
+.chartStatus {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+  opacity: 0;
+  text-align: center;
+}
+
+.chartCard[data-error="true"] .chartStatus {
+  max-height: 40px;
+  margin: var(--spacer-8) 0 0;
+  opacity: 1;
+}
+
+.chartTooltip {
+  --tooltip-x: 0px;
+  --tooltip-y: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 132px;
+  padding: 6px 10px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 96%, #FFFFFF);
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, calc(-100% - 10px));
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chartTooltip {
+    background: color-mix(in srgb, var(--surface) 92%, #000000);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.chartTooltip[data-visible="true"] {
+  opacity: 1;
+}
+
+.chartTooltip[data-placement="bottom"] {
+  transform: translate3d(var(--tooltip-x), var(--tooltip-y), 0) translate(-50%, 10px);
+}
+
+.tooltipRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacer-8);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.tooltipDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chart-series-1);
+}
+
+.tooltipName {
+  color: var(--text-muted);
+}
+
+.tooltipValue {
+  color: var(--text);
+  font: var(--weight-medium) var(--text-code) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+
+@media (max-width: 520px) {
+  .chartCard {
+    padding: var(--spacer-16);
+  }
+
+  .donutShell {
+    width: min(100%, 232px);
+    height: 232px;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="pie-donut-text">
+  <section class="chartCard" aria-label="Donut chart for browser visitors">
+    <div class="chartHeader">
+      <h3 class="chartTitle">Pie Chart - Donut with Text</h3>
+    </div>
+    <div class="donutShell">
+      <canvas aria-label="Browser visitors by category" role="img"></canvas>
+      <div class="chartFallback" aria-hidden="true">
+        <svg class="fallbackSvg" viewBox="0 0 260 260" role="img" aria-label="Browser visitor share fallback">
+          <circle class="donutTrack" cx="130" cy="130" r="82"/>
+          <circle class="donutSlice" data-browser="chrome" cx="130" cy="130" r="82" pathLength="100" stroke-dasharray="24.4 75.6" stroke-dashoffset="0" transform="rotate(-90 130 130)"/>
+          <circle class="donutSlice" data-browser="safari" cx="130" cy="130" r="82" pathLength="100" stroke-dasharray="17.8 82.2" stroke-dashoffset="-24.4" transform="rotate(-90 130 130)"/>
+          <circle class="donutSlice" data-browser="firefox" cx="130" cy="130" r="82" pathLength="100" stroke-dasharray="25.5 74.5" stroke-dashoffset="-42.2" transform="rotate(-90 130 130)"/>
+          <circle class="donutSlice" data-browser="edge" cx="130" cy="130" r="82" pathLength="100" stroke-dasharray="15.4 84.6" stroke-dashoffset="-67.7" transform="rotate(-90 130 130)"/>
+          <circle class="donutSlice" data-browser="other" cx="130" cy="130" r="82" pathLength="100" stroke-dasharray="16.9 83.1" stroke-dashoffset="-83.1" transform="rotate(-90 130 130)"/>
+          <text text-anchor="middle" dominant-baseline="middle">
+            <tspan class="donutMetric" x="130" y="124">1,125</tspan>
+            <tspan class="donutLabel" x="130" y="154">Visitors</tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="chartTooltip" data-visible="false" data-placement="top" aria-hidden="true">
+        <div class="tooltipRow">
+          <span class="tooltipDot"></span>
+          <span class="tooltipName">Chrome</span>
+          <span class="tooltipValue">275</span>
+        </div>
+      </div>
+    </div>
+    <div class="chartLegend" aria-label="Chart legend">
+      <span class="legendItem"><span class="legendSwatch" data-browser="chrome"></span>Chrome</span>
+      <span class="legendItem"><span class="legendSwatch" data-browser="safari"></span>Safari</span>
+      <span class="legendItem"><span class="legendSwatch" data-browser="firefox"></span>Firefox</span>
+      <span class="legendItem"><span class="legendSwatch" data-browser="edge"></span>Edge</span>
+      <span class="legendItem"><span class="legendSwatch" data-browser="other"></span>Other</span>
+    </div>
+    <p class="chartStatus">Chart runtime failed to load; static fallback remains visible.</p>
+  </section>
+</div>
+<script>
+(() => {
+  const rootSelector = '.widget[data-dynamic-ui-widget][data-template="pie-donut-text"]:not([data-mounted])';
+  const widgets = Array.from(document.querySelectorAll(rootSelector));
+  if (widgets.length === 0) {
+    return;
+  }
+
+  const chartData = [
+    { browser: "chrome", visitors: 275, fill: "var(--chart-series-1)" },
+    { browser: "safari", visitors: 200, fill: "var(--chart-series-2)" },
+    { browser: "firefox", visitors: 287, fill: "var(--chart-series-3)" },
+    { browser: "edge", visitors: 173, fill: "var(--chart-series-4)" },
+    { browser: "other", visitors: 190, fill: "var(--chart-other)" }
+  ];
+  const nameKey = "browser";
+  const dataKey = "visitors";
+  const centerLabel = "Visitors";
+  const chartConfig = {
+    visitors: {
+      label: "Visitors"
+    },
+    chrome: {
+      label: "Chrome",
+      color: "var(--chart-series-1)"
+    },
+    safari: {
+      label: "Safari",
+      color: "var(--chart-series-2)"
+    },
+    firefox: {
+      label: "Firefox",
+      color: "var(--chart-series-3)"
+    },
+    edge: {
+      label: "Edge",
+      color: "var(--chart-series-4)"
+    },
+    other: {
+      label: "Other",
+      color: "var(--chart-other)"
+    }
+  };
+
+  const loadChartJs = (onReady, onError) => {
+    if (window.Chart) {
+      onReady();
+      return;
+    }
+
+    const existingLoader = document.querySelector('script[data-dynamic-ui-chartjs="true"]');
+    if (existingLoader) {
+      if (existingLoader.dataset.status === "ready" && window.Chart) {
+        onReady();
+        return;
+      }
+      if (existingLoader.dataset.status === "error") {
+        onError();
+        return;
+      }
+      existingLoader.addEventListener("load", onReady, { once: true });
+      existingLoader.addEventListener("error", onError, { once: true });
+      return;
+    }
+
+    const loader = document.createElement("script");
+    loader.src = "https://cdn.jsdelivr.net/npm/chart.js@4";
+    loader.async = true;
+    loader.dataset.dynamicUiChartjs = "true";
+    loader.dataset.status = "loading";
+    loader.onload = () => {
+      loader.dataset.status = "ready";
+      onReady();
+    };
+    loader.onerror = () => {
+      loader.dataset.status = "error";
+      onError();
+    };
+    document.head.appendChild(loader);
+  };
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const formatter = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+
+  widgets.forEach((widget) => {
+    widget.dataset.mounted = "true";
+
+    const card = widget.querySelector(".chartCard");
+    const shell = widget.querySelector(".donutShell");
+    const canvas = widget.querySelector("canvas");
+    const fallback = widget.querySelector(".chartFallback");
+    const tooltip = widget.querySelector(".chartTooltip");
+    const tooltipDot = widget.querySelector(".tooltipDot");
+    const tooltipName = widget.querySelector(".tooltipName");
+    const tooltipValue = widget.querySelector(".tooltipValue");
+
+    if (!card || !shell || !canvas || !fallback || !tooltip || !tooltipDot || !tooltipName || !tooltipValue) {
+      return;
+    }
+
+    const styles = getComputedStyle(widget);
+    const token = (name) => styles.getPropertyValue(name).trim();
+    const resolveColor = (value) => {
+      const match = /^var\((--[^)]+)\)$/.exec(value.trim());
+      return match ? token(match[1]) || value : value;
+    };
+    const rows = chartData
+      .map((row) => {
+        const rawValue = Number(row[dataKey]);
+        return {
+          ...row,
+          value: Number.isFinite(rawValue) && rawValue > 0 ? rawValue : 0
+        };
+      })
+      .filter((row) => row.value > 0);
+
+    const total = rows.reduce((sum, row) => sum + row.value, 0);
+    if (total <= 0) {
+      card.dataset.error = "true";
+      return;
+    }
+
+    const colors = rows.map((row) => resolveColor(row.fill || chartConfig[row[nameKey]]?.color || "var(--brand)"));
+    const resolveHoverColor = (color) => {
+      const raw = String(color || "").trim();
+      const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(raw);
+      if (!match) {
+        return raw;
+      }
+
+      const hex = match[1].length === 3
+        ? match[1].split("").map((char) => char + char).join("")
+        : match[1];
+      const channels = [0, 2, 4].map((start) => parseInt(hex.slice(start, start + 2), 16));
+      const luminance = channels[0] * 0.299 + channels[1] * 0.587 + channels[2] * 0.114;
+      const hoverChannels = channels.map((channel) => {
+        return luminance > 170
+          ? Math.round(channel * 0.88)
+          : Math.round(channel + (255 - channel) * 0.12);
+      });
+      return `rgb(${hoverChannels.join(", ")})`;
+    };
+    const hoverColors = colors.map(resolveHoverColor);
+    const labels = rows.map((row) => chartConfig[row[nameKey]]?.label || row[nameKey]);
+
+    const showTooltip = (context) => {
+      const { chart, tooltip: model } = context;
+      if (!model || model.opacity === 0 || !model.dataPoints || model.dataPoints.length === 0) {
+        tooltip.dataset.visible = "false";
+        tooltip.setAttribute("aria-hidden", "true");
+        return;
+      }
+
+      const point = model.dataPoints[0];
+      const row = rows[point.dataIndex];
+      if (!row) {
+        tooltip.dataset.visible = "false";
+        tooltip.setAttribute("aria-hidden", "true");
+        return;
+      }
+
+      tooltipName.textContent = labels[point.dataIndex];
+      tooltipValue.textContent = formatter.format(row.value);
+      tooltipDot.style.background = colors[point.dataIndex];
+
+      const shellRect = shell.getBoundingClientRect();
+      const canvasRect = chart.canvas.getBoundingClientRect();
+      const rawX = canvasRect.left - shellRect.left + model.caretX;
+      const rawY = canvasRect.top - shellRect.top + model.caretY;
+      const tooltipWidth = tooltip.offsetWidth || 132;
+      const tooltipHeight = tooltip.offsetHeight || 34;
+      const x = clamp(rawX, tooltipWidth / 2 + 8, shellRect.width - tooltipWidth / 2 - 8);
+      const y = clamp(rawY, 8, shellRect.height - 8);
+
+      tooltip.style.setProperty("--tooltip-x", `${x}px`);
+      tooltip.style.setProperty("--tooltip-y", `${y}px`);
+      tooltip.dataset.placement = y < tooltipHeight + 20 ? "bottom" : "top";
+      tooltip.dataset.visible = "true";
+      tooltip.setAttribute("aria-hidden", "false");
+    };
+
+    loadChartJs(() => {
+      const centerTextPlugin = {
+        id: "dynamicUiDonutCenterText",
+        afterDraw(chart) {
+          const { ctx, chartArea } = chart;
+          const firstArc = chart.getDatasetMeta(0).data[0];
+          const centerX = firstArc ? firstArc.x : (chartArea.left + chartArea.right) / 2;
+          const centerY = firstArc ? firstArc.y : (chartArea.top + chartArea.bottom) / 2;
+
+          ctx.save();
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = token("--text") || "#171717";
+          const titleFontSize = (token("--text-title") || "16px/24px").split("/")[0].trim();
+          ctx.font = `${token("--weight-strong") || 600} ${titleFontSize} ${token("--font-metric") || "system-ui, sans-serif"}`;
+          ctx.fillText(formatter.format(total), centerX, centerY - 4);
+          ctx.fillStyle = token("--text-muted") || "#52525B";
+          ctx.font = `${token("--weight-regular") || 400} 12px ${token("--font-sans") || "system-ui, sans-serif"}`;
+          ctx.fillText(centerLabel, centerX, centerY + 16);
+          ctx.restore();
+        }
+      };
+
+      const Chart = window.Chart;
+      new Chart(canvas, {
+        type: "doughnut",
+        data: {
+          labels,
+          datasets: [
+            {
+              data: rows.map((row) => row.value),
+              backgroundColor: colors,
+              hoverBackgroundColor: hoverColors,
+              borderWidth: 0,
+              hoverBorderWidth: 0,
+              hoverOffset: 0,
+              spacing: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "62%",
+          animation: {
+            duration: 220
+          },
+          interaction: {
+            mode: "nearest",
+            intersect: true
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false,
+              external: showTooltip
+            }
+          }
+        },
+        plugins: [centerTextPlugin]
+      });
+
+      fallback.dataset.ready = "true";
+    }, () => {
+      card.dataset.error = "true";
+    });
+  });
+})();
+</script>

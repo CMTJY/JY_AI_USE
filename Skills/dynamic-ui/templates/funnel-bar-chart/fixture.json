@@ -1,0 +1,19 @@
+{
+  "title": "Funnel Bar Chart",
+  "xDataKey": "conversion",
+  "yDataKey": "stage",
+  "valueDataKey": "value",
+  "chartData": [
+    { "stage": "Visitors", "value": 12400, "displayValue": "12.4k", "conversion": 100 },
+    { "stage": "Leads", "value": 6800, "displayValue": "6.8k", "conversion": 55 },
+    { "stage": "Qualified", "value": 3200, "displayValue": "3.2k", "conversion": 26 },
+    { "stage": "Proposals", "value": 1500, "displayValue": "1.5k", "conversion": 12 },
+    { "stage": "Closed", "value": 620, "displayValue": "620", "conversion": 5 }
+  ],
+  "chartConfig": {
+    "conversion": {
+      "label": "Baseline share",
+      "color": "var(--chart-series-1)"
+    }
+  }
+}

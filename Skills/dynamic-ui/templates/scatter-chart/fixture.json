@@ -1,0 +1,52 @@
+{
+  "title": "Scatter Chart",
+  "axis": {
+    "x": "Reach score",
+    "y": "Conversion rate (%)"
+  },
+  "scale": {
+    "x": { "min": 0, "max": 100 },
+    "y": { "min": 0, "max": 20 }
+  },
+  "sizeKey": "size",
+  "data": [
+    {
+      "id": "paid",
+      "data": [
+        { "x": 18, "y": 5.5, "size": 52, "label": "Paid A" },
+        { "x": 42, "y": 8.9, "size": 72, "label": "Paid B" },
+        { "x": 76, "y": 13.8, "size": 93, "label": "Paid C" }
+      ]
+    },
+    {
+      "id": "organic",
+      "data": [
+        { "x": 24, "y": 7.1, "size": 38, "label": "Organic A" },
+        { "x": 56, "y": 11.2, "size": 66, "label": "Organic B" },
+        { "x": 88, "y": 16.4, "size": 80, "label": "Organic C" }
+      ]
+    },
+    {
+      "id": "partner",
+      "data": [
+        { "x": 30, "y": 3.8, "size": 28, "label": "Partner A" },
+        { "x": 63, "y": 6.7, "size": 45, "label": "Partner B" },
+        { "x": 92, "y": 9.4, "size": 54, "label": "Partner C" }
+      ]
+    }
+  ],
+  "chartConfig": {
+    "paid": {
+      "label": "Paid search",
+      "color": "var(--chart-series-1)"
+    },
+    "organic": {
+      "label": "Organic",
+      "color": "var(--chart-series-2)"
+    },
+    "partner": {
+      "label": "Partner",
+      "color": "var(--chart-series-3)"
+    }
+  }
+}

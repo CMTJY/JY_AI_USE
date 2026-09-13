@@ -1,0 +1,271 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --chart-other: #D3D4DA;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.flowCard {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--spacer-20);
+}
+
+.flowHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--spacer-16);
+}
+
+.flowTitleGroup {
+  display: grid;
+  gap: var(--spacer-4);
+  min-width: 0;
+}
+
+.flowTitle {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+
+.flowCount {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacer-8);
+  min-height: 28px;
+  padding: 0 var(--spacer-12);
+  color: var(--brand-text);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: var(--radius-full);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.flowCanvas {
+  margin-top: var(--spacer-16);
+  overflow: hidden;
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: var(--radius);
+}
+
+.flowSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gridDot {
+  fill: color-mix(in srgb, var(--text-muted) 28%, transparent);
+}
+
+.edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--text-muted) 58%, transparent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.edge[data-animated="true"] {
+  stroke: var(--brand);
+  stroke-dasharray: 8 7;
+  opacity: 0.88;
+  animation: flowDash 1.4s linear infinite;
+}
+
+.edgeLabelBg {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.edgeLabel {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.nodeBox {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--border) 90%, transparent);
+  stroke-width: 1;
+}
+
+.node[data-role="input"] .nodeBox {
+  fill: color-mix(in srgb, var(--brand) 7%, var(--surface));
+  stroke: color-mix(in srgb, var(--brand) 72%, var(--border));
+}
+
+.nodeTitle {
+  fill: var(--text);
+  font: var(--weight-medium) var(--text-body) var(--font-sans);
+}
+
+.node[data-role="input"] .nodeTitle {
+  fill: var(--brand-text);
+}
+
+
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge[data-animated="true"] {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .flowCard {
+    padding: var(--spacer-16);
+  }
+
+  .flowHeader {
+    display: grid;
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="tree-flow">
+  <section class="flowCard" aria-label="Horizontal tree flow">
+    <div class="flowHeader">
+      <div class="flowTitleGroup">
+        <h3 class="flowTitle">Horizontal Flow</h3>
+      </div>
+      <div class="flowCount">8 nodes</div>
+    </div>
+    <div class="flowCanvas">
+      <svg class="flowSvg" viewBox="0 0 720 340" role="img" aria-label="A horizontal tree flow with eight nodes and seven smoothstep edges">
+        <defs>
+          <pattern id="treeFlowGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle class="gridDot" cx="1" cy="1" r="1" />
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="720" height="340" fill="url(#treeFlowGrid)" />
+        <path class="edge" data-animated="true" fill="none" d="M120 161 H150 Q158 161 158 153 V86 Q158 78 166 78 H198" />
+        <path class="edge" data-animated="true" fill="none" d="M120 161 H150 Q158 161 158 169 V234 Q158 242 166 242 H198" />
+        <path class="edge" fill="none" d="M276 78 H388" />
+        <path class="edge" data-animated="true" fill="none" d="M276 242 H330 Q338 242 338 230 V188 Q338 180 346 180 H427" />
+        <path class="edge" data-animated="true" fill="none" d="M276 242 H330 Q338 242 338 250 V252 Q338 260 346 260 H427" />
+        <path class="edge" data-animated="true" fill="none" d="M427 144 V136 Q427 126 437 126 H600" />
+        <path class="edge" data-animated="true" fill="none" d="M427 296 V288 Q427 278 437 278 H600" />
+        <rect class="edgeLabelBg" x="289" y="67" width="86" height="22" rx="8" />
+        <text class="edgeLabel" x="332" y="82" text-anchor="middle">edge label</text>
+
+        <g class="node" data-role="input" transform="translate(42 143)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Input</text>
+        </g>
+
+        <g class="node" transform="translate(198 60)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">A Node</text>
+        </g>
+
+        <g class="node" transform="translate(198 224)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 3</text>
+        </g>
+
+        <g class="node" transform="translate(388 60)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 4</text>
+        </g>
+
+        <g class="node" transform="translate(388 144)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 5</text>
+        </g>
+
+        <g class="node" transform="translate(388 260)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 6</text>
+        </g>
+
+        <g class="node" transform="translate(600 108)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 7</text>
+        </g>
+
+        <g class="node" transform="translate(600 260)">
+          <rect class="nodeBox" width="78" height="36" rx="8" />
+          <text class="nodeTitle" x="39" y="23" text-anchor="middle">Node 8</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+</div>

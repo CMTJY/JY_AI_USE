@@ -1,0 +1,388 @@
+<style>
+:root {
+  color-scheme: light;
+  --surface: #F7F7F8;
+  --surface-muted: #EFEFF2;
+  --text: #171717;
+  --text-muted: #52525B;
+  --border: rgba(23, 23, 23, 0.12);
+  --brand: #4B3FE3;
+  --brand-soft: #F2F7FF;
+  --brand-soft-strong: #E5EAFF;
+  --brand-text: #1A1759;
+  --brand-on: #FFFFFF;
+  --chart-series-1: #3C2ECA;
+  --chart-series-2: #A9AEFF;
+  --chart-series-3: #6F6FFF;
+  --chart-series-4: #22A5F7;
+  --chart-other: #D3D4DA;
+  --accent: #27D2BF;
+  --accent-2: #F87454;
+  --accent-soft: #EAFBF8;
+  --accent-text: #0F766E;
+  --success: #1DC981;
+  --warning: #EFAA17;
+  --danger: #E8463A;
+  --radius: 8px;
+  --radius-card: 12px;
+  --radius-full: 999px;
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-12: 12px;
+  --spacer-16: 16px;
+  --spacer-20: 20px;
+  --spacer-24: 24px;
+  --font-sans: "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-metric: "Inter", "SF Pro Text", "PingFang SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --text-caption: 12px/18px;
+  --text-body: 14px/20px;
+  --text-title: 16px/24px;
+  --text-code: 13px/20px;
+}
+
+:root[data-widget-theme="dark"] {
+  color-scheme: dark;
+  --surface: #171717;
+  --surface-muted: #262626;
+  --text: #E5E5E5;
+  --text-muted: #A1A1AA;
+  --border: rgba(229, 229, 229, 0.12);
+  --brand: #6054F1;
+  --brand-soft: #1A1759;
+  --brand-soft-strong: #3C2ECA;
+  --brand-text: #CFD8FF;
+  --chart-series-1: #4B3FE3;
+  --accent-2: #F87454;
+  --accent-soft: #123F3C;
+  --accent-text: #CCFBF1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-widget-theme="light"]) {
+    color-scheme: dark;
+    --surface: #171717;
+    --surface-muted: #262626;
+    --text: #E5E5E5;
+    --text-muted: #A1A1AA;
+    --border: rgba(229, 229, 229, 0.12);
+    --brand: #6054F1;
+    --brand-soft: #1A1759;
+    --brand-soft-strong: #3C2ECA;
+    --brand-text: #CFD8FF;
+    --chart-series-1: #4B3FE3;
+    --accent-2: #F87454;
+    --accent-soft: #123F3C;
+    --accent-text: #CCFBF1;
+  }
+}
+
+.widget {
+  color: var(--text);
+  background: transparent;
+  font: var(--weight-regular) var(--text-body) var(--font-sans);
+  letter-spacing: 0;
+  width: 100%;
+}
+
+.comparisonPanel {
+  box-sizing: border-box;
+  width: 100%;
+  background: transparent;
+}
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacer-16);
+}
+
+.compareCard {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 430px;
+  padding: var(--spacer-20);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
+  border-radius: var(--radius-card);
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.compareCard:hover,
+.compareCard:focus-visible {
+  border-color: color-mix(in srgb, var(--brand) 72%, var(--border));
+}
+
+.cardHeader {
+  display: grid;
+  gap: var(--spacer-12);
+  min-height: 96px;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacer-8);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 150px;
+  min-height: 24px;
+  padding: 0 var(--spacer-8);
+  overflow: hidden;
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  border-radius: var(--radius-full);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.badge[data-tone="brand"] {
+  color: var(--brand-text);
+  background: var(--surface-muted);
+  border-color: color-mix(in srgb, var(--brand) 26%, var(--border));
+}
+
+.cardTitle {
+  display: grid;
+  gap: var(--spacer-4);
+}
+
+.optionName {
+  margin: 0;
+  color: var(--text);
+  font: var(--weight-medium) var(--text-title) var(--font-sans);
+}
+
+.optionMeta {
+  margin: 0;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.metricList {
+  display: grid;
+  align-content: start;
+  margin-top: var(--spacer-16);
+  border-top: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.metricRow {
+  display: grid;
+  grid-template-columns: minmax(84px, 1fr) minmax(92px, 1.1fr);
+  align-items: center;
+  gap: var(--spacer-12);
+  min-height: 52px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+}
+
+.metricLabel {
+  min-width: 0;
+  color: var(--text-muted);
+  font: var(--weight-regular) var(--text-caption) var(--font-sans);
+}
+
+.metricValue {
+  min-width: 0;
+  color: var(--text);
+  text-align: right;
+  font: var(--weight-medium) var(--text-body) var(--font-sans);
+}
+
+.metricMark {
+  justify-self: end;
+  width: min(100%, 100px);
+  height: 7px;
+  overflow: hidden;
+  background: var(--surface-muted);
+  border-radius: var(--radius-full);
+}
+
+.metricFill {
+  display: block;
+  height: 100%;
+  background: var(--chart-series-1);
+  border-radius: var(--radius-full);
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  gap: var(--spacer-8);
+  margin-top: var(--spacer-16);
+  min-height: 24px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 24px;
+  padding: 0 var(--spacer-8);
+  overflow: hidden;
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  border-radius: var(--radius-full);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: var(--weight-medium) var(--text-caption) var(--font-sans);
+}
+
+.tag[data-tone="brand"] {
+  color: var(--brand-text);
+  background: var(--surface-muted);
+  border-color: color-mix(in srgb, var(--brand) 26%, var(--border));
+}
+
+
+@media (max-width: 760px) {
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .compareCard {
+    min-height: 0;
+  }
+
+  .cardHeader {
+    min-height: 0;
+  }
+
+  .tagList {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .compareCard {
+    padding: var(--spacer-16);
+  }
+
+  .metricRow {
+    grid-template-columns: minmax(72px, 0.9fr) minmax(92px, 1fr);
+  }
+}
+</style>
+<div class="widget" data-dynamic-ui-widget data-template="comparison-cards">
+  <section class="comparisonPanel" aria-label="Framework comparison cards">
+    <div class="comparisonGrid">
+      <article class="compareCard" tabindex="0">
+        <header class="cardHeader">
+          <div class="badgeRow">
+            <span class="badge" data-tone="brand">Recommended</span>
+          </div>
+          <div class="cardTitle">
+            <h3 class="optionName">React 19</h3>
+            <p class="optionMeta">Meta - UI library - 2013</p>
+          </div>
+        </header>
+        <div class="metricList">
+          <div class="metricRow">
+            <span class="metricLabel">Usage rate</span>
+            <span class="metricValue">44.7%</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Learning curve</span>
+            <span class="metricValue">Medium</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Performance</span>
+            <span class="metricMark"><span class="metricFill" style="width: 86%"></span></span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Ecosystem</span>
+            <span class="metricMark"><span class="metricFill" style="width: 94%"></span></span>
+          </div>
+        </div>
+        <div class="tagList">
+          <span class="tag">Top ecosystem</span>
+          <span class="tag">Cross-platform</span>
+        </div>
+      </article>
+
+      <article class="compareCard" tabindex="0">
+        <header class="cardHeader">
+          <div class="badgeRow">
+            <span class="badge">Efficient</span>
+          </div>
+          <div class="cardTitle">
+            <h3 class="optionName">Vue 3.5</h3>
+            <p class="optionMeta">Independent team - progressive - 2014</p>
+          </div>
+        </header>
+        <div class="metricList">
+          <div class="metricRow">
+            <span class="metricLabel">Usage rate</span>
+            <span class="metricValue">17.6%</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Learning curve</span>
+            <span class="metricValue">Easy</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Performance</span>
+            <span class="metricMark"><span class="metricFill" style="width: 90%"></span></span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Ecosystem</span>
+            <span class="metricMark"><span class="metricFill" style="width: 76%"></span></span>
+          </div>
+        </div>
+        <div class="tagList">
+          <span class="tag">Fastest start</span>
+          <span class="tag">Template first</span>
+        </div>
+      </article>
+
+      <article class="compareCard" tabindex="0">
+        <header class="cardHeader">
+          <div class="badgeRow">
+            <span class="badge">Enterprise</span>
+          </div>
+          <div class="cardTitle">
+            <h3 class="optionName">Angular 21</h3>
+            <p class="optionMeta">Google - full framework - 2016</p>
+          </div>
+        </header>
+        <div class="metricList">
+          <div class="metricRow">
+            <span class="metricLabel">Usage rate</span>
+            <span class="metricValue">18.2%</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Learning curve</span>
+            <span class="metricValue">Steep</span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Performance</span>
+            <span class="metricMark"><span class="metricFill" style="width: 74%"></span></span>
+          </div>
+          <div class="metricRow">
+            <span class="metricLabel">Ecosystem</span>
+            <span class="metricMark"><span class="metricFill" style="width: 62%"></span></span>
+          </div>
+        </div>
+        <div class="tagList">
+          <span class="tag">Type-safe</span>
+          <span class="tag">Scaffolded</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

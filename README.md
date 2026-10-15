@@ -51,6 +51,7 @@ AWENAI-TOOL/
 │   ├── lark-doc-precision/           #   飞书文档精准修改
 │   ├── model-up/                     #   多模态代理（文字模型看图）
 │   ├── skill-creator/                #   自定义技能创建工厂
+│   ├── teampnew/                     #   飞书项目启动、记忆迁移与路由检查
 │   └── superpowers/                  #   开发工作流超能力系列
 │
 └── LICENSE                           # MIT License
@@ -216,6 +217,7 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 |------|------|
 | [lark-doc-local-publish](Skills/lark-doc-local-publish/) | 本地 Markdown → 飞书云文档发布，支持标题自动编号 |
 | [lark-doc-precision](Skills/lark-doc-precision/) | 飞书文档精准修改——定位目标 block，只改目标，其余不动 |
+| [teamPNew](Skills/teampnew/) | 总管理知识库/团队项目启动与目录一致性检查，内置完整 Wiki Memory Agent；标准调用标识 `teampnew` |
 
 ### 开发超能力系列（Superpowers）
 
@@ -251,7 +253,7 @@ python "Agents/StartupPlanner Pro/tools/package_agent.py" marketing-xiaohongshu-
 
 - 安装支持项目规则或智能体体系的 AI 工具，如 Codex、Cursor、TRAE
 - 将本项目克隆到本地
-- 仅在运行 StartupPlanner Pro 维护/评测工具时需要 Python 3 与 PyYAML
+- StartupPlanner Pro 维护/评测工具需要 Python 3 与 PyYAML；teamPNew 可选初始化脚本需要 Python 3.9+，无第三方依赖
 
 ### 如何调用智能体
 

@@ -1,0 +1,9 @@
+{
+  "source": "Agents/wiki-memory-agent",
+  "bundled_on": "2026-10-15",
+  "files": {
+    "README.md": "cc6ccdb8fed2deeead8eb456f7d40a73becf1792a331558ef171219b404806cf",
+    "template/AGENTS.md": "fa50602d919a43ebbfea8970fb5284824d8dae6b2cd300df2330d83aaf64a15a",
+    "template/memory/INDEX.md": "b17174684c12e9ec1d35b3aa8428348e7321c0d2b08bd7a18f4ad43d4bc4e79f"
+  }
+}

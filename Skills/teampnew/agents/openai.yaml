@@ -1,0 +1,4 @@
+interface:
+  display_name: "teamPNew"
+  short_description: "初始化飞书总管理或团队项目，迁移长期记忆并按路由核对目录位置与名称"
+  default_prompt: "使用 $teampnew，先让我选择总管理知识库、团队项目或当前项目一致性检查。"

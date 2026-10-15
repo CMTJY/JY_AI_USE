@@ -1,0 +1,2 @@
+# Keep bundled source snapshots byte-identical for manifest verification.
+assets/wiki-memory-agent/** -text
